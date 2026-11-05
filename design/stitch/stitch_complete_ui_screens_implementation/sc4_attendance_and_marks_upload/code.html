@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"inverse-primary":"#b7c4ff","on-primary-container":"#cad3ff","inverse-on-surface":"#eef0ff","tertiary-fixed":"#dce1ff","surface-container-lowest":"#ffffff","background":"#faf8ff","primary-fixed-dim":"#b7c4ff","on-primary":"#ffffff","surface":"#faf8ff","outline-variant":"#c4c5d7","primary-container":"#1d4ed8","on-error":"#ffffff","on-surface":"#131b2e","inverse-surface":"#283044","on-tertiary-fixed":"#00164e","secondary-fixed-dim":"#ffb690","tertiary-fixed-dim":"#b6c4ff","outline":"#747686","surface-container-high":"#e2e7ff","surface-container-low":"#f2f3ff","surface-tint":"#2151da","on-tertiary":"#ffffff","surface-container":"#eaedff","on-secondary-container":"#5c2400","error":"#ba1a1a","secondary-container":"#fd761a","tertiary-container":"#3e57a8","on-tertiary-fixed-variant":"#264191","on-primary-fixed":"#001551","on-secondary-fixed-variant":"#783200","primary":"#0037b0","on-primary-fixed-variant":"#0039b5","on-surface-variant":"#434655","on-error-container":"#93000a","surface-bright":"#faf8ff","surface-variant":"#dae2fd","on-background":"#131b2e","secondary-fixed":"#ffdbca","primary-fixed":"#dce1ff","on-secondary":"#ffffff","on-secondary-fixed":"#341100","tertiary":"#233f8f","secondary":"#9d4300","on-tertiary-container":"#c9d3ff","surface-dim":"#d2d9f4","error-container":"#ffdad6","surface-container-highest":"#dae2fd"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-xl":"2rem","space-xs":"0.25rem","space-md":"1rem","space-sm":"0.5rem",margin:"2rem","gutter-mobile":"1rem","space-lg":"1.5rem","margin-mobile":"1rem",gutter:"1.5rem"},fontFamily:{display:["Inter"],"headline-lg-mobile":["Inter"],"headline-lg":["Inter"],caption:["Inter"],"body-lg":["Inter"],"title-lg":["Inter"],"label-md":["Inter"],"body-sm":["Inter"],"body-md":["Inter"],"headline-md":["Inter"],"headline-sm":["Inter"],"label-lg":["Inter"],"title-md":["Inter"],"display-mobile":["Inter"]},fontSize:{display:["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg-mobile":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],caption:["12px",{lineHeight:"16px",fontWeight:"400"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"title-lg":["18px",{lineHeight:"26px",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"body-sm":["14px",{lineHeight:"20px",fontWeight:"400"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}],"headline-md":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"600"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"display-mobile":["30px",{lineHeight:"38px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 h-16 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-6 flex items-center justify-between gap-4"><div class="flex items-center gap-3 min-w-[320px]"><div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-[22px]">assured_workload</span></div><div class="flex flex-col"><span class="font-title-md text-title-md text-on-surface leading-tight">વિદ્યા પ્રગતિ સેતુ | Vidya Pragati Setu</span><span class="font-caption text-caption text-on-surface-variant truncate max-w-xs">શ્રી સરદાર પટેલ હાઈસ્કૂલ, આણંદ (UDISE: 24150104502)</span></div></div><div class="hidden lg:flex flex-1 max-w-md items-center"><div class="relative w-full"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span><input class="w-full h-10 pl-9 pr-4 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container-lowest" placeholder="Search student name, Aadhaar, or scheme ID..." type="text"/></div></div><div class="flex items-center gap-3 shrink-0"><button class="h-9 px-3 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[16px]">language</span><span>ગુજરાતી / English</span></button><button class="relative w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">notifications</span><span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-error text-on-error font-caption text-[10px] font-bold flex items-center justify-center">5</span></button><div class="flex items-center gap-2 pl-2"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden xl:flex flex-col text-left"><span class="font-label-lg text-label-lg text-on-surface leading-snug">Dr. Kalpesh Shah</span><span class="font-caption text-caption text-on-surface-variant">Principal</span></div></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-[260px] bg-surface-container-lowest z-40 flex flex-col justify-between p-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-1"><div class="px-3 py-2 text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">School Modules</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-lg"><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-title-md text-title-md">Dashboard</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="verification-queue" href="#"><span class="material-symbols-outlined text-[20px]">fact_check</span><span class="font-title-md text-title-md">Verification Queue</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="student-records-and-marks" href="#"><span class="material-symbols-outlined text-[20px]">school</span><span class="font-title-md text-title-md">Student Records &amp; Marks</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cycle-distribution" href="#"><span class="material-symbols-outlined text-[20px]">pedal_bike</span><span class="font-title-md text-title-md">Cycle Distribution</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reports-and-analytics" href="#"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span class="font-title-md text-title-md">Reports &amp; Analytics</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="support-and-grievances" href="#"><span class="material-symbols-outlined text-[20px]">help</span><span class="font-title-md text-title-md">Support &amp; Grievances</span></a></nav></div><div class="flex flex-col gap-3 pt-4"><div class="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md"><span class="material-symbols-outlined text-primary text-[18px]">verified</span><span>Auto-Verification Active (AI)</span></div><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-error hover:bg-error-container hover:text-on-error-container transition-colors" data-path="login" href="#"><span class="material-symbols-outlined text-[20px]">logout</span><span class="font-title-md text-title-md">Logout</span></a></div></aside><div class="pl-[260px]"><main class="relative pt-16 bg-surface min-h-[calc(100vh-4rem)] p-gutter"><div class="flex flex-col w-full gap-6">
+<!-- Top Breadcrumb & Page Header Section -->
+<section class="flex flex-col gap-2">
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant">
+<span class="hover:text-primary transition-colors cursor-pointer">શાળાઓ (Schools)</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="hover:text-primary transition-colors cursor-pointer">વિદ્યાર્થી રેકોર્ડ્સ અને માર્કસ (Student Records)</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-semibold">હાજરી અને પરિણામ અપલોડ (Attendance &amp; Marks)</span>
+</nav>
+<div class="flex flex-wrap items-start justify-between gap-4">
+<div class="flex flex-col max-w-3xl">
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">વિદ્યાર્થી હાજરી અને માર્કસ ડેટા સિંક</h1>
+<span class="px-2.5 py-1 rounded-full bg-surface-container-high text-primary font-label-md text-label-md flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">sync</span> SC4 Engine
+          </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+          શિષ્યવૃત્તિ પાત્રતા માટે ધોરણ ૯ થી ૧૨ ના માસિક હાજરી પત્રક અને સત્રાંત પરીક્ષા પરિણામ અપલોડ કરો. (Attendance &amp; Academic Marks Synchronization • Academic Year 2025-26)
+        </p>
+</div>
+<div class="flex items-center gap-3 self-end sm:self-auto">
+<button class="h-10 px-4 rounded-lg bg-surface-container-lowest text-primary font-label-lg text-label-lg shadow-sm hover:shadow transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+<span>પોર્ટલ માર્ગદર્શિકા (Guidelines)</span>
+</button>
+<button class="h-10 px-4 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-md hover:bg-tertiary transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+<span>નમૂના ફાઇલ ડાઉનલોડ (.xlsx)</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Module Sub-Navigation Tabs -->
+<div class="flex items-center justify-between bg-surface-container-low p-1.5 rounded-xl shadow-sm">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface-container-lowest text-primary font-title-md text-title-md shadow-sm">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span>માસિક હાજરી (Monthly Attendance)</span>
+<span class="ml-1.5 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-[11px]">ઓક્ટોબર ૨૦૨૫</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/60 font-title-md text-title-md transition-colors">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+<span>સત્ર પરીક્ષા ગુણ - Term 1 &amp; 2 (Exam Marks)</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/60 font-title-md text-title-md transition-colors">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span>અગાઉના અપલોડ ઇતિહાસ (Upload Audit Log)</span>
+</button>
+</div>
+<div class="hidden xl:flex items-center gap-2 pr-3 text-on-surface-variant font-label-md text-label-md">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span>UDISE 24150104502 • Anand District Node</span>
+</div>
+</div>
+<!-- Live State Portal Auto-Sync Integration Banner -->
+<section class="p-4 sm:p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div class="flex items-start gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-tertiary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-[24px]">cloud_sync</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-2.5">
+<span class="font-title-md text-title-md text-on-surface">ગુજરાત શાળા પોર્ટલ (State School Attendance Portal / CTS API) સાથે લિંક</span>
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-label-md text-[11px] flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[13px]">check_circle</span> સ્વચાલિત સિંક સક્રિય (Auto-Sync Connected)
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          છેલ્લું સફળ દૈનિક સિંક: <span class="font-semibold text-on-surface">ગઈકાલે રાત્રે ૧૧:૫૯ વાગ્યે (૮૩૦ વિદ્યાર્થીઓ આપમેળે અપડેટ થયા)</span>. બાકીના <span class="text-error font-semibold">૧૨ રેકોર્ડ્સમાં વિસંગતતા</span> હોવાથી આચાર્ય ચકાસણી જરૂરી છે.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-4 shrink-0 self-end lg:self-center">
+<label class="flex items-center gap-2 cursor-pointer text-on-surface font-label-md text-label-md">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary accent-primary" type="checkbox"/>
+<span class="hidden sm:inline">સ્વચાલિત દૈનિક સિંક ચાલુ રાખો</span>
+</label>
+<button class="h-9 px-3.5 rounded-lg bg-surface-container text-primary font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+<span>હમણાં ફરી સિંક કરો (Sync Now)</span>
+</button>
+</div>
+</section>
+<!-- 3-Step Wizard Stepper -->
+<section class="p-6 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative">
+<!-- Step 1 (Completed) -->
+<div class="flex items-center gap-3.5 p-3 rounded-lg bg-surface-container-low/70">
+<div class="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-caption text-caption text-emerald-800 font-semibold uppercase tracking-wider">પગલું ૧ • પૂર્ણ થયેલ</span>
+<span class="font-title-md text-title-md text-on-surface truncate">૧. એક્સેલ / CSV અપલોડ</span>
+<span class="font-caption text-caption text-on-surface-variant truncate">attendance_oct_2025.xlsx (1.4 MB)</span>
+</div>
+</div>
+<!-- Step 2 (Active Current Step) -->
+<div class="flex items-center gap-3.5 p-3 rounded-lg bg-primary-fixed/40 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-primary"></div>
+<div class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 relative">
+<span class="font-bold text-[14px]">૨</span>
+<span class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-secondary-container animate-ping"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-caption text-caption text-primary font-semibold uppercase tracking-wider">પગલું ૨ • વર્તમાન પ્રક્રિયા</span>
+<span class="font-title-md text-title-md text-primary font-bold truncate">૨. ડેટા ચકાસણી અને માન્યતા</span>
+<span class="font-caption text-caption text-on-surface-variant truncate">૧૨ વિસંગતતાઓના સુધારા પેન્ડિંગ</span>
+</div>
+</div>
+<!-- Step 3 (Upcoming) -->
+<div class="flex items-center gap-3.5 p-3 rounded-lg bg-surface-container-low/40 opacity-75">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center shrink-0 font-bold text-[14px]">
+          ૩
+        </div>
+<div class="flex flex-col min-w-0">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">પગલું ૩ • અંતિમ</span>
+<span class="font-title-md text-title-md text-on-surface-variant truncate">૩. અંતિમ પુષ્ટિ અને શિષ્યવૃત્તિ લિંકિંગ</span>
+<span class="font-caption text-caption text-on-surface-variant truncate">નમો લક્ષ્મી અને જ્ઞાન સાધના સ્કીમ</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Step 2 Data Validation Summary Cards (4 Metric Bento) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wide">કુલ પ્રોસેસ કરેલ રેકોર્ડ્સ</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">group</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-[32px] leading-tight text-on-surface font-bold">૮૪૨</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">વિદ્યાર્થીઓ</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant block mt-1">૮ વર્ગો (ધોરણ ૯ થી ૧૨) શામેલ</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-emerald-800 uppercase tracking-wide">માન્ય રેકોર્ડ્સ (Auto-Approved)</span>
+<div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700">
+<span class="material-symbols-outlined text-[18px]">task_alt</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-[32px] leading-tight text-emerald-700 font-bold">૮૩૦</span>
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-label-md text-[11px] font-bold">૯૮.૬% પાસ</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant block mt-1">રાજ્ય હાજરી સર્વર સાથે સંપૂર્ણ મેળ</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-error uppercase tracking-wide">ક્ષતિ / વિસંગતતા (Conflicts)</span>
+<div class="w-8 h-8 rounded-lg bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-[32px] leading-tight text-error font-bold">૧૨</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-md text-[11px] font-bold">ધ્યાન જરૂરી</span>
+</div>
+<span class="font-caption text-caption text-error font-medium block mt-1">સુધારો કર્યા વિના સ્કીમ સિંક અટકશે</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wide">શિષ્યવૃત્તિ પાત્રતા અસર</span>
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[18px]">savings</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-[32px] leading-tight text-primary font-bold">૭૮૮</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">૭૫%+ હાજરી</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant block mt-1">નમો લક્ષ્મી &amp; જ્ઞાન સાધના માટે તુરંત પાત્ર</span>
+</div>
+</div>
+</section>
+<!-- Excel File Details & Controls Strip -->
+<section class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md">
+<span class="material-symbols-outlined text-primary text-[18px]">description</span>
+<span class="font-semibold">attendance_oct_2025.xlsx</span>
+<span class="text-on-surface-variant text-caption">| ૧૨ ઓક્ટોબર, ૧૦:૧૫ AM</span>
+</div>
+<div class="h-6 w-px bg-outline-variant hidden sm:block"></div>
+<!-- Error Filter Pills -->
+<div class="flex items-center gap-1.5">
+<button class="px-3 py-1.5 rounded-lg bg-error-container text-on-error-container font-label-md text-label-md flex items-center gap-1.5 font-bold">
+<span class="material-symbols-outlined text-[16px]">filter_alt</span>
+<span>તમામ ૧૨ ક્ષતિઓ બતાવો (12 Errors Only)</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors">
+<span>બધા ૮૪૨ રેકોર્ડ્સ</span>
+</button>
+</div>
+<div class="relative">
+<select class="h-9 pl-3 pr-8 rounded-lg bg-surface-container text-on-surface font-body-sm text-body-sm focus:outline-none appearance-none cursor-pointer">
+<option>વર્ગ ફિલ્ટર: તમામ ક્ષતિગ્રસ્ત વર્ગો</option>
+<option>ધોરણ ૯-A</option>
+<option>ધોરણ ૯-B</option>
+<option>ધોરણ ૧૦-A</option>
+<option>ધોરણ ૧૧-સામાન્ય</option>
+<option>ધોરણ ૧૧-વિજ્ઞાન</option>
+<option>ધોરણ ૧૨-સામાન્ય</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[16px]">expand_more</span>
+</div>
+</div>
+<!-- Inline Fix Badge & Search -->
+<div class="flex items-center gap-3 justify-between lg:justify-end">
+<div class="relative flex-1 sm:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px]">search</span>
+<input class="w-full h-9 pl-9 pr-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container-lowest" placeholder="Search CTS ID, Roll # or Name..." type="text"/>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-label-md text-label-md font-semibold shrink-0">
+<span class="material-symbols-outlined text-emerald-600 text-[16px]">edit_note</span>
+<span>ઇનલાઇન સુધારો સક્રિય</span>
+</div>
+</div>
+</section>
+<!-- Interactive Validation & Conflict Resolution Data Table -->
+<section class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<th class="py-3 px-4 w-12 text-center">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary accent-primary" type="checkbox"/>
+</th>
+<th class="py-3 px-3 w-16">પંક્તિ</th>
+<th class="py-3 px-4 min-w-[200px]">CTS ID &amp; વિદ્યાર્થીનું નામ</th>
+<th class="py-3 px-3 min-w-[100px]">ધોરણ/વર્ગ</th>
+<th class="py-3 px-4 min-w-[130px] text-center">હાજરી દિવસો</th>
+<th class="py-3 px-3 min-w-[80px] text-center">ટકાવારી (%)</th>
+<th class="py-3 px-4 min-w-[260px]">ઓળખાયેલ વિસંગતતા / ક્ષતિ</th>
+<th class="py-3 px-4 min-w-[240px]">સુધારો અને કાર્યવાહી (Inline Fix)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-sm text-body-sm text-on-surface">
+<!-- Row 1: Name Mismatch -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 px-4 text-center">
+<input class="w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+</td>
+<td class="py-3.5 px-3 font-mono font-semibold text-on-surface-variant">#42</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold">રિયા હસમુખભાઈ પટેલ</span>
+<span class="font-caption text-caption text-primary font-mono">GJ-AND-2026-004512</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-md text-[12px]">૯-B</span>
+</td>
+<td class="py-3.5 px-4 text-center font-mono">
+<span class="font-semibold text-on-surface">૨૩</span> / ૨૪
+            </td>
+<td class="py-3.5 px-3 text-center">
+<span class="font-semibold text-emerald-700">૯૫.૮%</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-amber-500 text-[18px] shrink-0 mt-0.5">badge</span>
+<div class="flex flex-col">
+<span class="text-amber-800 font-medium">નામ વિસંગતતા (Name Mismatch)</span>
+<span class="font-caption text-caption text-on-surface-variant">શાળા ડેટાબેઝ: Riya Mansukhbhai vs Riya Hasmukhbhai</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<button class="h-8 px-2.5 rounded bg-primary text-on-primary font-label-md text-[12px] flex items-center gap-1 hover:bg-tertiary transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[14px]">done</span>
+<span>CTS નામ સ્વીકારો</span>
+</button>
+<button class="h-8 px-2 rounded bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-[12px] transition-colors" title="મેન્યુઅલ સુધારો">
+                  એડિટ
+                </button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Attendance > 100% -->
+<tr class="hover:bg-surface-container-low/50 transition-colors bg-error-container/20">
+<td class="py-3.5 px-4 text-center">
+<input class="w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+</td>
+<td class="py-3.5 px-3 font-mono font-semibold text-error">#108</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold">કલ્પેશ દિનેશભાઈ ઠાકોર</span>
+<span class="font-caption text-caption text-primary font-mono">GJ-AND-2026-003891</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-md text-[12px]">૧૦-A</span>
+</td>
+<td class="py-3.5 px-4 text-center font-mono">
+<span class="font-bold text-error">૨૬</span> / ૨૪
+            </td>
+<td class="py-3.5 px-3 text-center">
+<span class="font-bold text-error">૧૦૮.૩%</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">error</span>
+<div class="flex flex-col">
+<span class="text-error font-medium">અમાન્ય હાજરી (&gt;100% Error)</span>
+<span class="font-caption text-caption text-on-surface-variant">કુલ કાર્યકારી દિવસો ૨૪ કરતાં વધુ દિવસો નોંધાયેલ છે</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="relative w-20">
+<input class="w-full h-8 px-2 border-0 bg-surface-container text-on-surface font-mono font-bold rounded text-center focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary text-[13px]" max="24" type="number" value="22"/>
+</div>
+<button class="h-8 px-3 rounded bg-emerald-600 text-white font-label-md text-[12px] flex items-center gap-1 hover:bg-emerald-700 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[14px]">save</span>
+<span>સાચવો</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: CTS Not Found -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input class="w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+</td>
+<td class="py-3.5 px-3 font-mono font-semibold text-on-surface-variant">#215</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold">રાહુલ ભરતભાઈ સોલંકી</span>
+<span class="font-caption text-caption text-error font-mono flex items-center gap-1">
+                  GJ-AND-2026-999999
+                  <span class="material-symbols-outlined text-[12px]">link_off</span>
+</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-md text-[12px]">૧૧-વિજ્ઞાન</span>
+</td>
+<td class="py-3.5 px-4 text-center font-mono">
+<span class="font-semibold text-on-surface">૧૮</span> / ૨૪
+            </td>
+<td class="py-3.5 px-3 text-center">
+<span class="font-semibold text-on-surface">૭૫.૦%</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">person_search</span>
+<div class="flex flex-col">
+<span class="text-error font-medium">CTS ID માન્ય નથી (Not Found)</span>
+<span class="font-caption text-caption text-on-surface-variant">રાજ્ય શાળા પોર્ટલ ડેટાબેઝમાં આ ID ઉપલબ્ધ નથી</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<input class="h-8 px-2.5 rounded bg-surface-container text-on-surface font-mono text-[12px] w-40 focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary" placeholder="સાચો CTS દાખલ કરો..." type="text"/>
+<button class="h-8 px-2 rounded bg-primary text-on-primary font-label-md text-[12px] flex items-center gap-1 hover:bg-tertiary transition-colors">
+                  મેપ કરો
+                </button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Zero Attendance Flag -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input class="w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+</td>
+<td class="py-3.5 px-3 font-mono font-semibold text-on-surface-variant">#341</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold">પૂજા રમેશભાઈ પ્રજાપતિ</span>
+<span class="font-caption text-caption text-primary font-mono">GJ-AND-2026-004112</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-md text-[12px]">૯-A</span>
+</td>
+<td class="py-3.5 px-4 text-center font-mono">
+<span class="font-bold text-amber-600">૦</span> / ૨૪
+            </td>
+<td class="py-3.5 px-3 text-center">
+<span class="font-bold text-amber-600">૦.૦%</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-amber-600 text-[18px] shrink-0 mt-0.5">event_busy</span>
+<div class="flex flex-col">
+<span class="text-amber-800 font-medium">સંપૂર્ણ ગેરહાજર (Zero Attendance)</span>
+<span class="font-caption text-caption text-on-surface-variant">મેડિકલ રજા અથવા માન્ય કારણ અપલોડ કરો</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<label class="flex items-center gap-1.5 cursor-pointer font-label-md text-[12px] text-on-surface">
+<input class="w-3.5 h-3.5 rounded text-primary accent-primary" type="checkbox"/>
+<span>મેડિકલ રજા</span>
+</label>
+<button class="h-8 px-2 rounded bg-surface-container text-primary font-label-md text-[12px] flex items-center gap-1 hover:bg-surface-container-high transition-colors" title="મેડિકલ સર્ટિફિકેટ અપલોડ">
+<span class="material-symbols-outlined text-[14px]">attach_file</span>
+<span>સર્ટિફિકેટ</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Below 75% Attendance -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input class="w-4 h-4 rounded text-primary accent-primary" type="checkbox"/>
+</td>
+<td class="py-3.5 px-3 font-mono font-semibold text-on-surface-variant">#512</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold">મિતેશ સંજયભાઈ વણકર</span>
+<span class="font-caption text-caption text-primary font-mono">GJ-AND-2026-004780</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-label-md text-[12px]">૧૨-સામાન્ય</span>
+</td>
+<td class="py-3.5 px-4 text-center font-mono">
+<span class="font-semibold text-amber-600">૧૭</span> / ૨૪
+            </td>
+<td class="py-3.5 px-3 text-center">
+<span class="font-bold text-amber-600">૭૦.૮%</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary-container text-[18px] shrink-0 mt-0.5">priority_high</span>
+<div class="flex flex-col">
+<span class="text-secondary font-medium">૭૫% લઘુત્તમ નિયમ અપૂર્ણ</span>
+<span class="font-caption text-caption text-on-surface-variant">નમો લક્ષ્મી યોજના માટે ૨ દિવસ ઓછા પડે છે</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<button class="h-8 px-2.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-md text-[12px] flex items-center gap-1.5 hover:bg-secondary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+<span>આચાર્ય વિશેષાધિકાર છૂટછાટ</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination / Status Footer -->
+<div class="px-4 py-3 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-3 text-on-surface-variant font-label-md text-label-md">
+<div class="flex items-center gap-2">
+<span>કુલ ૧૨ ક્ષતિગ્રસ્ત રેકોર્ડ્સ દર્શાવવામાં આવ્યા છે (૧ થી ૫ દર્શાવેલ)</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors shadow-sm disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<span class="px-2 font-semibold text-on-surface">૧ / ૩</span>
+<button class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center text-on-surface hover:text-primary transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Bottom Action Footer Bar (Sticky Wizard Controller) -->
+<footer class="sticky bottom-4 z-30 p-4 sm:p-5 rounded-2xl bg-surface-container-lowest shadow-xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+<!-- Left: Resolved Status & Toggle -->
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-surface-container">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+<span class="font-title-md text-title-md text-on-surface">
+          ૧૨ માંથી <span class="text-emerald-700 font-bold">૨ ક્ષતિઓ સુધારી</span> છે
+        </span>
+<span class="font-caption text-caption text-on-surface-variant font-medium">(૧૦ બાકી છે)</span>
+</div>
+<label class="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface select-none">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary accent-primary" type="checkbox"/>
+<span>ક્ષતિવાળા ૧૨ રેકોર્ડ્સ પછીથી સુધારવા માટે બાકી રાખી ૮૩૦ માન્ય રેકોર્ડ્સ આગળ ધપાવો</span>
+</label>
+</div>
+<!-- Right: Navigation CTAs -->
+<div class="flex flex-wrap items-center gap-3 justify-end">
+<button class="h-11 px-4 rounded-xl bg-surface-container text-on-surface hover:bg-surface-container-high font-label-lg text-label-lg transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+<span>નવી ફાઇલ અપલોડ કરો</span>
+</button>
+<button class="h-11 px-4 rounded-xl bg-surface-container-high text-primary hover:bg-surface-container-highest font-label-lg text-label-lg transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">save</span>
+<span>ડ્રાફ્ટ સાચવો</span>
+</button>
+<button class="h-11 px-6 rounded-xl bg-secondary-container text-on-secondary font-label-lg text-label-lg hover:bg-secondary transition-all flex items-center gap-2 shadow-md hover:shadow-lg font-bold">
+<span>ડેટા માન્ય કરો અને શિષ્યવૃત્તિ સિંક કરો</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</footer>
+</div>
+<script>
+  // Interactive micro-interactions for validation actions
+  document.addEventListener('DOMContentLoaded', () => {
+    // Quick confirmation on CTA buttons
+    const syncBtn = document.querySelector('button.bg-secondary-container');
+    if (syncBtn) {
+      syncBtn.addEventListener('click', () => {
+        alert('ડેટા ચકાસણી પૂર્ણ થઈ છે! ૮૩૦ વિદ્યાર્થીઓ નમો લક્ષ્મી અને જ્ઞાન સાધના સ્કીમ સાથે સફળતાપૂર્વક લિંક કરવામાં આવ્યા છે.');
+      });
+    }
+
+    // Save inline edit indicators
+    const inlineSaveButtons = document.querySelectorAll('button:has(.material-symbols-outlined:contains("save"))');
+    inlineSaveButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.innerHTML = '<span class="material-symbols-outlined text-[14px]">done</span> સાચવાઈ ગયું';
+        this.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+        this.classList.add('bg-emerald-800');
+      });
+    });
+  });
+</script></main></div></body></html>

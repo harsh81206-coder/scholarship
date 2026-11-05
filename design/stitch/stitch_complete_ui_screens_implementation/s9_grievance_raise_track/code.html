@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+
+<html lang="gu"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "error": "#ba1a1a", "primary": "#0037b0", "on-background": "#131b2e", "secondary": "#9d4300", "tertiary": "#233f8f", "on-surface-variant": "#434655", "on-surface": "#131b2e", "surface-container-low": "#f2f3ff", "outline": "#747686", "on-primary-container": "#cad3ff", "outline-variant": "#c4c5d7", "on-secondary-fixed-variant": "#783200", "on-primary-fixed": "#001551", "on-primary-fixed-variant": "#0039b5", "inverse-surface": "#283044", "on-secondary-fixed": "#341100", "tertiary-fixed": "#dce1ff", "secondary-container": "#fd761a", "on-tertiary": "#ffffff", "on-tertiary-container": "#c9d3ff", "background": "#faf8ff", "secondary-fixed": "#ffdbca", "secondary-fixed-dim": "#ffb690", "surface": "#faf8ff", "on-secondary": "#ffffff", "surface-variant": "#dae2fd", "on-error": "#ffffff", "surface-container-lowest": "#ffffff", "on-primary": "#ffffff", "primary-container": "#1d4ed8", "inverse-on-surface": "#eef0ff", "on-secondary-container": "#5c2400", "primary-fixed": "#dce1ff", "surface-container": "#eaedff", "on-tertiary-fixed": "#00164e", "on-tertiary-fixed-variant": "#264191", "error-container": "#ffdad6", "tertiary-fixed-dim": "#b6c4ff", "surface-tint": "#2151da", "tertiary-container": "#3e57a8", "inverse-primary": "#b7c4ff", "surface-container-highest": "#dae2fd", "surface-container-high": "#e2e7ff", "surface-dim": "#d2d9f4", "primary-fixed-dim": "#b7c4ff", "on-error-container": "#93000a", "surface-bright": "#faf8ff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xs": "0.25rem", "space-md": "1rem", "space-lg": "1.5rem", "margin-mobile": "1rem", "space-sm": "0.5rem", "gutter": "1.5rem", "gutter-mobile": "1rem", "margin": "2rem", "space-xl": "2rem" }, fontFamily: { "display": ["Inter"], "caption": ["Inter"], "title-md": ["Inter"], "label-lg": ["Inter"], "headline-sm": ["Inter"], "title-lg": ["Inter"], "body-sm": ["Inter"], "body-md": ["Inter"], "headline-md": ["Inter"], "headline-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "label-md": ["Inter"], "body-lg": ["Inter"], "display-mobile": ["Inter"] }, fontSize: { "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "display-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-xs"><div class="flex items-center min-w-0 flex-1"><button aria-label="પાછા જાઓ" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors -ml-space-xs shrink-0" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><h1 class="font-title-lg text-title-lg text-on-surface truncate ml-space-xs leading-tight">Grievance Detail</h1></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Switch language" class="h-9 px-space-sm flex items-center justify-center rounded-lg bg-surface-container text-primary font-label-md text-label-md font-semibold hover:bg-surface-container-high transition-colors" type="button">ગુ / EN</button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe px-gutter-mobile bg-surface flex-grow"><div class="flex flex-col w-full pb-8">
+<!-- Citizen Assistance Banner -->
+<div class="bg-primary/10 rounded-xl p-space-sm flex items-center justify-between mb-space-md shadow-sm">
+<div class="flex items-center gap-space-xs min-w-0">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[18px]">support_agent</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label-md text-label-md text-primary font-bold">CM હેલ્પલાઇન: 181</span>
+<span class="text-outline-variant font-label-md">|</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium truncate">શિક્ષણ સહાય: 1800-233-5500</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant truncate">વિદ્યા પ્રગતિ સેતુ • ૨૪x૭ ફરિયાદ નિવારણ</p>
+</div>
+</div>
+<a aria-label="Call Helpline" class="shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary shadow hover:bg-primary-container transition-colors" href="tel:18002335500">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</a>
+</div>
+<!-- Student Profile Quick Identification -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md mb-space-md shadow-sm flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative shrink-0">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Warm passport portrait of high school girl student Riya Patel wearing neat school uniform with badge, smiling confidently against clean soft blue administrative studio backdrop, gentle morning natural light, 35mm portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9yBgxJl9HUz56yYULbbwxPGcSLDr5wsndRJLHsyi3tB1B4ZmCeho9Vpfov7gli1GYxLQmhMesucr4BdL8jlHWlLRORezqz9n2iRNHDT4FhGwW4Jw-N1bmqlpBCdkddmuSHDs6xwiWWfTjRbNBy44sk8RT1f7tT2R1PnDierwaQiGdBwffXX3V3xCivZDl8QcgbSSlDFG0IBMVNVoglYFRUF4L0vs-nYqZtlE-tq8"/>
+<span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-secondary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[10px]">verified</span>
+</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<h2 class="font-title-md text-title-md text-on-surface truncate">રિયા પટેલ (Riya Patel)</h2>
+<span class="bg-surface-container text-on-surface-variant px-1.5 py-0.5 rounded font-caption text-caption">ધોરણ ૯-B</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant truncate">શ્રી સરદાર પટેલ હાઇસ્કૂલ, આણંદ</p>
+<p class="font-caption text-caption text-primary font-semibold">CTS ID: GJ-AND-2026-004512</p>
+</div>
+</div>
+<div class="shrink-0 text-right">
+<span class="inline-flex items-center gap-1 bg-surface-container text-secondary font-label-md text-label-md px-2.5 py-1 rounded-full font-bold">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+        GSRDA માન્ય
+      </span>
+</div>
+</div>
+<!-- Segmented Two-Tab Navigation -->
+<div class="bg-surface-container-high p-1 rounded-xl flex gap-1 mb-space-lg shadow-inner">
+<button class="flex-1 py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 font-label-lg text-label-lg font-semibold bg-surface-container-lowest text-primary shadow-sm transition-all duration-200" id="tabTrackBtn" onclick="switchGrievanceTab('track')" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span>મારી ફરિયાદો</span>
+<span class="bg-primary text-on-primary text-[11px] px-1.5 py-0.2 rounded-full font-bold" id="ticketCountBadge">2</span>
+</button>
+<button class="flex-1 py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 font-label-lg text-label-lg font-semibold text-on-surface-variant hover:text-on-surface transition-all duration-200" id="tabRaiseBtn" onclick="switchGrievanceTab('raise')" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>નવી ફરિયાદ</span>
+</button>
+</div>
+<!-- VIEW 1: MY TICKETS TRACKING -->
+<div class="flex flex-col gap-space-md w-full" id="viewTrack">
+<!-- Section Label -->
+<div class="flex items-center justify-between px-1">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface font-bold">સક્રિય ફરિયાદોનું ટ્રેકિંગ</h3>
+<p class="font-caption text-caption text-on-surface-variant">Live SLA Status & Department Timeline</p>
+</div>
+<span class="font-label-md text-label-md text-primary font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[16px]">sync</span> લાઇવ અપડેટ
+      </span>
+</div>
+<!-- CARD A: Active Ticket -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md flex flex-col gap-space-sm relative overflow-hidden">
+<!-- Top category and SLA alert -->
+<div class="flex items-center justify-between gap-space-xs flex-wrap">
+<div class="flex items-center gap-1.5">
+<span class="bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">pedal_bike</span>
+            સાયકલ વિતરણ સંબંધિત
+          </span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant font-mono font-semibold">#GRV-2026-0412</span>
+</div>
+<!-- Scheme Reference -->
+<div>
+<h4 class="font-title-md text-title-md text-on-surface font-bold">સરસ્વતી સાધના યોજના (AY 2025-26)</h4>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">શાળામાં સાયકલ બેચ આવી ગઈ હોવા છતાં OTP વેલિડેશન સમયે બારકોડ સ્કેન એરર દર્શાવે છે.</p>
+</div>
+<!-- SLA Countdown Banner -->
+<div class="bg-secondary-fixed/40 rounded-lg p-2.5 flex items-center justify-between gap-2">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0">hourglass_top</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-secondary font-bold truncate">ઉકેલ સમય: ૨ દિવસ બાકી</p>
+<p class="font-caption text-caption text-on-secondary-fixed-variant">નિયત લક્ષ્યાંક તારીખ: 02 Mar 2026</p>
+</div>
+</div>
+<span class="bg-secondary text-on-secondary text-caption font-bold px-2 py-0.5 rounded shrink-0">SLA Active</span>
+</div>
+<!-- Assigned Officer Details -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-2.5 min-w-0">
+<img class="w-10 h-10 rounded-full object-cover shrink-0" data-alt="Professional bust photo of senior Indian administrative male education officer wearing clean white formal khadi shirt with spectacles, pleasant helpful government servant expression, soft daylight office backdrop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiBU0N12f6iv2PX-Sx40QXZCZKSXKrhpsfdu8kPfEYEZwGbh-42gW0w_a2H0KbEteEK9zYlhRhugfO7Xrcaw5kQ4AHBdUBwQmUsMvqgGd7u0gK7pckaZW3XgArZxZJOg-86jJzOtFQLLP4Z4ei4axwLahjEktmz5nRjqs0u7LjzKJZLpO0jJkSE3CNkUJfgBa0E2xKw73uWqi9ytQcFPkegUt-jcDb10Kx1vQyUOI"/>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-bold truncate">શ્રી પરેશ ત્રિવેદી</p>
+<p class="font-caption text-caption text-on-surface-variant truncate">નાયબ DEO, આણંદ જિલ્લા શિક્ષણ કચેરી</p>
+</div>
+</div>
+<a class="shrink-0 h-9 px-2.5 rounded-lg bg-surface-container text-primary font-label-md text-label-md font-semibold flex items-center gap-1 hover:bg-surface-container-high transition-colors" href="tel:+912692245000">
+<span class="material-symbols-outlined text-[16px]">call</span>
+<span>કૉલ</span>
+</a>
+</div>
+<!-- Stepper Progress Tracker -->
+<div class="my-1 pl-1">
+<p class="font-label-md text-label-md text-on-surface font-bold mb-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[18px]">timeline</span>
+          તપાસ પ્રક્રિયાની સ્થિતિ (Live Timeline)
+        </p>
+<div class="relative flex flex-col gap-3 pl-6">
+<!-- Step 1 Complete -->
+<div class="relative flex items-start gap-2">
+<div class="absolute -left-6 top-0 w-4 h-4 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[11px] font-bold">check</span>
+</div>
+<div class="absolute -left-[17px] top-4 w-0.5 h-6 bg-primary"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">૧. ફરિયાદ પોર્ટલ પર નોંધાઈ</p>
+<p class="font-caption text-caption text-on-surface-variant">24 Feb 2026, 10:30 AM • ઓટો જનરેટેડ ટોકન</p>
+</div>
+</div>
+<!-- Step 2 Complete -->
+<div class="relative flex items-start gap-2">
+<div class="absolute -left-6 top-0 w-4 h-4 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[11px] font-bold">check</span>
+</div>
+<div class="absolute -left-[17px] top-4 w-0.5 h-6 bg-primary"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">૨. DEO ડેસ્કને રીવ્યુ માટે સોંપાઈ</p>
+<p class="font-caption text-caption text-on-surface-variant">24 Feb 2026, 02:15 PM • અધિકારી ચકાસણી શરૂ</p>
+</div>
+</div>
+<!-- Step 3 In-Progress (Current active) -->
+<div class="relative flex items-start gap-2">
+<div class="absolute -left-6 top-0 w-4 h-4 rounded-full bg-primary-container animate-pulse flex items-center justify-center text-on-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-bright"></span>
+</div>
+<div class="absolute -left-[17px] top-4 w-0.5 h-6 bg-surface-container-high"></div>
+<div>
+<span class="inline-block bg-primary/10 text-primary font-label-md text-label-md px-1.5 py-0.2 rounded font-bold mb-0.5">વર્તમાન સ્થિતિ (In Review)</span>
+<p class="font-label-md text-label-md text-on-surface font-bold">૩. શાળા આચાર્ય અને વેન્ડર તપાસ હેઠળ</p>
+<p class="font-caption text-caption text-on-surface-variant">25 Feb 2026 • સ્ટોક યાદી અને ફ્રેમ બારકોડ રી-ટેસ્ટિંગ પ્રક્રિયા ચાલુ</p>
+</div>
+</div>
+<!-- Step 4 Pending -->
+<div class="relative flex items-start gap-2 opacity-60">
+<div class="absolute -left-6 top-0 w-4 h-4 rounded-full bg-surface-container-high flex items-center justify-center text-outline">
+<span class="text-[10px] font-bold">૪</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-medium">૪. અંતિમ નિરાકરણ અને સુધારેલ OTP</p>
+<p class="font-caption text-caption text-on-surface-variant">સાયકલ હેન્ડઓવર સ્વીકૃતિ SMS મોકલાશે</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action buttons -->
+<div class="flex items-center gap-space-xs pt-space-xs">
+<button class="flex-1 min-h-[44px] px-3 rounded-lg bg-surface-container text-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-1 hover:bg-surface-container-high transition-colors" onclick="openReplyModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">add_comment</span>
+<span>જવાબ / વધારાની વિગત ઉમેરો</span>
+</button>
+<button class="h-11 px-3 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md font-semibold flex items-center justify-center gap-1 hover:bg-surface-container-high transition-colors" onclick="alert('તમારી ફરિયાદ અગ્રતા ધોરણે ચિહ્નિત કરવામાં આવી છે.')" title="ઝડપી રીમાઇન્ડર" type="button">
+<span class="material-symbols-outlined text-[18px]">notifications_active</span>
+</button>
+</div>
+</div>
+<!-- CARD B: Resolved Ticket -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md flex flex-col gap-space-sm relative">
+<!-- Header -->
+<div class="flex items-center justify-between gap-space-xs flex-wrap">
+<span class="bg-surface-container-highest text-primary font-label-md text-label-md px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">account_balance</span>
+          DBT બેંક ખાતું સુધારો
+        </span>
+<div class="flex items-center gap-1.5">
+<span class="bg-primary/10 text-primary font-label-md text-label-md px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+            સફળ નિરાકરણ
+          </span>
+<span class="font-label-md text-label-md text-on-surface-variant font-mono">#GRV-2026-0189</span>
+</div>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface font-bold">નમો લક્ષ્મી યોજના (Namo Lakshmi Yojana)</h4>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">આવેદન ક્રમાંક: NL-2025-994102 • પૂર્ણ તારીખ: 18 Feb 2026</p>
+</div>
+<!-- Resolution Officer Note -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex gap-2.5 items-start">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">task_alt</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-primary font-bold">નિરાકરણ નોંધ (Resolution Summary):</p>
+<p class="font-body-sm text-body-sm text-on-surface mt-1 leading-relaxed">
+            માતા હેતલબેન પટેલનું SBI ખાતું NPCI સાથે સફળતાપૂર્વક મેપ થઈ ચૂક્યું છે અને પ્રથમ હપ્તો <span class="font-bold text-primary">₹ ૨,૫૦૦</span> સીધા ખાતામાં જમા થઈ ગયો છે (UTR: SBIN2611020045).
+          </p>
+</div>
+</div>
+<!-- Interactive Star Rating Prompt -->
+<div class="bg-surface-container-high/60 rounded-xl p-space-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">આ નિરાકરણથી તમે કેટલા સંતુષ્ટ છો?</p>
+<p class="font-caption text-caption text-on-surface-variant">Rate Grievance Resolution Quality</p>
+</div>
+<span class="font-caption text-caption font-bold text-secondary bg-secondary-fixed/50 px-2 py-0.5 rounded" id="ratingStatusText">
+            ૪/૫ રેટિંગ આપ્યું
+          </span>
+</div>
+<!-- 5 Stars Row -->
+<div class="flex items-center gap-1.5" id="starRatingGroup">
+<button aria-label="1 star" class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-secondary hover:scale-110 transition-transform" onclick="setRating(1)" type="button">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="2 stars" class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-secondary hover:scale-110 transition-transform" onclick="setRating(2)" type="button">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="3 stars" class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-secondary hover:scale-110 transition-transform" onclick="setRating(3)" type="button">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="4 stars" class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-secondary hover:scale-110 transition-transform" onclick="setRating(4)" type="button">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="5 stars" class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-outline hover:scale-110 transition-transform" onclick="setRating(5)" type="button">
+<span class="material-symbols-outlined text-[24px]">star</span>
+</button>
+</div>
+<p class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[14px]">check_circle</span>
+          તમારો પ્રતિભાવ સબમિટ થયો છે. આભાર!
+        </p>
+</div>
+</div>
+<!-- Quick CTA to switch to Raise form -->
+<button class="w-full min-h-[48px] rounded-xl bg-surface-container-low text-primary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 hover:bg-surface-container-high transition-colors shadow-sm" onclick="switchGrievanceTab('raise')" type="button">
+<span class="material-symbols-outlined text-[20px]">post_add</span>
+<span>નવી ફરિયાદ અથવા પ્રશ્ન નોંધાવો</span>
+</button>
+</div>
+<!-- VIEW 2: RAISE NEW GRIEVANCE FORM -->
+<div class="hidden flex-col gap-space-md w-full" id="viewRaise">
+<!-- Form Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md flex flex-col gap-space-md">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface font-bold">નવી ફરિયાદ નોંધાવો</h3>
+<p class="font-caption text-caption text-on-surface-variant">Raise New Ticket with Verified Student Details</p>
+</div>
+<form class="flex flex-col gap-space-md" id="grievanceForm" onsubmit="handleFormSubmit(event)">
+<!-- Scheme / Application pre-selected dropdown -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold flex items-center justify-between">
+<span>સંબંધિત યોજના / અરજી <span class="text-error font-bold">*</span></span>
+<span class="font-caption text-caption text-primary font-normal">Active Profile Link</span>
+</label>
+<div class="relative">
+<select class="w-full h-11 px-3 pr-9 rounded-lg bg-surface-container text-on-surface font-body-sm text-body-sm appearance-none outline-none focus:bg-surface-container-high">
+<option selected="" value="APP-2026-00871">APP-2026-00871 (સરસ્વતી સાધના યોજના)</option>
+<option value="APP-2026-00344">APP-2026-00344 (નમો લક્ષ્મી યોજના)</option>
+<option value="APP-GEN">સામાન્ય શિષ્યવૃત્તિ પૂછપરછ (General Educational Grant)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 pointer-events-none text-on-surface-variant text-[20px]">arrow_drop_down</span>
+</div>
+</div>
+<!-- Issue Category Selector -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold">
+            સમસ્યાનો પ્રકાર (Grievance Category) <span class="text-error font-bold">*</span>
+</label>
+<div class="relative">
+<select class="w-full h-11 px-3 pr-9 rounded-lg bg-surface-container text-on-surface font-body-sm text-body-sm appearance-none outline-none focus:bg-surface-container-high" required="">
+<option disabled="" value="">કેટેગરી પસંદ કરો...</option>
+<option selected="" value="bicycle">સાયકલ વિતરણ / ક્ષતિગ્રસ્ત સાયકલ (Bicycle Handover / Defect)</option>
+<option value="dbt">શિષ્યવૃત્તિ જમા થઈ નથી (DBT / Payment Issue)</option>
+<option value="eligibility">પાત્રતા ખોટી દર્શાવે છે (Eligibility Criteria Dispute)</option>
+<option value="docs">દસ્તાવેજ વેરિફિકેશન વિલંબ (Document Verification Delay)</option>
+<option value="school">શાળા કક્ષાએથી મંજૂરી અટકેલ (School Level Pending)</option>
+<option value="other">અન્ય સમસ્યા (Other Grievance)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 pointer-events-none text-on-surface-variant text-[20px]">arrow_drop_down</span>
+</div>
+</div>
+<!-- Problem Description Area with Voice Input Button -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold">
+              સમસ્યાનું વિગતવાર વર્ણન <span class="text-error font-bold">*</span>
+</label>
+<span class="font-caption text-caption text-on-surface-variant">મહત્તમ ૫૦૦ શબ્દો</span>
+</div>
+<div class="relative">
+<textarea class="w-full p-3 pr-12 rounded-lg bg-surface-container text-on-surface font-body-sm text-body-sm outline-none resize-none focus:bg-surface-container-high placeholder:text-on-surface-variant/70 leading-relaxed" id="grievanceDescription" placeholder="તમારી સમસ્યા વિગતવાર જણાવો... (જેમ કે: સાયકલ મંજૂર થઈ છે પણ શાળામાં OTP મળતો નથી)" required="" rows="4"></textarea>
+<!-- Voice Input Floating Button -->
+<button class="absolute right-2.5 bottom-2.5 w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all" id="voiceBtn" onclick="toggleVoiceInput()" title="ગુજરાતીમાં બોલીને લખો (Gujarati Voice Typing)" type="button">
+<span class="material-symbols-outlined text-[20px]" id="micIcon">mic</span>
+</button>
+</div>
+<!-- Gujarati Voice Typing Guidance -->
+<div class="flex items-center justify-between px-1">
+<span class="font-caption text-caption text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">record_voice_over</span>
+              વોઇસ ઇનપુટ ઉપલબ્ધ: માઇક દબાવી ગુજરાતીમાં બોલો
+            </span>
+<span class="font-caption text-caption text-secondary font-bold hidden" id="voiceStatus">સાંભળી રહ્યા છીએ...</span>
+</div>
+</div>
+<!-- Attachment Uploader -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface font-semibold flex items-center justify-between">
+<span>ફોટો અથવા પુરાવો જોડો (Attach Photo/Receipt)</span>
+<span class="font-caption text-caption text-on-surface-variant">વૈકલ્પિક (Max 5MB)</span>
+</label>
+<div class="bg-surface-container p-3 rounded-xl flex flex-col gap-2.5">
+<div class="flex items-center gap-2">
+<button class="flex-1 h-11 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 shadow-sm hover:bg-surface-container-low transition-colors" onclick="simulateUpload('Camera')" type="button">
+<span class="material-symbols-outlined text-primary text-[20px]">photo_camera</span>
+<span>કેમેરાથી ફોટો</span>
+</button>
+<button class="flex-1 h-11 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 shadow-sm hover:bg-surface-container-low transition-colors" onclick="simulateUpload('Gallery')" type="button">
+<span class="material-symbols-outlined text-primary text-[20px]">upload_file</span>
+<span>દસ્તાવેજ પસંદ કરો</span>
+</button>
+</div>
+<!-- Uploaded file placeholder pill -->
+<div class="bg-surface-container-lowest p-2 rounded-lg flex items-center justify-between gap-2 shadow-inner" id="attachedFilePill">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0">image</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">cycle_error_screen.jpg</p>
+<p class="font-caption text-caption text-on-surface-variant">1.4 MB • ફોટો જોડાઈ ચૂક્યો છે</p>
+</div>
+</div>
+<button aria-label="Remove Attachment" class="w-8 h-8 rounded-full flex items-center justify-center text-error hover:bg-error/10" onclick="removeAttachment()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Citizen Charter Guarantee Box -->
+<div class="bg-surface-container-low rounded-xl p-3 flex items-start gap-2.5 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[22px] shrink-0 mt-0.5">verified_user</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-bold">ગુજરાત લોકસેવા હક્ક અધિનિયમ (GSRDA) ગેરંટી</p>
+<p class="font-caption text-caption text-on-surface-variant leading-relaxed">
+              તમારી ફરિયાદ નોંધાયા બાદ સંબંધિત શિક્ષણ અધિકારી દ્વારા ૭ દિવસમાં ફરજિયાત નિરાકરણ કરવામાં આવશે. આપને SMS દ્વારા સતત અપડેટ્સ મળતા રહેશે.
+            </p>
+</div>
+</div>
+<!-- Primary Action Submit Button -->
+<button class="w-full min-h-[48px] rounded-xl bg-primary-container text-on-primary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-lg hover:brightness-110 active:scale-98 transition-all" type="submit">
+<span>ફરિયાદ સબમિટ કરો (Submit Ticket)</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+</div>
+</div>
+<!-- MODAL / DRAWER FOR REPLY (Hidden by default) -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/50 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4" id="replyModal">
+<div class="bg-surface-container-lowest w-full max-w-lg rounded-t-2xl sm:rounded-2xl p-space-md shadow-2xl flex flex-col gap-space-md max-h-[751px] overflow-y-auto">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-title-md text-title-md text-on-surface font-bold">વિગત ઉમેરો / જવાબ આપો</h4>
+<p class="font-caption text-caption text-on-surface-variant">ટિકિટ: #GRV-2026-0412 (DEO Desk)</p>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant" onclick="closeReplyModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="bg-surface-container-low p-2.5 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">info</span>
+<p class="font-caption text-caption text-on-surface-variant">અધિકારીશ્રી પરેશ ત્રિવેદીના ધ્યાન પર સીધી માહિતી મોકલાશે.</p>
+</div>
+<textarea class="w-full p-3 rounded-lg bg-surface-container text-on-surface font-body-sm text-body-sm outline-none resize-none focus:bg-surface-container-high" id="replyText" placeholder="તમારો વધારાનો ખુલાસો અથવા સુધારેલ આધાર નંબર અહીં લખો..." rows="3"></textarea>
+<div class="flex gap-2">
+<button class="flex-1 min-h-[44px] rounded-lg bg-surface-container text-on-surface font-label-md text-label-md font-semibold" onclick="closeReplyModal()" type="button">
+          રદ કરો
+        </button>
+<button class="flex-1 min-h-[44px] rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1" onclick="submitReply()" type="button">
+<span>મોકલો</span>
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</div>
+<!-- SUCCESS TOAST (Controlled via JS) -->
+<div class="fixed bottom-6 left-4 right-4 z-50 bg-inverse-surface text-inverse-on-surface p-3.5 rounded-xl shadow-xl flex items-center gap-3 transform translate-y-32 transition-transform duration-300 pointer-events-none" id="toastNotification">
+<span class="material-symbols-outlined text-secondary-container text-[24px] shrink-0">check_circle</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md font-bold" id="toastTitle">ફરિયાદ સફળતાપૂર્વક નોંધાઈ ગઈ છે!</p>
+<p class="font-caption text-caption opacity-90 truncate" id="toastMessage">નવો ટોકન ક્રમાંક: #GRV-2026-0518</p>
+</div>
+</div>
+</div>
+<script>
+  function switchGrievanceTab(tab) {
+    const trackView = document.getElementById('viewTrack');
+    const raiseView = document.getElementById('viewRaise');
+    const tabTrackBtn = document.getElementById('tabTrackBtn');
+    const tabRaiseBtn = document.getElementById('tabRaiseBtn');
+
+    if (tab === 'track') {
+      trackView.classList.remove('hidden');
+      raiseView.classList.add('hidden');
+
+      tabTrackBtn.className = 'flex-1 py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 font-label-lg text-label-lg font-semibold bg-surface-container-lowest text-primary shadow-sm transition-all duration-200';
+      tabRaiseBtn.className = 'flex-1 py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 font-label-lg text-label-lg font-semibold text-on-surface-variant hover:text-on-surface transition-all duration-200';
+    } else {
+      trackView.classList.add('hidden');
+      raiseView.classList.remove('hidden');
+
+      tabRaiseBtn.className = 'flex-1 py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 font-label-lg text-label-lg font-semibold bg-surface-container-lowest text-primary shadow-sm transition-all duration-200';
+      tabTrackBtn.className = 'flex-1 py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 font-label-lg text-label-lg font-semibold text-on-surface-variant hover:text-on-surface transition-all duration-200';
+    }
+  }
+
+  function setRating(rating) {
+    const starButtons = document.querySelectorAll('#starRatingGroup button');
+    const ratingStatus = document.getElementById('ratingStatusText');
+
+    starButtons.forEach((btn, index) => {
+      const icon = btn.querySelector('.material-symbols-outlined');
+      if (index < rating) {
+        btn.classList.add('text-secondary');
+        btn.classList.remove('text-outline');
+        icon.style.fontVariationSettings = "'FILL' 1";
+      } else {
+        btn.classList.remove('text-secondary');
+        btn.classList.add('text-outline');
+        icon.style.fontVariationSettings = "'FILL' 0";
+      }
+    });
+
+    if (ratingStatus) {
+      ratingStatus.innerText = rating + '/૫ રેટિંગ અપડેટ થયું';
+    }
+    showToast('પ્રતિભાવ સબમિટ થયો', rating + ' સ્ટાર રેટિંગ આપવા બદલ આભાર!');
+  }
+
+  function toggleVoiceInput() {
+    const mic = document.getElementById('micIcon');
+    const voiceStatus = document.getElementById('voiceStatus');
+    const desc = document.getElementById('grievanceDescription');
+
+    if (voiceStatus.classList.contains('hidden')) {
+      voiceStatus.classList.remove('hidden');
+      mic.classList.add('animate-pulse', 'text-error');
+      setTimeout(() => {
+        desc.value = (desc.value ? desc.value + " " : "") + "સાયકલ વિતરણ માટે શાળાએ જતાં બારકોડ માન્ય નથી તેવી ભૂલ દર્શાવે છે.";
+        voiceStatus.classList.add('hidden');
+        mic.classList.remove('animate-pulse', 'text-error');
+        showToast('વોઇસ રેકગ્નિશન સફળ', 'ગુજરાતી વાક્ય ટાઇપ થઈ ગયું છે.');
+      }, 1600);
+    } else {
+      voiceStatus.classList.add('hidden');
+      mic.classList.remove('animate-pulse', 'text-error');
+    }
+  }
+
+  function simulateUpload(source) {
+    const filePill = document.getElementById('attachedFilePill');
+    if (filePill) {
+      filePill.classList.remove('hidden');
+      filePill.classList.add('flex');
+    }
+    showToast(source + ' થી દસ્તાવેજ પસંદ થયો', 'નવું જોડાણ: cycle_bill_scan.pdf (1.2MB)');
+  }
+
+  function removeAttachment() {
+    const filePill = document.getElementById('attachedFilePill');
+    if (filePill) {
+      filePill.classList.add('hidden');
+      filePill.classList.remove('flex');
+    }
+    showToast('જોડાણ હટાવ્યું', 'દસ્તાવેજ રદ કરવામાં આવ્યો છે.');
+  }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    showToast('ફરિયાદ સફળતાપૂર્વક નોંધાઈ ગઈ!', 'નવો ટોકન: #GRV-2026-0518 • ૭ દિવસમાં ઉકેલ.');
+    const badge = document.getElementById('ticketCountBadge');
+    if (badge) badge.innerText = '3';
+    setTimeout(() => {
+      switchGrievanceTab('track');
+    }, 1200);
+  }
+
+  function openReplyModal() {
+    const modal = document.getElementById('replyModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeReplyModal() {
+    const modal = document.getElementById('replyModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+
+  function submitReply() {
+    const replyInput = document.getElementById('replyText');
+    if (replyInput.value.trim() === '') {
+      showToast('વિગત દાખલ કરો', 'કૃપા કરીને પહેલા સંદેશ લખો.');
+      return;
+    }
+    closeReplyModal();
+    replyInput.value = '';
+    showToast('જવાબ મોકલાયો', 'અધિકારીને તમારી વિગત મળી ગઈ છે.');
+  }
+
+  function showToast(title, message) {
+    const toast = document.getElementById('toastNotification');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastMsg = document.getElementById('toastMessage');
+
+    if (toastTitle) toastTitle.innerText = title;
+    if (toastMsg) toastMsg.innerText = message;
+
+    toast.classList.remove('translate-y-32');
+    toast.classList.add('translate-y-0');
+
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0');
+      toast.classList.add('translate-y-32');
+    }, 3200);
+  }
+</script></main></body></html>

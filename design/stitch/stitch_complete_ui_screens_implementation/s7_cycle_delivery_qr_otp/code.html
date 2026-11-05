@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html lang="gu"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary-fixed-dim": "#b7c4ff", "error": "#ba1a1a", "surface-dim": "#d2d9f4", "on-primary-fixed-variant": "#0039b5", "surface-variant": "#dae2fd", "on-secondary-container": "#5c2400", "on-background": "#131b2e", "on-surface": "#131b2e", "tertiary": "#233f8f", "on-secondary-fixed-variant": "#783200", "inverse-primary": "#b7c4ff", "outline-variant": "#c4c5d7", "on-secondary-fixed": "#341100", "tertiary-container": "#3e57a8", "error-container": "#ffdad6", "surface": "#faf8ff", "secondary": "#9d4300", "on-tertiary-fixed-variant": "#264191", "primary-fixed": "#dce1ff", "surface-container-highest": "#dae2fd", "background": "#faf8ff", "surface-container-high": "#e2e7ff", "on-surface-variant": "#434655", "on-tertiary-fixed": "#00164e", "surface-container": "#eaedff", "surface-bright": "#faf8ff", "tertiary-fixed-dim": "#b6c4ff", "tertiary-fixed": "#dce1ff", "secondary-fixed-dim": "#ffb690", "primary": "#0037b0", "on-primary": "#ffffff", "secondary-fixed": "#ffdbca", "surface-tint": "#2151da", "surface-container-low": "#f2f3ff", "inverse-on-surface": "#eef0ff", "on-primary-fixed": "#001551", "on-error-container": "#93000a", "on-error": "#ffffff", "secondary-container": "#fd761a", "outline": "#747686", "on-tertiary": "#ffffff", "surface-container-lowest": "#ffffff", "on-tertiary-container": "#c9d3ff", "on-primary-container": "#cad3ff", "inverse-surface": "#283044", "on-secondary": "#ffffff", "primary-container": "#1d4ed8" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-xl": "2rem", "space-md": "1rem", "gutter": "1.5rem", "margin-mobile": "1rem", "gutter-mobile": "1rem", "space-lg": "1.5rem", "margin": "2rem", "space-xs": "0.25rem" }, fontFamily: { "title-lg": ["Inter"], "headline-sm": ["Inter"], "headline-lg-mobile": ["Inter"], "headline-lg": ["Inter"], "body-lg": ["Inter"], "display-mobile": ["Inter"], "body-md": ["Inter"], "caption": ["Inter"], "body-sm": ["Inter"], "title-md": ["Inter"], "headline-md": ["Inter"], "label-lg": ["Inter"], "label-md": ["Inter"], "display": ["Inter"] }, fontSize: { "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "display-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf8ff;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Vidya Pragati Setu Emblem" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1UMxPY7rba52Qdathw8K64C2QGwbSJsOCWAHbKQr0mnnNjmUsnSIkPe3m9LOOYzPfIH0qd_HR6z9hJ5NrMW-JPCsobB3wvD6D4ZskMO3lQy5m8OgH3_DyuVUPJppWCCFTXYzv4dKdxyqfbw-Js3GwFNuEJTr8GhzJaK3QwL581-faCkASyQWz4MHkVYkhSECu0EwR913WZ9oTdA97zMJU8fUKHHE_zXEWxi9ix7of1h"/><div class="flex flex-col min-w-0"><span class="font-label-lg text-label-lg text-primary leading-tight truncate">વિદ્યા પ્રગતિ સેતુ</span><span class="font-caption text-caption text-on-surface-variant truncate">Vidya Pragati Setu</span></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Switch Language" class="min-h-[44px] px-space-sm flex items-center gap-space-xs bg-surface-container text-primary rounded-full hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">translate</span><span class="font-label-md text-label-md font-semibold">ગુજ / EN</span></button><button aria-label="Notifications" class="relative w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface rounded-full transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2 right-2 w-4 h-4 bg-error text-on-error font-caption text-[10px] font-bold rounded-full flex items-center justify-center ring-2 ring-surface">3</span></button><img alt="Profile" class="w-8 h-8 rounded-full object-cover shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhHjaNha8cBV2hMbgSL1soVKaRyD_I-8IllsKC_pFLgKJ1ofHvfnklEYgNlR6M7FvbfQBsegn6aUVjm35fCpMrwpzf5yWA3pxASgfdJtDCiVHMI0HIuk7ZMr2v-xZa1DmtJ4mi0bUraZ0cou-3rdX_H2w3FCEHXu-e8gI7MiZ4fPScdwJIiIiZrBd6TNu2i0UqcFGs-fUBpyVG0kVY7BUPNYojpM-2qv6uoihdT6k"/></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface max-w-[390px] mx-auto min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Navigation & Header -->
+<div class="px-gutter-mobile py-space-sm bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-space-sm mb-space-xs">
+<button aria-label="પાછા જાઓ" class="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-high text-primary flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label-md text-label-md text-secondary font-bold">સરસ્વતી સાધના યોજના</span>
+<span class="text-outline-variant text-[10px]">•</span>
+<span class="font-caption text-caption text-on-surface-variant">સાઇકલ વિતરણ ટ્રેકર</span>
+</div>
+<h1 class="font-title-lg text-title-lg text-on-surface font-bold leading-tight truncate">મારી સાઇકલ | My Bicycle Handover</h1>
+</div>
+</div>
+<p class="font-caption text-caption text-on-surface-variant pl-[48px] leading-snug">
+      વિદ્યાર્થી સાઇકલ વેરિફિકેશન અને સુરક્ષિત OTP ડિલિવરી પોર્ટલ
+    </p>
+</div>
+<div class="px-gutter-mobile py-space-md flex flex-col gap-space-md">
+<!-- Student & Vehicle Identification Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md">
+<div class="flex items-start gap-space-sm">
+<div class="relative shrink-0">
+<img class="w-14 h-14 rounded-full object-cover shadow-sm" data-alt="Warm documentary-style portrait of young schoolgirl Riya Patel wearing navy blue Gujarati government school uniform holding her notebook proudly against bright natural school morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4PNWXTi7TKMpnUBoRUKRy7G72AcgX-VJdp9YSxVl059ePZkl1oFuoU9WEDf42AxpUkOLh9DuGr1bN2jsX5QyPl0GHSgc3F8Lpwi6wGYcutk7m7nA9F7njqShaICIYdxT2LuTnU4ZPrBkGXfwMqtuphFwolA8f5Wm9Ef40f6dNSeu_NFt_LOhaw9RK8WEEcyEVmWCq5Qa3Re9V9uImLU1Gl5LGCqhnfq7duj5Fxqo"/>
+<div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[13px]">pedal_bike</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-title-md text-title-md text-on-surface font-bold truncate">રિયા પટેલ</span>
+<span class="bg-surface-container text-primary font-label-md text-label-md px-2 py-0.5 rounded-full shrink-0">ધોરણ ૯-બી</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant truncate">Riya Patel • Class 9-B</p>
+<div class="flex items-center gap-1 mt-1 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-primary">badge</span>
+<span>CTS ID:</span>
+<span class="font-mono font-semibold text-on-surface">GJ-AND-2026-004512</span>
+</div>
+</div>
+</div>
+<div class="mt-space-sm pt-space-sm bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant">સાઇકલ સીરીયલ નંબર (Cycle Serial):</span>
+<span class="font-label-md text-label-md font-mono bg-primary text-on-primary px-2 py-0.5 rounded shadow-sm">SSB-2026-077432</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0">school</span>
+<span class="font-caption text-caption font-medium truncate">શ્રી સરદાર પટેલ હાઈસ્કૂલ, આણંદ (Shree Sardar Patel High School)</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0">precision_manufacturing</span>
+<span class="font-caption text-caption truncate">Hero Cycles Gujarat Govt Batch #B-2026-0145</span>
+</div>
+</div>
+</div>
+<!-- Main Handover OTP & QR Verification Card (Hero Focus) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-xl overflow-hidden relative">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div>
+<h2 class="font-title-md text-title-md text-on-surface font-bold">સોંપણી OTP અને QR કોડ</h2>
+<p class="font-caption text-caption text-on-surface-variant">Secure Handover Token</p>
+</div>
+</div>
+<span class="bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+          સક્રિય / Active
+        </span>
+</div>
+<!-- Prominent OTP Area -->
+<div class="bg-surface-container-high rounded-xl p-space-md text-center flex flex-col items-center justify-center shadow-inner my-space-xs">
+<span class="font-label-md text-label-md text-on-surface-variant mb-1">આચાર્ય/શિક્ષકને દર્શાવવા માટેનો ૬-અંકનો OTP</span>
+<div class="flex items-center justify-center gap-2 my-1" id="otpDisplay">
+<span class="w-10 h-12 bg-surface-container-lowest text-primary font-display-mobile text-display-mobile font-mono font-bold rounded-lg flex items-center justify-center shadow-sm">4</span>
+<span class="w-10 h-12 bg-surface-container-lowest text-primary font-display-mobile text-display-mobile font-mono font-bold rounded-lg flex items-center justify-center shadow-sm">8</span>
+<span class="w-10 h-12 bg-surface-container-lowest text-primary font-display-mobile text-display-mobile font-mono font-bold rounded-lg flex items-center justify-center shadow-sm">2</span>
+<span class="w-3 text-on-surface-variant font-bold text-center">-</span>
+<span class="w-10 h-12 bg-surface-container-lowest text-primary font-display-mobile text-display-mobile font-mono font-bold rounded-lg flex items-center justify-center shadow-sm">9</span>
+<span class="w-10 h-12 bg-surface-container-lowest text-primary font-display-mobile text-display-mobile font-mono font-bold rounded-lg flex items-center justify-center shadow-sm">1</span>
+<span class="w-10 h-12 bg-surface-container-lowest text-primary font-display-mobile text-display-mobile font-mono font-bold rounded-lg flex items-center justify-center shadow-sm">3</span>
+</div>
+<div class="flex items-center justify-between w-full mt-space-sm pt-space-xs">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">timer</span>
+<span class="font-caption text-caption font-bold" id="otpCountdown">માન્યતા: ૦૮:૪૫ મિનિટ બાકી</span>
+</div>
+<button class="flex items-center gap-1 text-primary hover:text-primary-container font-label-md text-label-md font-semibold transition-transform active:scale-95" id="refreshOtpBtn" type="button">
+<span class="material-symbols-outlined text-[15px]" id="refreshIcon">refresh</span>
+<span>નવો OTP મેળવો</span>
+</button>
+</div>
+</div>
+<!-- QR Code Section -->
+<div class="mt-space-md flex items-center gap-space-md p-space-sm bg-surface-container-low rounded-xl">
+<div class="bg-surface-container-lowest p-2 rounded-lg shadow-sm shrink-0 flex flex-col items-center">
+<!-- Clean Inline Dynamic QR SVG Graphic -->
+<svg class="w-24 h-24 text-on-surface" fill="currentColor" viewbox="0 0 100 100">
+<rect fill="#ffffff" height="100" rx="4" width="100"></rect>
+<!-- Top-left finder -->
+<path d="M6 6h28v28H6z M10 10v20h20V10z M14 14h12v12H14z" fill="#131b2e"></path>
+<!-- Top-right finder -->
+<path d="M66 6h28v28H66z M70 10v20h20V10z M74 14h12v12H74z" fill="#131b2e"></path>
+<!-- Bottom-left finder -->
+<path d="M6 66h28v28H6z M10 70v20h20V70z M14 74h12v12H14z" fill="#131b2e"></path>
+<!-- QR data modules -->
+<rect fill="#131b2e" height="6" width="6" x="38" y="10"></rect>
+<rect fill="#1d4ed8" height="6" width="6" x="50" y="14"></rect>
+<rect fill="#131b2e" height="6" width="6" x="42" y="24"></rect>
+<rect fill="#131b2e" height="6" width="6" x="54" y="24"></rect>
+<rect fill="#131b2e" height="6" width="6" x="10" y="42"></rect>
+<rect fill="#1d4ed8" height="6" width="6" x="22" y="42"></rect>
+<rect fill="#131b2e" height="6" width="6" x="14" y="52"></rect>
+<rect fill="#131b2e" height="6" width="6" x="26" y="52"></rect>
+<rect fill="#fd761a" height="8" width="8" x="40" y="40"></rect>
+<rect fill="#131b2e" height="6" width="6" x="52" y="40"></rect>
+<rect fill="#131b2e" height="6" width="6" x="44" y="52"></rect>
+<rect fill="#1d4ed8" height="8" width="8" x="56" y="50"></rect>
+<rect fill="#131b2e" height="6" width="6" x="70" y="42"></rect>
+<rect fill="#131b2e" height="6" width="6" x="84" y="42"></rect>
+<rect fill="#131b2e" height="6" width="6" x="74" y="52"></rect>
+<rect fill="#131b2e" height="6" width="6" x="82" y="52"></rect>
+<rect fill="#131b2e" height="6" width="6" x="40" y="70"></rect>
+<rect fill="#131b2e" height="6" width="6" x="52" y="68"></rect>
+<rect fill="#131b2e" height="6" width="6" x="42" y="82"></rect>
+<rect fill="#131b2e" height="6" width="6" x="54" y="80"></rect>
+<rect fill="#1d4ed8" height="8" width="8" x="70" y="72"></rect>
+<rect fill="#131b2e" height="6" width="6" x="84" y="72"></rect>
+<rect fill="#131b2e" height="6" width="6" x="72" y="84"></rect>
+<rect fill="#fd761a" height="8" width="8" x="82" y="84"></rect>
+</svg>
+<span class="font-caption text-[9px] text-on-surface-variant font-mono mt-1">SSB-077432</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[16px]">qr_code_scanner</span>
+<span class="font-label-md text-label-md font-bold">શિક્ષક દ્વારા સ્કેન થશે</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1 leading-snug">
+            શાળાના આચાર્યશ્રી અથવા નોડલ શિક્ષક સાઇકલ આપતી વખતે તમારા ફોનમાંથી આ QR કોડ સ્કેન કરશે.
+          </p>
+<div class="mt-2 inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded text-[11px] font-medium text-on-surface">
+<span class="material-symbols-outlined text-[13px] text-secondary">flash_on</span>
+<span>ઇન્સ્ટન્ટ વેરિફિકેશન</span>
+</div>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0 mt-0.5">info</span>
+<p class="font-caption text-caption text-on-surface-variant leading-tight">
+          શાળાના આચાર્ય અથવા નોડલ શિક્ષકને સાઇકલ આપતી વખતે જ આ કોડ બતાવો. (Share only during physical delivery inspection).
+        </p>
+</div>
+</div>
+<!-- Safety Alert Box (Amber Theme) -->
+<div class="bg-on-secondary-fixed text-secondary-fixed rounded-xl p-space-md shadow-md flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[24px] text-secondary-fixed-dim shrink-0">gpp_maybe</span>
+<div class="flex-1">
+<h3 class="font-label-lg text-label-lg font-bold text-on-secondary-container">મહત્વપૂર્ણ સુરક્ષા સૂચના (Security Advisory)</h3>
+<p class="font-caption text-caption text-secondary-fixed-dim mt-1 leading-snug">
+          સાવચેતી: આ OTP માત્ર શાળાના અધિકૃત શિક્ષક સાથે જ શેર કરવો. કોઈ અજાણી વ્યક્તિ, એજન્ટ કે બિન-અધિકૃત સંસ્થા સાથે ક્યારેય શેર કરવો નહીં.
+        </p>
+</div>
+</div>
+<!-- 4-Step Delivery Progress Stepper -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md">
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<h2 class="font-title-md text-title-md text-on-surface font-bold">વિતરણ સ્થિતિ અને ટ્રેકર</h2>
+<p class="font-caption text-caption text-on-surface-variant">4-Stage Handover Progress</p>
+</div>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-md text-label-md px-2 py-0.5 rounded-full font-bold">૩ / ૪ પૂરાં</span>
+</div>
+<!-- Stepper Chain -->
+<div class="relative pl-7 flex flex-col gap-space-md">
+<!-- Connecting Line -->
+<div class="absolute left-3 top-3 bottom-4 w-0.5 bg-surface-container-highest"></div>
+<!-- Step 1 (Completed) -->
+<div class="relative flex flex-col">
+<div class="absolute -left-7 top-0 w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<div class="flex items-baseline justify-between gap-2">
+<span class="font-label-md text-label-md text-on-surface font-bold">વિક્રેતા તરફથી રવાના (Dispatched)</span>
+<span class="font-caption text-[11px] text-on-surface-variant shrink-0">૦૮ ઑક્ટો • 10:30 AM</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">Hero Cycles Gujarat Logistics Hub, વડોદરા</p>
+</div>
+<!-- Step 2 (Completed) -->
+<div class="relative flex flex-col">
+<div class="absolute -left-7 top-0 w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<div class="flex items-baseline justify-between gap-2">
+<span class="font-label-md text-label-md text-on-surface font-bold">શાળામાં પ્રાપ્ત (Received at School)</span>
+<span class="font-caption text-[11px] text-on-surface-variant shrink-0">૧૪ ઑક્ટો • 02:15 PM</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">તપાસણી પૂર્ણ • આચાર્ય ડૉ. કલ્પેશ શાહ દ્વારા વેરિફાઇડ</p>
+</div>
+<!-- Step 3 (Active / Current) -->
+<div class="relative flex flex-col bg-surface-container-low p-space-sm rounded-lg -ml-2 pl-4">
+<div class="absolute -left-5 top-2.5 w-6 h-6 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center ring-4 ring-secondary-fixed shadow-sm">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span>
+</div>
+<div class="flex items-center justify-between gap-1">
+<span class="font-label-md text-label-md text-secondary font-bold">સોંપણી પેન્ડિંગ (Handover Ready)</span>
+<span class="bg-secondary text-on-secondary font-caption text-[10px] px-1.5 py-0.5 rounded font-bold uppercase">આજે</span>
+</div>
+<p class="font-caption text-caption text-on-surface mt-1 font-medium">આજે વિતરણ કાર્યક્રમ • રૂમ નં. ૪, પ્રાર્થના ખંડ</p>
+<div class="mt-1 flex items-center gap-1 font-caption text-[11px] text-secondary">
+<span class="material-symbols-outlined text-[13px]">alarm</span>
+<span>સમય: બપોરે ૦૨:૩૦ થી ૦૪:૦૦ કલાકે</span>
+</div>
+</div>
+<!-- Step 4 (Upcoming) -->
+<div class="relative flex flex-col opacity-75">
+<div class="absolute -left-7 top-0 w-6 h-6 rounded-full bg-surface-container-highest text-outline flex items-center justify-center">
+<span class="font-caption text-caption font-bold">૪</span>
+</div>
+<div class="flex items-baseline justify-between gap-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold">વિદ્યાર્થીને સોંપણી પૂર્ણ (Delivered)</span>
+<span class="font-caption text-[11px] text-on-surface-variant shrink-0">બાકી</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">OTP અને જિઓ-ટેગ ડિજિટલ પુરાવા પછી તાત્કાલિક પૂર્ણ થશે</p>
+</div>
+</div>
+</div>
+<!-- Geo-tagged Photo Proof & Digital Receipt Info Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md">
+<div class="flex items-center gap-space-sm mb-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">add_a_photo</span>
+</div>
+<div>
+<h2 class="font-title-md text-title-md text-on-surface font-bold">જિઓ-ટેગ ડિજિટલ પુરાવો</h2>
+<p class="font-caption text-caption text-on-surface-variant">Geo-tagged Delivery Verification</p>
+</div>
+</div>
+<p class="font-caption text-caption text-on-surface-variant leading-relaxed">
+        સરકારી પારદર્શિતા અંતર્ગત સાઇકલ આપતી વખતે શિક્ષક વિદ્યાર્થી સાથે સાઇકલનો GPS લોકેશન (આણંદ, ગુજરાત) યુક્ત ફોટો લેશે જેથી બોગસ વિતરણ અટકાવી શકાય.
+      </p>
+<!-- Simulated Proof Mock & Action -->
+<div class="mt-space-sm bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-12 h-12 rounded bg-surface-container flex items-center justify-center text-primary shrink-0 relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A sample government stamped digital PDF certificate preview with Gujarat state emblem showing bicycle allocation details and verified QR watermark" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPIRWxCVExdveU5ymcT6VtoW4H1NbJgcF3IxZx8oWZL4GmPtrD8klvaMEMyUBN7Du56xuof4R4mpZ3v2r5abYlp6s6lctA98bD62aZ1VybLRsNKxvN0jvqIbiXm86RdVwpVI_8GXjGwX_g4veipGBfxN2vRCiZfaGIMcvGT7lUpCcgsp61xR2ddHmE2rZkYEPGdfad86z-vxbJ-GTfp3NYwJudTqTgsG7aKVRakGo"/>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[18px]">description</span>
+</div>
+</div>
+<div class="min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-bold block truncate">ડિલિવરી રસીદ નમૂનો</span>
+<span class="font-caption text-[11px] text-on-surface-variant block truncate">Handover Receipt PDF (Preview)</span>
+</div>
+</div>
+<button class="shrink-0 h-9 px-3 bg-surface-container-high hover:bg-surface-container-highest text-primary font-label-md text-label-md font-semibold rounded-lg flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>ડાઉનલોડ</span>
+</button>
+</div>
+</div>
+<!-- Cycle Details Photo & Specifications -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md">
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface">સાઇકલ મોડેલ વિગતો (Bicycle Specs)</h3>
+<span class="font-caption text-caption text-primary font-semibold">મેક ઇન ઇન્ડિયા</span>
+</div>
+<div class="w-full h-36 rounded-lg overflow-hidden relative mb-space-sm shadow-inner">
+<img class="w-full h-full object-cover" data-alt="A brand-new sturdy black and saffron trim 26-inch ladies roadster bicycle designed for rural girl students with front basket and rear carrier, parked in a sunny Indian government school courtyard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU54Blfe1ZllWAV_lcemBMFEyjOlhVkhybjDLS-dO6UH8L4cU2TO3QsVFjIHJfHwUj4jbnGNzC4Ig-_qQYEVQa8XnHIF2vd7rjjaunrlXpyMhf0jAswSfFGCtdtd3k-YEGG0szghW7ptafw_3ZFT44cvZWQ7QDlxLhva1tcq9WiQgpEyKpHgBkNjPzJIMncYKKzz3_DeYJCTV8k9xAwkaiTOQybQKf_jc7TFG5Lwk"/>
+<div class="absolute bottom-2 left-2 bg-on-surface/85 backdrop-blur-sm text-surface font-caption text-[11px] px-2 py-0.5 rounded">
+          Model: Saraswati Roadster 26T (With Basket)
+        </div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-on-surface-variant font-caption text-caption">
+<div class="bg-surface-container-low p-2 rounded flex flex-col">
+<span class="text-[10px] uppercase">વોરંટી / સહાય</span>
+<span class="font-semibold text-on-surface mt-0.5">૧ વર્ષ મફત સર્વિસ</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex flex-col">
+<span class="text-[10px] uppercase">એક્સેસરીઝ</span>
+<span class="font-semibold text-on-surface mt-0.5">ટોપલી, ઘંટડી, લોક કીટ</span>
+</div>
+</div>
+</div>
+<!-- Support & Issue Resolution Section -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-error-container text-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">report_problem</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface">સાઇકલ ક્ષતિગ્રસ્ત છે કે મળી નથી?</h3>
+<p class="font-caption text-caption text-on-surface-variant leading-snug mt-0.5">
+            જો સાઇકલ તૂટેલી હોય કે વિતરણમાં વિલંબ હોય તો ફરિયાદ નોંધાવો.
+          </p>
+</div>
+</div>
+<div class="flex flex-col gap-2 mt-1">
+<button class="w-full h-11 bg-surface-container-lowest hover:bg-surface text-primary font-label-md text-label-md font-bold rounded-lg flex items-center justify-center gap-1 shadow-sm transition-all active:scale-[0.99]" type="button">
+<span>ફરિયાદ નોંધાવો / ટિકિટ ખોલો (Raise Ticket)</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+<a class="h-10 bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md rounded-lg flex items-center justify-center gap-2 transition-colors" href="tel:18002335500">
+<span class="material-symbols-outlined text-[16px] text-primary">call</span>
+<span>ટોલ-ફ્રી હેલ્પલાઇન: <strong>૧૮૦૦ ૨૩૩ ૫૫૦૦</strong> (1800-233-5500)</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function () {
+    // Interactive OTP Refresh Countdown Simulator
+    let timeLeft = 525; // 8 minutes 45 seconds in seconds
+    const countdownEl = document.getElementById('otpCountdown');
+    const refreshBtn = document.getElementById('refreshOtpBtn');
+    const refreshIcon = document.getElementById('refreshIcon');
+    const otpContainer = document.getElementById('otpDisplay');
+
+    function formatGujaratiTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      
+      const toGujaratiNum = (num) => {
+        const gujaratiDigits = ['૦', '૧', '૨', '૩', '૪', '૫', '૬', '૭', '૮', '૯'];
+        return String(num).padStart(2, '0').split('').map(d => gujaratiDigits[d] || d).join('');
+      };
+
+      return 'માન્યતા: ' + toGujaratiNum(mins) + ':' + toGujaratiNum(secs) + ' મિનિટ બાકી';
+    }
+
+    const timer = setInterval(() => {
+      if (timeLeft > 0) {
+        timeLeft--;
+        if (countdownEl) {
+          countdownEl.textContent = formatGujaratiTime(timeLeft);
+        }
+      }
+    }, 1000);
+
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', () => {
+        if (refreshIcon) {
+          refreshIcon.classList.add('animate-spin');
+          setTimeout(() => refreshIcon.classList.remove('animate-spin'), 600);
+        }
+        
+        // Random new 6-digit OTP
+        const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
+        if (otpContainer) {
+          const boxes = otpContainer.querySelectorAll('span:not(.text-on-surface-variant)');
+          if (boxes.length === 6) {
+            newOtp.split('').forEach((digit, i) => {
+              boxes[i].textContent = digit;
+            });
+          }
+        }
+        
+        timeLeft = 600; // Reset to 10 mins
+        if (countdownEl) {
+          countdownEl.textContent = formatGujaratiTime(timeLeft);
+        }
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/95 backdrop-blur-xl shadow-[0_-2px_12px_rgba(15,23,42,0.06)]" data-active-classes="text-primary font-semibold"><div class="max-w-[390px] mx-auto flex items-center justify-around h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="home-dashboard" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-caption text-caption mt-0.5">મુખ્ય પાનું</span></a><a class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="scheme-catalog" href="#"><span class="material-symbols-outlined text-[22px]">school</span><span class="font-caption text-caption mt-0.5">યોજનાઓ</span></a><a class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="apply-form" href="#"><div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_2px_8px_rgba(29,78,216,0.3)]"><span class="material-symbols-outlined text-[20px]">edit_document</span></div><span class="font-caption text-caption mt-0.5">અરજી</span></a><a class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="application-tracker" href="#"><span class="material-symbols-outlined text-[22px]">timeline</span><span class="font-caption text-caption mt-0.5">ટ્રેકર</span></a><a class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="citizen-profile" href="#"><span class="material-symbols-outlined text-[22px]">account_circle</span><span class="font-caption text-caption mt-0.5">પ્રોફાઇલ</span></a></div></nav></body></html>

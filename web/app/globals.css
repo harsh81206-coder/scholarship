@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Material Symbols Outlined (local via @fontsource) ─────────────────── */
+@import "@fontsource/material-symbols-outlined/400.css";
+
+/* ── Custom font-variation-settings for filled icons ───────────────────── */
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+  user-select: none;
+}
+
+/* ── Base layer ─────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --font-inter: "Inter", sans-serif;
+    --font-noto-gujarati: "Noto Sans Gujarati", sans-serif;
+  }
+
+  html {
+    @apply bg-surface text-on-surface antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-body-md;
+  }
+
+  /* Focus rings — WCAG AA compliant */
+  :focus-visible {
+    outline: 3px solid #1D4ED8;
+    outline-offset: 2px;
+  }
+
+  /* Gujarati text gets Noto Sans Gujarati */
+  :lang(gu) {
+    font-family: var(--font-noto-gujarati), system-ui, sans-serif;
+    line-height: 1.7; /* Extra line-height for matras */
+  }
+}
+
+/* ── Component layer ────────────────────────────────────────────────────── */
+@layer components {
+  /* Cards */
+  .card {
+    @apply bg-surface-container-lowest rounded-xl border border-outline-variant shadow-level-1;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply h-11 px-5 rounded bg-primary text-on-primary text-label-lg
+           hover:bg-primary-container transition-colors focus-visible:ring-2 focus-visible:ring-primary;
+  }
+
+  /* Saffron CTA button */
+  .btn-cta {
+    @apply h-11 px-5 rounded bg-secondary text-on-secondary text-label-lg
+           hover:opacity-90 transition-opacity;
+  }
+
+  /* Outline / secondary button */
+  .btn-outline {
+    @apply h-11 px-5 rounded bg-surface-container-lowest border border-outline-variant
+           text-primary text-label-lg hover:bg-surface-container-low transition-colors;
+  }
+
+  /* Destructive button */
+  .btn-danger {
+    @apply h-11 px-5 rounded bg-danger text-on-danger text-label-lg
+           hover:opacity-90 transition-opacity;
+  }
+
+  /* Status chips */
+  .chip {
+    @apply inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-label-md border;
+  }
+  .chip-approved {
+    @apply chip bg-chip-approved-bg text-chip-approved-text border-chip-approved-border;
+  }
+  .chip-pending {
+    @apply chip bg-chip-pending-bg text-chip-pending-text border-chip-pending-border;
+  }
+  .chip-rejected {
+    @apply chip bg-chip-rejected-bg text-chip-rejected-text border-chip-rejected-border;
+  }
+  .chip-inprogress {
+    @apply chip bg-chip-inprogress-bg text-chip-inprogress-text border-chip-inprogress-border;
+  }
+
+  /* Form input */
+  .input {
+    @apply h-11 w-full rounded border border-outline bg-surface-container-lowest px-3
+           text-body-md text-on-surface placeholder:text-on-surface-variant
+           focus:outline-none focus:border-primary focus:shadow-focus transition-shadow;
+  }
+
+  /* Page container */
+  .page-container {
+    @apply max-w-container mx-auto px-gutter;
+  }
+}
+
+/* ── Utility layer ──────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Smooth scroll anchor offset for sticky headers */
+  .scroll-mt-topbar {
+    scroll-margin-top: 4rem;
+  }
+
+  /* Mobile-safe bottom padding for bottom nav */
+  .pb-safe {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 4rem);
+  }
+}
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px) translateX(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.25s ease-out forwards;
+}
+

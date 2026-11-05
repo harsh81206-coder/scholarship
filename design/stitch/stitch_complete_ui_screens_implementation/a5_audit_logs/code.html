@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+
+<html lang="gu"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-high":"#e2e7ff","on-tertiary-fixed":"#00164e","secondary-container":"#fd761a","surface-container-lowest":"#ffffff","primary-container":"#1d4ed8","on-tertiary":"#ffffff","surface":"#faf8ff","on-primary-fixed-variant":"#0039b5","secondary-fixed-dim":"#ffb690","on-secondary-container":"#5c2400","surface-bright":"#faf8ff","primary-fixed":"#dce1ff","on-secondary":"#ffffff","inverse-on-surface":"#eef0ff","surface-container-highest":"#dae2fd","on-secondary-fixed":"#341100","on-tertiary-fixed-variant":"#264191","error-container":"#ffdad6","inverse-surface":"#283044","inverse-primary":"#b7c4ff","on-surface":"#131b2e","surface-variant":"#dae2fd","outline":"#747686","surface-container-low":"#f2f3ff","surface-container":"#eaedff","on-surface-variant":"#434655","tertiary":"#233f8f","on-error-container":"#93000a","primary-fixed-dim":"#b7c4ff","error":"#ba1a1a","on-primary":"#ffffff","on-background":"#131b2e","on-primary-container":"#cad3ff","tertiary-fixed-dim":"#b6c4ff","surface-tint":"#2151da","secondary":"#9d4300","primary":"#0037b0","surface-dim":"#d2d9f4","on-secondary-fixed-variant":"#783200","tertiary-container":"#3e57a8","tertiary-fixed":"#dce1ff","on-tertiary-container":"#c9d3ff","background":"#faf8ff","on-primary-fixed":"#001551","secondary-fixed":"#ffdbca","outline-variant":"#c4c5d7","on-error":"#ffffff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","margin-mobile":"1rem","gutter":"1.5rem","gutter-mobile":"1rem","margin":"2rem","space-xl":"2rem","space-md":"1rem","space-lg":"1.5rem","space-xs":"0.25rem"},"fontFamily":{"title-lg":["Inter"],"body-lg":["Inter"],"display-mobile":["Inter"],"caption":["Inter"],"title-md":["Inter"],"label-lg":["Inter"],"headline-md":["Inter"],"label-md":["Inter"],"body-md":["Inter"],"body-sm":["Inter"],"headline-lg-mobile":["Inter"],"display":["Inter"],"headline-lg":["Inter"],"headline-sm":["Inter"]},"fontSize":{"title-lg":["18px",{"lineHeight":"26px","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"display-mobile":["30px",{"lineHeight":"38px","letterSpacing":"-0.01em","fontWeight":"700"}],"caption":["12px",{"lineHeight":"16px","fontWeight":"400"}],"title-md":["16px",{"lineHeight":"24px","fontWeight":"600"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"display":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-[260px] bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-md flex items-center gap-space-sm bg-surface-container-low"><div class="w-9 h-9 rounded bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm">V</div><div class="flex flex-col"><span class="font-title-md text-title-md text-primary leading-tight">વિદ્યા પ્રગતિ સેતુ</span><span class="font-caption text-caption text-on-surface-variant leading-tight">State Command Center</span></div></div><div class="px-space-md py-space-sm"><span class="font-caption text-caption uppercase text-outline tracking-wider font-semibold">રાજ્ય મોનિટરિંગ (State Command)</span></div><nav class="flex flex-col px-space-sm gap-space-xs" data-active-classes="bg-primary-container text-on-primary font-bold rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="overview-analytics" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span>રાજ્ય એનાલિટિક્સ</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="scheme-rule-builder" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span>યોજના નિયમ બિલ્ડર</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="fund-dbt-reconciliation" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>ફંડ ટ્રેકર અને PFMS</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="fraud-anomaly-monitor" href="#"><span class="material-symbols-outlined text-[20px]">security</span><span>છેતરપિંડી અને વિસંગતતા</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="audit-trail-logs" href="#"><span class="material-symbols-outlined text-[20px]">history_edu</span><span>ઓડિટ લૉગ્સ</span></a></nav><div class="px-space-md pt-space-md pb-space-sm"><span class="font-caption text-caption uppercase text-outline tracking-wider font-semibold">જિલ્લા વહીવટ (District Oversight)</span></div><nav class="flex flex-col px-space-sm gap-space-xs" data-active-classes="bg-primary-container text-on-primary font-bold rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="districts-performance" href="#"><span class="material-symbols-outlined text-[20px]">location_city</span><span>33 જિલ્લા રેન્કિંગ</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="dropout-prevention" href="#"><span class="material-symbols-outlined text-[20px]">school</span><span>ડ્રોપઆઉટ મોનિટરિંગ</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="cycle-distribution" href="#"><span class="material-symbols-outlined text-[20px]">pedal_bike</span><span>સાયકલ વિતરણ</span></a></nav></div><div class="p-space-md bg-surface-container-low flex flex-col gap-space-sm"><div class="flex items-center justify-between text-on-surface-variant"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px] text-tertiary">call</span><span class="font-caption text-caption font-semibold">1800-233-5500</span></div><span class="font-caption text-caption bg-surface-container-highest px-space-xs py-0.5 rounded text-on-surface">Toll-Free</span></div><div class="flex items-center justify-between py-1 px-space-xs rounded bg-surface-container-lowest"><span class="font-caption text-caption text-on-surface-variant">NIC State Data Centre</span><span class="w-2 h-2 rounded-full bg-secondary-container"></span></div><a class="flex items-center justify-center gap-space-xs py-2 rounded-lg bg-surface-container-high text-error hover:bg-error-container hover:text-on-error-container font-label-md text-label-md transition-colors" data-path="login" href="#"><span class="material-symbols-outlined text-[18px]">logout</span><span>લૉગ આઉટ (Logout)</span></a></div></aside><div class="pl-[260px]"><header class="fixed top-0 left-[260px] right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md min-w-[320px]"><div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary font-headline-sm text-headline-sm"><span class="material-symbols-outlined text-primary text-[22px]">assured_workload</span></div><div class="flex flex-col"><span class="font-caption text-caption text-secondary font-semibold">ગુજરાત સરકાર | શિક્ષણ વિભાગ</span><span class="font-label-lg text-label-lg text-primary truncate max-w-[300px]">રાજ્ય કમાન્ડ એન્ડ એનાલિટિક્સ સેન્ટર</span></div></div><div class="flex-1 max-w-md"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">search</span><input class="w-full h-10 pl-10 pr-4 rounded-lg bg-surface-container-low text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Search 33 Districts, Schools, Schemes..." type="text"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container-low rounded-lg p-0.5"><button class="px-2 py-1 text-on-surface font-label-md text-label-md rounded font-semibold">ગુજરાતી</button><button class="px-2 py-1 text-on-surface-variant hover:text-on-surface font-label-md text-label-md rounded">हिन्दी</button><button class="px-2 py-1 text-on-surface-variant hover:text-on-surface font-label-md text-label-md rounded">English</button></div><div class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-container-high text-on-surface"><span class="material-symbols-outlined text-[18px] text-primary">calendar_today</span><span class="font-label-md text-label-md font-semibold">AY 2025-26 (લાઇવ)</span></div><div class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span><span class="font-caption text-caption text-on-surface font-semibold">State Sync</span></div><div class="relative"><button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span></button><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></div><div class="flex items-center gap-space-sm pl-space-sm"><div class="flex flex-col text-right hidden xl:flex"><span class="font-label-md text-label-md font-semibold text-on-surface leading-tight">ડૉ. વિનોદ આર. રાવ, IAS</span><span class="font-caption text-caption text-on-surface-variant leading-tight">અગ્ર સચિવ, શિક્ષણ વિભાગ</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full gap-space-lg">
+<!-- 1. Header & Command Action Bar -->
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md bg-surface-container-lowest p-space-lg rounded-xl shadow-sm">
+<div class="flex flex-col gap-space-xs">
+<nav class="flex items-center gap-2 font-caption text-caption text-outline">
+<span class="hover:text-primary transition-colors cursor-pointer">શિક્ષણ વિભાગ</span>
+<span>›</span>
+<span class="hover:text-primary transition-colors cursor-pointer">રાજ્ય કમાન્ડ એન્ડ એનાલિટિક્સ સેન્ટર</span>
+<span>›</span>
+<span class="text-primary font-semibold">ઓડિટ લૉગ્સ અને ક્રિપ્ટોગ્રાફિક ટ્રેઇલ (GR: AUDIT/CAG/2026/03)</span>
+</nav>
+<div class="flex flex-wrap items-center gap-space-sm pt-1">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">સંપૂર્ણ ઓડિટ ટ્રેઇલ અને ક્રિપ્ટોગ્રાફિક સુરક્ષા</h1>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">lock</span>
+          બ્લોકચેન-ગ્રેડ ઇન્ટિગ્રિટી ચેઇન v2.4 (Verified Active)
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-3xl">
+        CAG માર્ગદર્શિકા અને RTI અધિનિયમ ૨૦૦૫ હેઠળ તમામ વહીવટી, નીતિગત અને DBT નિર્ણયોની અપરિવર્તનીય (Immutable) ડિજિટલ સાબિતી.
+      </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high font-label-lg text-label-lg transition-colors shadow-sm" id="verifyChainBtn">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>ઇન્ટિગ્રિટી ચેઇન ચકાસો</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-lg text-label-lg transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">file_download</span>
+<span>RTI / CAG એક્સપોર્ટ (.CSV / Signed PDF)</span>
+</button>
+</div>
+</div>
+<!-- 2. Security & Audit KPI Strip (5 Bento Metric Cards) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant font-semibold">કુલ ઓડિટેડ ઇવેન્ટ્સ</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">timeline</span>
+</div>
+</div>
+<div class="pt-3">
+<div class="font-headline-md text-headline-md text-on-surface tracking-tight">૨૪,૧૮,૫૪૦</div>
+<div class="flex items-center gap-1 mt-1 font-caption text-caption text-emerald-700">
+<span class="material-symbols-outlined text-[15px]">trending_up</span>
+<span class="font-semibold">+૧,૪૨૦ આજે લાઇવ રેકોર્ડ્ડ</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant font-semibold">ચેઇન અખંડિતતા સ્થિતિ</span>
+<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+</div>
+<div class="pt-3">
+<div class="font-headline-md text-headline-md text-on-surface tracking-tight">૧૦૦% અખંડિત</div>
+<div class="flex items-center gap-1.5 mt-1 font-caption text-caption">
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+<span class="text-emerald-700 font-semibold">Tamper-Proof ✓ Verified</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant font-semibold">વહીવટી નિર્ણયો</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">manage_accounts</span>
+</div>
+</div>
+<div class="pt-3">
+<div class="font-headline-md text-headline-md text-on-surface tracking-tight">૧૨,૮૪૫</div>
+<span class="font-caption text-caption text-on-surface-variant mt-1 block">યોજના નીતિ &amp; DBT મંજૂરીઓ</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant font-semibold">સિસ્ટમ અને સુરક્ષા એલર્ટ્સ</span>
+<div class="w-8 h-8 rounded-lg bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">gpp_maybe</span>
+</div>
+</div>
+<div class="pt-3">
+<div class="font-headline-md text-headline-md text-error tracking-tight">૩,૮૧૨</div>
+<span class="font-caption text-caption text-on-surface-variant mt-1 block">ફ્રોડ બ્લોક &amp; IP ડિટેક્શન</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant font-semibold">છેલ્લો ઓડિટ સિંક</span>
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">tag</span>
+</div>
+</div>
+<div class="pt-3">
+<div class="font-headline-md text-headline-md text-on-surface tracking-tight">૧૪ મિ. પહેલાં</div>
+<div class="flex items-center gap-1 font-caption text-caption text-outline mt-1 font-mono">
+<span>બ્લોક #૮૪,૯૨૧ (SHA-256)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. Filter & Search Controls Bar -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-center">
+<!-- Search Input -->
+<div class="md:col-span-4 relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">search</span>
+<input class="w-full h-11 pl-10 pr-3 rounded-lg bg-surface text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-lowest shadow-sm" placeholder="ઇવેન્ટ ID, અધિકારીનું નામ, CTS ID અથવા IP સરનામું શોધો..." type="text"/>
+</div>
+<!-- Dropdown 1: Role -->
+<div class="md:col-span-2">
+<select class="w-full h-11 px-3 rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none shadow-sm cursor-pointer">
+<option value="all">ભૂમિકા: તમામ ભૂમિકાઓ</option>
+<option value="state_admin">State Admin (સચિવાલય)</option>
+<option value="deo">DEO Office (જિલ્લા)</option>
+<option value="principal">School Principal (શાળા)</option>
+<option value="system">System / AI Service</option>
+</select>
+</div>
+<!-- Dropdown 2: Action Type -->
+<div class="md:col-span-2">
+<select class="w-full h-11 px-3 rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none shadow-sm cursor-pointer">
+<option value="all">ક્રિયા પ્રકાર: તમામ ક્રિયાઓ</option>
+<option value="scheme_rule">Scheme Rule Modified</option>
+<option value="dbt">DBT Initiated</option>
+<option value="bulk_approval">Bulk Approved (DSC)</option>
+<option value="fraud_freeze">Fraud Flag Cleared / Frozen</option>
+<option value="login">User Login &amp; Session</option>
+</select>
+</div>
+<!-- Dropdown 3: Entity -->
+<div class="md:col-span-2">
+<select class="w-full h-11 px-3 rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none shadow-sm cursor-pointer">
+<option value="all">એન્ટિટી: તમામ એન્ટિટી</option>
+<option value="dbt_batch">DBT Batch</option>
+<option value="policy">Scheme Policy</option>
+<option value="application">Application</option>
+<option value="session">User Session</option>
+</select>
+</div>
+<!-- Date Range Picker & Reset -->
+<div class="md:col-span-2 flex items-center gap-space-xs">
+<button class="flex-1 h-11 px-2.5 rounded-lg bg-surface hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">calendar_month</span>
+<span class="truncate">૧૯ ફેબ્રુ - ૨૬ ફેબ્રુ ૨૦૨૬</span>
+</button>
+<button class="w-11 h-11 rounded-lg bg-surface hover:bg-surface-container-high text-on-surface-variant flex items-center justify-center shadow-sm" title="ફિલ્ટર રીસેટ કરો">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 4. Main Content Area (Split 65% Main Audit Table, 35% Deep Inspection Panel) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left 65%: Audit Logs Table -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="p-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">database</span>
+<span class="font-title-md text-title-md text-on-surface">લાઇવ ઇવેન્ટ ટ્રાન્ઝેક્શન લોગ્સ</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high font-label-md text-label-md text-primary font-semibold">૨૪,૧૮,૫૪૦ રેકોર્ડ્સ</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-ping"></span>
+<span class="font-caption text-caption text-on-surface-variant">રીયલ-ટાઇમ બ્લોક સમન્વયન</span>
+</div>
+</div>
+<!-- Responsive Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-lowest font-label-md text-label-md text-outline uppercase tracking-wider">
+<th class="py-3 px-4">ટાઈમસ્ટેમ્પ</th>
+<th class="py-3 px-4">અભિનેતા અને ભૂમિકા</th>
+<th class="py-3 px-4">ક્રિયા અને વિગત</th>
+<th class="py-3 px-4">ટાર્ગેટ એન્ટિટી</th>
+<th class="py-3 px-4">IP અને સ્થાન</th>
+<th class="py-3 px-4">SHA-256 હેશ</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface">
+<!-- Row 1: Selected Row -->
+<tr class="bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer relative" id="row-selected">
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-primary">૨૬ ફેબ્રુ ૨૦૨૬</span>
+<span class="font-caption text-caption text-outline">૧૧:૪૫:૧૮ AM IST</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold text-xs">VR</div>
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">ડૉ. વિનોદ રાવ, IAS</span>
+<span class="font-caption text-caption text-primary font-semibold">State Admin (સચિવ)</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm max-w-xs">
+<div class="flex flex-col">
+<span class="font-semibold text-secondary">યોજના નીતિ સંશોધન</span>
+<span class="text-on-surface-variant font-caption text-caption truncate" title="નમો લક્ષ્મી યોજનામાં આવક મર્યાદા ₹ ૫ લાખથી વધારી ₹ ૬ લાખ કરી">નમો લક્ષ્મી યોજનામાં આવક મર્યાદા ₹ ૫L થી ₹ ૬L કરી</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm font-mono whitespace-nowrap">
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-caption text-primary">SCH-NL-2026-RULE</span>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col font-caption text-caption">
+<span class="font-mono text-on-surface">10.42.0.12</span>
+<span class="text-outline">GSWAN ગાંધીનગર</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-caption text-caption font-mono">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>e3b0c442...89a1</span>
+</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">૨૬ ફેબ્રુ ૨૦૨૬</span>
+<span class="font-caption text-caption text-outline">૧૧:૧૪:૦૨ AM IST</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold text-xs">PF</div>
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">PFMS પેમેન્ટ ગેટવે</span>
+<span class="font-caption text-caption text-outline">Automated API Service</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm max-w-xs">
+<div class="flex flex-col">
+<span class="font-semibold text-primary">DBT બેચ ડિસ્પેચ (Batch Initiated)</span>
+<span class="text-on-surface-variant font-caption text-caption truncate" title="₹ ૨૭.૭૧ કરોડ નમો લક્ષ્મી બેચ ૩ રવાના">₹ ૨૭.૭૧ કરોડ નમો લક્ષ્મી બેચ ૩</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm font-mono whitespace-nowrap">
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-caption text-on-surface">PFMS-GJ-2026-B8841</span>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col font-caption text-caption">
+<span class="font-mono text-on-surface">172.16.8.90</span>
+<span class="text-outline">PFMS Gateway New Delhi</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-caption text-caption font-mono">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>a78f21bc...6742</span>
+</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">૨૬ ફેબ્રુ ૨૦૨૬</span>
+<span class="font-caption text-caption text-outline">૧૦:૧૮:૪૫ AM IST</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold text-xs">PT</div>
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">પરેશ ત્રિવેદી</span>
+<span class="font-caption text-caption text-outline">DEO આણંદ જીલ્લો</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm max-w-xs">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">બલ્ક મંજૂરી (DSC Signed)</span>
+<span class="text-on-surface-variant font-caption text-caption truncate" title="૧,૨૪૦ પાસ થયેલ અરજીઓ ડિજિટલ સહી (DSC) સાથે મંજૂર">૧,૨૪૦ પાસ થયેલ અરજીઓ મંજૂર</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm font-mono whitespace-nowrap">
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-caption text-on-surface">BLK-AND-2026-44</span>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col font-caption text-caption">
+<span class="font-mono text-on-surface">10.58.12.4</span>
+<span class="text-outline">DEO Office Anand</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-caption text-caption font-mono">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>9f2b881a...3109</span>
+</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">૨૬ ફેબ્રુ ૨૦૨૬</span>
+<span class="font-caption text-caption text-outline">૦૯:૫૫:૧૧ AM IST</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-error-container text-on-error-container flex items-center justify-center font-bold text-xs">AI</div>
+<div class="flex flex-col">
+<span class="font-semibold text-error">વિજિલન્સ AI મોનિટર</span>
+<span class="font-caption text-caption text-error">Automated Flag Engine</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm max-w-xs">
+<div class="flex flex-col">
+<span class="font-semibold text-error">ખાતું ફ્રીઝ (Payment Freeze)</span>
+<span class="text-on-surface-variant font-caption text-caption truncate" title="૧૪ વિદ્યાર્થી સિન્ડિકેટ ફ્લેગ FLG-GJ-2026-0891">૧૪ વિદ્યાર્થી સિન્ડિકેટ ફ્લેગ FLG</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm font-mono whitespace-nowrap">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-caption text-caption font-semibold">ACC-SBI-8812</span>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col font-caption text-caption">
+<span class="font-mono text-on-surface">System Internal</span>
+<span class="text-outline">NIC Cloud Gandhinagar</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-caption text-caption font-mono">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>54d9aa21...ef11</span>
+</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">૨૫ ફેબ્રુ ૨૦૨૬</span>
+<span class="font-caption text-caption text-outline">૦૫:૨૦:૪૦ PM IST</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-bold text-xs">KS</div>
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">ડૉ. કલ્પેશ શાહ</span>
+<span class="font-caption text-caption text-outline">આચાર્ય, આણંદ</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm max-w-xs">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">શાળા વેરિફિકેશન પૂર્ણ</span>
+<span class="text-on-surface-variant font-caption text-caption truncate" title="રિયા પટેલ GJ-AND-2026-004512 પ્રમાણિત કરાયેલ">રિયા પટેલ GJ-AND-2026-004512</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm font-mono whitespace-nowrap">
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-caption text-on-surface">APP-2026-004512</span>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<div class="flex flex-col font-caption text-caption">
+<span class="font-mono text-on-surface">117.204.42.10</span>
+<span class="text-outline">શ્રી સરદાર પટેલ હાઇસ્કૂલ</span>
+</div>
+</td>
+<td class="py-3 px-4 font-body-sm text-body-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-caption text-caption font-mono">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>1b94e803...41bb</span>
+</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="p-space-md bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+          દર્શાવેલ <span class="font-semibold text-on-surface">૧ - ૫</span> ના કુલ <span class="font-semibold text-on-surface">૨૪,૧૮,૫૪૦</span> ઓડિટ લોગ્સ
+        </span>
+<div class="flex items-center gap-1.5 font-label-md text-label-md">
+<button class="w-8 h-8 rounded flex items-center justify-center bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container-high transition-colors shadow-sm disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded flex items-center justify-center bg-primary text-on-primary font-bold shadow-sm">૧</button>
+<button class="w-8 h-8 rounded flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors shadow-sm">૨</button>
+<button class="w-8 h-8 rounded flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors shadow-sm">૩</button>
+<span class="px-1 text-outline">...</span>
+<button class="w-8 h-8 rounded flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors shadow-sm">૫,૦૦૦</button>
+<button class="w-8 h-8 rounded flex items-center justify-center bg-surface-container-lowest text-on-surface-variant hover:bg-surface-container-high transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right 35%: Deep Inspection & Cryptographic Diff Drawer -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col gap-space-md p-space-md">
+<!-- Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">find_in_page</span>
+<h2 class="font-title-lg text-title-lg text-on-surface">ઇન્સ્પેક્શન અને ડિફ વિશ્લેષણ</h2>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-caption text-caption text-outline">ઇવેન્ટ આઈડી:</span>
+<span class="font-mono text-xs px-2 py-0.5 rounded bg-surface-container-high text-primary font-bold">LOG-GJ-2026-99412</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-md text-label-md font-bold">
+          CRITICAL POLICY
+        </span>
+</div>
+<!-- Metadata summary grid -->
+<div class="bg-surface-container-low rounded-lg p-3 grid grid-cols-1 gap-2 font-body-sm text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant font-caption text-caption">ડિજિટલ સહી (DSC):</span>
+<span class="font-mono font-semibold text-emerald-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">verified</span> Valid (NIC Sub-CA Class 3)
+          </span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant font-caption text-caption">સુરક્ષિત નેટવર્ક:</span>
+<span class="font-semibold text-on-surface">ગુજરાત સ્ટેટ વાઇડ એરિયા નેટવર્ક (GSWAN)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant font-caption text-caption">સત્તાવાર સહીકર્તા:</span>
+<span class="font-semibold text-primary">ડૉ. વિનોદ રાવ, IAS (Secretariat)</span>
+</div>
+</div>
+<!-- Cryptographic Chain Verification Block -->
+<div class="bg-surface-container rounded-lg p-space-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">account_tree</span> ક્રિપ્ટોગ્રાફિક સાંકળ પુરાવો
+          </span>
+<span class="font-caption text-caption bg-surface-container-lowest px-2 py-0.5 rounded text-emerald-700 font-semibold">Merkle Root: Valid (0 ms)</span>
+</div>
+<div class="space-y-1.5 font-mono text-xs text-on-surface-variant">
+<div class="flex items-center justify-between bg-surface-container-lowest p-2 rounded">
+<span class="text-outline">Previous Hash (Block #84920):</span>
+<span class="text-on-surface font-semibold truncate ml-2">7c9f...31ab</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-lowest p-2 rounded">
+<span class="text-primary font-semibold">Current Hash (Block #84921):</span>
+<span class="text-primary font-bold truncate ml-2">e3b0c442...89a1</span>
+</div>
+</div>
+<div class="flex items-center gap-2 p-2 rounded bg-emerald-50 text-emerald-800 font-caption text-caption leading-tight">
+<span class="material-symbols-outlined text-[18px] text-emerald-700 shrink-0">gavel</span>
+<span>CAG અને RTI ઓડિટ કાયદા ૨૦૦૫ મુજબ આ ડિજિટલ સહી અદાલતમાં માન્ય અફર કાનૂની પુરાવો છે.</span>
+</div>
+</div>
+<!-- Visual JSON Diff Panel (Code viewer style) -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-outline">difference</span> JSON વિગતવાર ફેરફાર (Diff)
+          </span>
+<span class="font-caption text-caption text-outline font-mono">v1.2 → v2.0</span>
+</div>
+<div class="bg-inverse-surface text-inverse-on-surface p-3 rounded-lg font-mono text-xs overflow-x-auto leading-relaxed shadow-inner">
+<div class="text-outline mb-1">// ફેરફાર પહેલાં (Previous State - Red)</div>
+<div class="bg-error/20 text-error-container px-2 py-1 rounded mb-2 flex items-center justify-between">
+<span>- "income_ceiling": 500000,</span>
+<span class="text-outline text-[11px] font-sans">મૂળ સીમા</span>
+</div>
+<div class="bg-error/20 text-error-container px-2 py-1 rounded mb-3 flex items-center justify-between">
+<span>- "target_classes": [9, 10],</span>
+<span class="text-outline text-[11px] font-sans">ફક્ત ધોરણ ૯-૧૦</span>
+</div>
+<div class="text-outline mb-1">// ફેરફાર પછી (New Active State - Green)</div>
+<div class="bg-emerald-950 text-emerald-300 px-2 py-1 rounded mb-2 flex items-center justify-between">
+<span>+ "income_ceiling": 600000,</span>
+<span class="text-emerald-400 text-[11px] font-sans">+ ₹ 1,00,000 વધારો</span>
+</div>
+<div class="bg-emerald-950 text-emerald-300 px-2 py-1 rounded flex items-center justify-between">
+<span>+ "target_classes": [9, 10, 11, 12]</span>
+<span class="text-emerald-400 text-[11px] font-sans">ધોરણ ૧૧-૧૨ વિસ્તરણ</span>
+</div>
+</div>
+</div>
+<!-- Security Actions -->
+<div class="flex flex-col gap-2 pt-2">
+<button class="w-full py-2.5 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+<span>ડિજિટલી સાઇન્ડ ઓડિટ સર્ટિફિકેટ (.p7b)</span>
+</button>
+<button class="w-full py-2.5 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">content_paste_go</span>
+<span>RTI ક્વેરી સંદર્ભ નંબર જનરેટ કરો</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 5. Bottom Integrity Verification Banner -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]">lock_clock</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface">WORM (Write Once Read Many) સિસ્ટમ અખંડિતતા ગેરંટી</span>
+<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-label-md text-label-md font-bold">100% Immutable</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-4xl">
+          આ તમામ લૉગ્સ WORM સ્ટોરેજ અને નેશનલ ઇન્ફોર્મેટિક્સ સેન્ટર (NIC) સિક્યોર્ડ તિજોરીમાં એનક્રિપ્ટેડ છે. કોઈપણ ડેટાબેઝ એડમિનિસ્ટ્રેટર કે બાહ્ય યુઝર દ્વારા આ રેકોર્ડ્સમાં ફેરફાર કે ડિલીટ કરવું અશક્ય છે.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-4 shrink-0">
+<div class="flex flex-col text-right">
+<span class="font-caption text-caption text-outline">સ્ટેટ ઓડિટ સુપરવાઇઝર</span>
+<span class="font-label-md text-label-md font-bold text-on-surface">NIC / CAG સેલ ગુજરાત</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Inline JavaScript for Table Interaction -->
+<script>
+  (function() {
+    const rows = document.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+      row.addEventListener('click', function() {
+        rows.forEach(r => {
+          r.classList.remove('bg-primary/5', 'bg-primary/10');
+          const tdTime = r.querySelector('td:first-child span.font-semibold');
+          if (tdTime) {
+            tdTime.classList.remove('text-primary');
+            tdTime.classList.add('text-on-surface');
+          }
+        });
+        this.classList.add('bg-primary/5');
+        const activeTime = this.querySelector('td:first-child span.font-semibold');
+        if (activeTime) {
+          activeTime.classList.remove('text-on-surface');
+          activeTime.classList.add('text-primary');
+        }
+      });
+    });
+
+    const verifyBtn = document.getElementById('verifyChainBtn');
+    if (verifyBtn) {
+      verifyBtn.addEventListener('click', function() {
+        const originalText = this.innerHTML;
+        this.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>ચકાસણી ચાલુ છે...</span>';
+        setTimeout(() => {
+          this.innerHTML = '<span class="material-symbols-outlined text-[18px] text-emerald-600">task_alt</span><span class="text-emerald-700 font-bold">ચેઇન માન્ય છે (0 ભૂલ)</span>';
+          setTimeout(() => {
+            this.innerHTML = originalText;
+          }, 3000);
+        }, 800);
+      });
+    }
+  })();
+</script></main></div></body></html>

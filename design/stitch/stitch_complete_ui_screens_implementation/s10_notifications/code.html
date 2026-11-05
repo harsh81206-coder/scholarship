@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html lang="gu"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-fixed": "#001551", "surface-container-low": "#f2f3ff", "surface-variant": "#dae2fd", "inverse-on-surface": "#eef0ff", "surface-container-high": "#e2e7ff", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#b6c4ff", "outline-variant": "#c4c5d7", "inverse-primary": "#b7c4ff", "on-background": "#131b2e", "on-primary": "#ffffff", "primary-fixed-dim": "#b7c4ff", "on-secondary": "#ffffff", "surface": "#faf8ff", "on-error": "#ffffff", "surface-dim": "#d2d9f4", "on-primary-container": "#cad3ff", "error-container": "#ffdad6", "on-secondary-container": "#5c2400", "tertiary-fixed": "#dce1ff", "on-error-container": "#93000a", "surface-tint": "#2151da", "on-tertiary-container": "#c9d3ff", "secondary": "#9d4300", "primary-fixed": "#dce1ff", "surface-bright": "#faf8ff", "on-surface": "#131b2e", "on-tertiary": "#ffffff", "on-secondary-fixed-variant": "#783200", "tertiary": "#233f8f", "secondary-fixed-dim": "#ffb690", "primary": "#0037b0", "secondary-fixed": "#ffdbca", "surface-container": "#eaedff", "on-tertiary-fixed": "#00164e", "surface-container-highest": "#dae2fd", "primary-container": "#1d4ed8", "on-surface-variant": "#434655", "secondary-container": "#fd761a", "outline": "#747686", "on-secondary-fixed": "#341100", "error": "#ba1a1a", "tertiary-container": "#3e57a8", "on-tertiary-fixed-variant": "#264191", "background": "#faf8ff", "inverse-surface": "#283044", "on-primary-fixed-variant": "#0039b5" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "gutter-mobile": "1rem", "space-md": "1rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter": "1.5rem", "space-xs": "0.25rem", "margin-mobile": "1rem", "space-lg": "1.5rem", "margin": "2rem" }, fontFamily: { "body-sm": ["Inter"], "caption": ["Inter"], "display": ["Inter"], "title-md": ["Inter"], "headline-md": ["Inter"], "display-mobile": ["Inter"], "headline-lg-mobile": ["Inter"], "label-lg": ["Inter"], "label-md": ["Inter"], "title-lg": ["Inter"], "headline-sm": ["Inter"], "body-md": ["Inter"], "headline-lg": ["Inter"], "body-lg": ["Inter"] }, fontSize: { "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "display-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0"><button aria-label="પાછા જાઓ" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-high transition-colors" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><h1 class="font-title-lg text-title-lg text-on-surface truncate">Notifications</h1></div><div class="flex items-center gap-space-sm shrink-0"><button aria-label="ભાષા બદલો" class="h-9 px-space-sm rounded-full bg-surface-container flex items-center gap-1 text-on-surface hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[16px] text-primary">translate</span><span class="font-label-md text-label-md font-semibold text-primary">ગુ</span><span class="font-caption text-caption text-outline">|</span><span class="font-label-md text-label-md text-outline">EN</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full px-gutter-mobile pb-space-xl">
+<!-- Student Context Bar -->
+<section class="mt-space-md bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-title-md text-title-md text-on-surface truncate">રિયા પટેલ</span>
+<span class="font-caption text-caption px-1.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">ધોરણ ૯-B</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant truncate">CTS: GJ-AND-2026-004512 • શ્રી સરદાર પટેલ હાઇસ્કૂલ, આણંદ</p>
+</div>
+</div>
+<div class="shrink-0">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-semibold">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          સક્રિય
+        </span>
+</div>
+</div>
+</section>
+<!-- Notification Page Header & Actions -->
+<section class="mt-space-lg flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">સૂચનાઓ</h2>
+<span class="font-label-md text-label-md px-2 py-0.5 rounded-full bg-secondary text-on-secondary font-semibold" id="unreadBadge">
+        ૩ નવી (3 New)
+      </span>
+</div>
+<button class="flex items-center gap-1 text-primary hover:text-on-primary-fixed-variant transition-colors py-1 px-1 rounded-lg" id="markAllReadBtn" type="button">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+<span class="font-label-md text-label-md font-semibold">બધી વાંચી ગણેલ</span>
+</button>
+</section>
+<!-- Filter Chips (Horizontally Scrollable) -->
+<section class="mt-space-md -mx-gutter-mobile px-gutter-mobile overflow-x-auto no-scrollbar flex items-center gap-space-xs pb-1">
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center gap-1.5 shadow-sm transition-all" data-filter="all" type="button">
+<span class="material-symbols-outlined text-[16px]">all_inbox</span>
+<span>બધી (All • 7)</span>
+</button>
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container-high transition-all" data-filter="schemes" type="button">
+<span class="material-symbols-outlined text-[16px]">school</span>
+<span>યોજનાઓ (2)</span>
+</button>
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container-high transition-all" data-filter="payments" type="button">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+<span>ચુકવણી (2)</span>
+</button>
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container-high transition-all" data-filter="delivery" type="button">
+<span class="material-symbols-outlined text-[16px]">pedal_bike</span>
+<span>સાયકલ વિતરણ (1)</span>
+</button>
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container-high transition-all" data-filter="alerts" type="button">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span>દસ્તાવેજ એલર્ટ (2)</span>
+</button>
+</section>
+<!-- Group: આજે (Today) -->
+<div class="mt-space-lg group-container" data-group="today">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-on-surface font-bold">આજે (Today)</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-semibold">૩ સૂચનાઓ</span>
+</div>
+<span class="font-caption text-caption text-outline">૧૨ ફેબ્રુઆરી ૨૦૨૬</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Item 1: New Eligibility Alert -->
+<article class="notification-item unread bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all hover:shadow-md relative overflow-hidden" data-category="schemes">
+<div class="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-primary unread-dot"></div>
+<div class="flex items-start gap-space-sm">
+<div class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">auto_awesome</span>
+</div>
+<div class="min-w-0 flex-1 pr-3">
+<div class="flex items-center gap-1.5 mb-1 flex-wrap">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded-full bg-surface-container text-primary font-semibold">મેરિટ યોજના</span>
+<span class="font-caption text-caption text-outline flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">schedule</span> ૧૦ મિ. પહેલાં
+              </span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface leading-snug">નવી યોજના પાત્રતા: મુખ્યમંત્રી જ્ઞાન સાધના મેરિટ સ્કોલરશિપ</h3>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              તમારા ધોરણ ૮ ના પરિણામ (<span class="font-semibold text-on-surface">૭૮%</span>) અને હાજરી (<span class="font-semibold text-on-surface">૮૨%</span>) ના આધારે તમે <span class="font-semibold text-primary">₹ ૧૫,૦૦૦/વર્ષ</span> ની શિષ્યવૃત્તિ માટે પાત્ર બન્યા છો.
+            </p>
+<div class="mt-space-sm flex items-center justify-between gap-space-sm flex-wrap">
+<button class="h-9 px-3.5 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-semibold flex items-center gap-1.5 hover:bg-on-secondary-container transition-colors shadow-sm" type="button">
+<span>વિગત જુઓ &amp; અરજી કરો</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+<button class="mark-single-btn font-caption text-caption text-outline hover:text-on-surface transition-colors py-1" type="button">વાંચેલી ગણો</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Item 2: DBT Bank Transfer -->
+<article class="notification-item unread bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all hover:shadow-md relative overflow-hidden" data-category="payments">
+<div class="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-primary unread-dot"></div>
+<div class="flex items-start gap-space-sm">
+<div class="w-11 h-11 rounded-xl bg-surface-container-high flex items-center justify-center shrink-0 text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined text-[24px]">account_balance</span>
+</div>
+<div class="min-w-0 flex-1 pr-3">
+<div class="flex items-center gap-1.5 mb-1 flex-wrap">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded-full bg-surface-container text-on-tertiary-fixed-variant font-semibold">DBT જમા</span>
+<span class="font-caption text-caption text-outline flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">schedule</span> ૨ કલાક પહેલાં
+              </span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface leading-snug">DBT જમા: ₹ ૨,૫૦૦ નમો લક્ષ્મી યોજના</h3>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              માતા હેતલબેન પટેલના સ્ટેટ બેંક ઓફ ઇન્ડિયા (<span class="font-semibold text-on-surface">SBI ••••4521</span>) ખાતામાં પ્રથમ હપ્તો સફળતાપૂર્વક જમા થયો છે.
+            </p>
+<div class="mt-2 p-2 rounded-lg bg-surface-container-low flex items-center justify-between text-on-surface">
+<span class="font-caption text-caption text-on-surface-variant font-mono">UTR: SBIN2611020045</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded-full bg-surface-container text-primary font-semibold">ચુકવણી પૂર્ણ</span>
+</div>
+<div class="mt-space-sm flex items-center justify-between gap-space-sm flex-wrap">
+<button class="h-9 px-3 rounded-lg bg-surface-container text-primary font-label-md text-label-md font-semibold flex items-center gap-1.5 hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>ડિજિટલ રસીદ (.PDF)</span>
+</button>
+<button class="mark-single-btn font-caption text-caption text-outline hover:text-on-surface transition-colors py-1" type="button">વાંચેલી ગણો</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Item 3: Cycle Handover OTP -->
+<article class="notification-item unread bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all hover:shadow-md relative overflow-hidden" data-category="delivery">
+<div class="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-primary unread-dot"></div>
+<div class="flex items-start gap-space-sm">
+<div class="w-11 h-11 rounded-xl bg-secondary-fixed flex items-center justify-center shrink-0 text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[24px]">pedal_bike</span>
+</div>
+<div class="min-w-0 flex-1 pr-3">
+<div class="flex items-center gap-1.5 mb-1 flex-wrap">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">હસ્તાંતરણ OTP</span>
+<span class="font-caption text-caption text-outline flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">schedule</span> ૪ કલાક પહેલાં
+              </span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface leading-snug">સરસ્વતી સાધના સાયકલ હસ્તાંતરણ OTP જનરેટ થયો</h3>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              શ્રી સરદાર પટેલ હાઇસ્કૂલ ખાતે સાયકલ પ્રાપ્ત થઈ ગઈ છે. તમારા વર્ગ શિક્ષક સમક્ષ રજૂ કરવા માટેનો ગુપ્ત સુરક્ષા કોડ:
+            </p>
+<!-- OTP Display Card -->
+<div class="mt-2 p-2.5 rounded-xl bg-surface-container flex items-center justify-between">
+<div>
+<span class="font-caption text-caption text-outline block">વેરિફિકેશન OTP</span>
+<span class="font-headline-sm text-headline-sm tracking-widest text-primary font-bold">482913</span>
+</div>
+<div class="text-right">
+<span class="font-caption text-caption px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-semibold block">માન્ય: ૧૦ મિનિટ</span>
+<button class="mt-1 font-caption text-caption text-primary hover:underline flex items-center gap-0.5 justify-end" onclick="navigator.clipboard?.writeText('482913')" type="button">
+<span class="material-symbols-outlined text-[12px]">content_copy</span> કોપી કરો
+                </button>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between gap-space-sm flex-wrap">
+<button class="h-9 px-3.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center gap-1.5 hover:bg-on-primary-fixed-variant transition-colors shadow-sm" type="button">
+<span>OTP જુઓ &amp; વિગતો</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+<button class="mark-single-btn font-caption text-caption text-outline hover:text-on-surface transition-colors py-1" type="button">વાંચેલી ગણો</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- Group: અગાઉ (Earlier) -->
+<div class="mt-space-xl group-container" data-group="earlier">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-on-surface font-bold">અગાઉ (Earlier)</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-semibold">૪ સૂચનાઓ</span>
+</div>
+<span class="font-caption text-caption text-outline">પાછલા ૭ દિવસ</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Item 4: School Verification -->
+<article class="notification-item bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all hover:shadow-md" data-category="schemes">
+<div class="flex items-start gap-space-sm">
+<div class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5 mb-1 flex-wrap">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded-full bg-surface-container text-primary font-semibold">શાળા મંજૂરી</span>
+<span class="font-caption text-caption text-outline flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">history</span> ગઈકાલે, સાંજે ૫:૨૦
+              </span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface leading-snug">શાળા વેરિફિકેશન પૂર્ણ થયું</h3>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              આચાર્ય ડૉ. કલ્પેશ શાહ દ્વારા તમારી સાયકલ અને શિષ્યવૃત્તિ અરજી <span class="font-semibold text-on-surface">#APP-2026-00871</span> સફળતાપૂર્વક માન્ય કરવામાં આવી છે.
+            </p>
+</div>
+</div>
+</article>
+<!-- Item 5: Document Expiry Warning -->
+<article class="notification-item bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all hover:shadow-md" data-category="alerts">
+<div class="flex items-start gap-space-sm">
+<div class="w-11 h-11 rounded-xl bg-error-container flex items-center justify-center shrink-0 text-on-error-container">
+<span class="material-symbols-outlined text-[24px]">notification_important</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5 mb-1 flex-wrap">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-semibold">૧૫ દિવસ બાકી</span>
+<span class="font-caption text-caption text-outline flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">history</span> ૨ દિવસ પહેલાં
+              </span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface leading-snug">આવકનો દાખલો: રિન્યુઅલ ચેતવણી</h3>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              તમારો વાર્ષિક આવકનો દાખલો <span class="font-semibold text-error">૧૨ માર્ચ ૨૦૨૬</span> ના રોજ સમાપ્ત થાય છે. ડિજીલોકર દ્વારા નવો દાખલો સિંક કરો જેથી આગામી હપ્તો અટકે નહીં.
+            </p>
+<div class="mt-space-sm flex items-center gap-space-sm">
+<button class="h-9 px-3.5 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold flex items-center gap-1.5 hover:bg-surface-variant transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">folder_shared</span>
+<span>દસ્તાવેજ વૉલ્ટ ખોલો</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Item 6: DEO Bulk Approval -->
+<article class="notification-item bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all hover:shadow-md" data-category="schemes">
+<div class="flex items-start gap-space-sm">
+<div class="w-11 h-11 rounded-xl bg-surface-container-high flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">approval_delegation</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5 mb-1 flex-wrap">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded-full bg-surface-container text-primary font-semibold">જિલ્લા મંજૂરી (DEO)</span>
+<span class="font-caption text-caption text-outline flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">history</span> ૩ દિવસ પહેલાં
+              </span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface leading-snug">DEO આણંદ દ્વારા શિષ્યવૃત્તિ મંજૂર (Sanctioned)</h3>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              જિલ્લા શિક્ષણ અધિકારી દ્વારા <span class="font-semibold text-on-surface">₹ ૧૨,૫૦૦</span> ની શિષ્યવૃત્તિ માટે ડિજિટલ સહી (DSC) સાથે આદેશ જારી કરાયો.
+            </p>
+</div>
+</div>
+</article>
+<!-- Item 7: Bank Seeded Alert -->
+<article class="notification-item bg-surface-container-lowest rounded-xl p-space-md shadow-sm transition-all hover:shadow-md" data-category="payments">
+<div class="flex items-start gap-space-sm">
+<div class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">link</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5 mb-1 flex-wrap">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded-full bg-surface-container text-primary font-semibold">NPCI સીડીંગ</span>
+<span class="font-caption text-caption text-outline flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">history</span> ૫ દિવસ પહેલાં
+              </span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface leading-snug">આધાર-બેંક ખાતું સફળતાપૂર્વક લિંક થયું</h3>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              તમારું આધાર કાર્ડ SBI ખાતા સાથે NPCI મેપર પર ચકાસાયેલ છે. તમામ સરકારી લાભો સીધા ખાતામાં મેળવવા સક્ષમ.
+            </p>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- Empty state for filters (hidden by default) -->
+<div class="hidden mt-space-lg bg-surface-container-lowest rounded-xl p-space-xl text-center shadow-sm" id="filterEmptyState">
+<div class="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center mx-auto text-outline mb-space-sm">
+<span class="material-symbols-outlined text-[28px]">filter_alt_off</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">આ કેટેગરીમાં કોઈ સૂચના નથી</h3>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant">કૃપા કરીને અન્ય કેટેગરી અથવા "બધી" ફિલ્ટર પસંદ કરો.</p>
+<button class="mt-space-md inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold" onclick="document.querySelector('[data-filter=all]').click()" type="button">
+<span>બધી સૂચનાઓ જુઓ</span>
+</button>
+</div>
+<!-- Settings & Alerts Preference Card -->
+<section class="mt-space-xl bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface">SMS અને WhatsApp એલર્ટ સેટિંગ્સ</h4>
+<p class="mt-0.5 font-caption text-caption text-on-surface-variant leading-normal">
+            નોંધાયેલ મોબાઈલ નંબર (+91 98••• ••521) પર નિયમિત અપડેટ મેળવો.
+          </p>
+</div>
+</div>
+<button class="shrink-0 text-primary hover:text-on-primary-fixed-variant font-label-md text-label-md font-semibold flex items-center gap-0.5 pt-1" type="button">
+<span>સેટિંગ્સ</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<!-- Quick Preferences Toggle Row -->
+<div class="mt-space-md pt-space-sm flex items-center justify-between gap-space-sm bg-surface-container-low rounded-lg p-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">chat</span>
+<span class="font-label-md text-label-md text-on-surface">WhatsApp પર તાત્કાલિક સૂચના</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" id="whatsappToggle" type="checkbox"/>
+<div class="w-10 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</section>
+<!-- Legal & DPDP Disclaimer -->
+<footer class="mt-space-lg text-center px-space-sm">
+<div class="inline-flex items-center justify-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span class="font-caption text-caption">ગુજરાત સરકાર • શિક્ષણ વિભાગ (Government of Gujarat)</span>
+</div>
+<p class="mt-1 font-caption text-caption text-outline leading-relaxed max-w-xs mx-auto">
+      ડિજિટલ પર્સનલ ડેટા પ્રોટેક્શન (DPDP) કાયદો, ૨૦૨૩ અંતર્ગત આ ડેટા સુરક્ષિત છે. તમામ નાણાકીય માહિતી NIC અને DBT મિશન સાથે એન્ક્રિપ્ટેડ છે.
+    </p>
+</footer>
+</div>
+<script>
+  (function () {
+    const filterButtons = document.querySelectorAll('.filter-chip');
+    const notificationItems = document.querySelectorAll('.notification-item');
+    const groupContainers = document.querySelectorAll('.group-container');
+    const emptyState = document.getElementById('filterEmptyState');
+    const markAllReadBtn = document.getElementById('markAllReadBtn');
+    const unreadBadge = document.getElementById('unreadBadge');
+    const markSingleButtons = document.querySelectorAll('.mark-single-btn');
+
+    // Filter functionality
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        // Style active state
+        filterButtons.forEach(b => {
+          b.classList.remove('bg-primary', 'text-on-primary', 'font-semibold', 'shadow-sm');
+          b.classList.add('bg-surface-container', 'text-on-surface-variant');
+        });
+        btn.classList.remove('bg-surface-container', 'text-on-surface-variant');
+        btn.classList.add('bg-primary', 'text-on-primary', 'font-semibold', 'shadow-sm');
+
+        let visibleCount = 0;
+
+        notificationItems.forEach(item => {
+          const category = item.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            item.style.display = 'block';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Hide/Show groups if they have no visible items
+        groupContainers.forEach(group => {
+          const visibleInGroup = group.querySelectorAll('.notification-item:not([style*="display: none"])').length;
+          group.style.display = visibleInGroup > 0 ? 'block' : 'none';
+        });
+
+        // Empty state visibility
+        if (visibleCount === 0) {
+          emptyState.classList.remove('hidden');
+        } else {
+          emptyState.classList.add('hidden');
+        }
+      });
+    });
+
+    // Mark single notification as read
+    markSingleButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const item = e.target.closest('.notification-item');
+        if (item && item.classList.contains('unread')) {
+          item.classList.remove('unread');
+          const dot = item.querySelector('.unread-dot');
+          if (dot) dot.remove();
+          e.target.remove();
+          updateUnreadCount();
+        }
+      });
+    });
+
+    // Mark all as read
+    markAllReadBtn.addEventListener('click', () => {
+      document.querySelectorAll('.notification-item.unread').forEach(item => {
+        item.classList.remove('unread');
+        const dot = item.querySelector('.unread-dot');
+        if (dot) dot.remove();
+      });
+      document.querySelectorAll('.mark-single-btn').forEach(btn => btn.remove());
+      updateUnreadCount();
+    });
+
+    function updateUnreadCount() {
+      const remainingUnread = document.querySelectorAll('.notification-item.unread').length;
+      if (remainingUnread === 0) {
+        unreadBadge.textContent = 'બધી વાંચેલી (All Read)';
+        unreadBadge.className = 'font-label-md text-label-md px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-medium';
+        markAllReadBtn.style.opacity = '0.4';
+        markAllReadBtn.disabled = true;
+      } else {
+        const gujaratiNums = ['૦', '૧', '૨', '૩', '૪', '૫', '૬', '૭', '૮', '૯'];
+        const gujaratiStr = String(remainingUnread).split('').map(d => gujaratiNums[Number(d)] || d).join('');
+        unreadBadge.textContent = `${gujaratiStr} નવી (${remainingUnread} New)`;
+      }
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-md text-label-md mt-space-xs">Home</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="schemes" href="#"><span class="material-symbols-outlined text-[22px]">menu_book</span><span class="font-label-md text-label-md mt-space-xs">Schemes</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="apply" href="#"><span class="material-symbols-outlined text-[22px]">edit_document</span><span class="font-label-md text-label-md mt-space-xs">Apply</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="track" href="#"><span class="material-symbols-outlined text-[22px]">timeline</span><span class="font-label-md text-label-md mt-space-xs">Track</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="profile" href="#"><span class="material-symbols-outlined text-[22px]">person</span><span class="font-label-md text-label-md mt-space-xs">Profile</span></a></div></nav></body></html>

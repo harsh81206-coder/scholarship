@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"inverse-primary":"#b7c4ff","on-primary-container":"#cad3ff","inverse-on-surface":"#eef0ff","tertiary-fixed":"#dce1ff","surface-container-lowest":"#ffffff","background":"#faf8ff","primary-fixed-dim":"#b7c4ff","on-primary":"#ffffff","surface":"#faf8ff","outline-variant":"#c4c5d7","primary-container":"#1d4ed8","on-error":"#ffffff","on-surface":"#131b2e","inverse-surface":"#283044","on-tertiary-fixed":"#00164e","secondary-fixed-dim":"#ffb690","tertiary-fixed-dim":"#b6c4ff","outline":"#747686","surface-container-high":"#e2e7ff","surface-container-low":"#f2f3ff","surface-tint":"#2151da","on-tertiary":"#ffffff","surface-container":"#eaedff","on-secondary-container":"#5c2400","error":"#ba1a1a","secondary-container":"#fd761a","tertiary-container":"#3e57a8","on-tertiary-fixed-variant":"#264191","on-primary-fixed":"#001551","on-secondary-fixed-variant":"#783200","primary":"#0037b0","on-primary-fixed-variant":"#0039b5","on-surface-variant":"#434655","on-error-container":"#93000a","surface-bright":"#faf8ff","surface-variant":"#dae2fd","on-background":"#131b2e","secondary-fixed":"#ffdbca","primary-fixed":"#dce1ff","on-secondary":"#ffffff","on-secondary-fixed":"#341100","tertiary":"#233f8f","secondary":"#9d4300","on-tertiary-container":"#c9d3ff","surface-dim":"#d2d9f4","error-container":"#ffdad6","surface-container-highest":"#dae2fd"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-xl":"2rem","space-xs":"0.25rem","space-md":"1rem","space-sm":"0.5rem",margin:"2rem","gutter-mobile":"1rem","space-lg":"1.5rem","margin-mobile":"1rem",gutter:"1.5rem"},fontFamily:{display:["Inter"],"headline-lg-mobile":["Inter"],"headline-lg":["Inter"],caption:["Inter"],"body-lg":["Inter"],"title-lg":["Inter"],"label-md":["Inter"],"body-sm":["Inter"],"body-md":["Inter"],"headline-md":["Inter"],"headline-sm":["Inter"],"label-lg":["Inter"],"title-md":["Inter"],"display-mobile":["Inter"]},fontSize:{display:["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg-mobile":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],caption:["12px",{lineHeight:"16px",fontWeight:"400"}],"body-lg":["18px",{lineHeight:"28px",fontWeight:"400"}],"title-lg":["18px",{lineHeight:"26px",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"600"}],"body-sm":["14px",{lineHeight:"20px",fontWeight:"400"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}],"headline-md":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"600"}],"title-md":["16px",{lineHeight:"24px",fontWeight:"600"}],"display-mobile":["30px",{lineHeight:"38px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 h-16 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-6 flex items-center justify-between gap-4"><div class="flex items-center gap-3 min-w-[320px]"><div class="w-9 h-9 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-[22px]">assured_workload</span></div><div class="flex flex-col"><span class="font-title-md text-title-md text-on-surface leading-tight">વિદ્યા પ્રગતિ સેતુ | Vidya Pragati Setu</span><span class="font-caption text-caption text-on-surface-variant truncate max-w-xs">શ્રી સરદાર પટેલ હાઈસ્કૂલ, આણંદ (UDISE: 24150104502)</span></div></div><div class="hidden lg:flex flex-1 max-w-md items-center"><div class="relative w-full"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span><input class="w-full h-10 pl-9 pr-4 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container-lowest" placeholder="Search student name, Aadhaar, or scheme ID..." type="text"/></div></div><div class="flex items-center gap-3 shrink-0"><button class="h-9 px-3 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[16px]">language</span><span>ગુજરાતી / English</span></button><button class="relative w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">notifications</span><span class="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-error text-on-error font-caption text-[10px] font-bold flex items-center justify-center">5</span></button><div class="flex items-center gap-2 pl-2"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden xl:flex flex-col text-left"><span class="font-label-lg text-label-lg text-on-surface leading-snug">Dr. Kalpesh Shah</span><span class="font-caption text-caption text-on-surface-variant">Principal</span></div></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-[260px] bg-surface-container-lowest z-40 flex flex-col justify-between p-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-1"><div class="px-3 py-2 text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">School Modules</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-lg"><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-title-md text-title-md">Dashboard</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="verification-queue" href="#"><span class="material-symbols-outlined text-[20px]">fact_check</span><span class="font-title-md text-title-md">Verification Queue</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="student-records-and-marks" href="#"><span class="material-symbols-outlined text-[20px]">school</span><span class="font-title-md text-title-md">Student Records &amp; Marks</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cycle-distribution" href="#"><span class="material-symbols-outlined text-[20px]">pedal_bike</span><span class="font-title-md text-title-md">Cycle Distribution</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reports-and-analytics" href="#"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span class="font-title-md text-title-md">Reports &amp; Analytics</span></a><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="support-and-grievances" href="#"><span class="material-symbols-outlined text-[20px]">help</span><span class="font-title-md text-title-md">Support &amp; Grievances</span></a></nav></div><div class="flex flex-col gap-3 pt-4"><div class="flex items-center gap-2 px-3 py-2 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md"><span class="material-symbols-outlined text-primary text-[18px]">verified</span><span>Auto-Verification Active (AI)</span></div><a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-error hover:bg-error-container hover:text-on-error-container transition-colors" data-path="login" href="#"><span class="material-symbols-outlined text-[20px]">logout</span><span class="font-title-md text-title-md">Logout</span></a></div></aside><div class="pl-[260px]"><main class="relative pt-16 bg-surface min-h-[calc(100vh-4rem)] p-gutter"><div class="flex flex-col w-full gap-5 pb-12">
+<!-- Top Navigation & Action Strip -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-lowest p-4 rounded-xl shadow-sm">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md flex-wrap">
+<span class="hover:text-primary cursor-pointer transition-colors">શાળાઓ</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="hover:text-primary cursor-pointer transition-colors">વેરિફિકેશન કતાર (Verification Queue)</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-title-md text-title-md">રિયા પટેલ (APP-2026-008712)</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/15 text-secondary font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[16px] text-secondary">warning</span>
+<span>ધ્યાન જરૂરી / ફ્લેગ થયેલ (Flagged Review • AI Confidence 84%)</span>
+</div>
+<span class="text-on-surface-variant font-caption text-caption hidden sm:inline">UDISE: 24150104502 • આણંદ ગ્રામ્ય</span>
+</div>
+</div>
+<!-- Quick controls & Navigation -->
+<div class="flex items-center gap-2 flex-wrap">
+<div class="hidden xl:flex items-center gap-1.5 bg-surface-container px-3 py-1.5 rounded-lg text-on-surface-variant font-caption text-caption">
+<span class="font-semibold text-on-surface">શોર્ટકટ્સ:</span>
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-primary font-bold shadow-xs">A</kbd> મંજૂર
+        <kbd class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-secondary font-bold shadow-xs">R</kbd> સુધારો
+        <kbd class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-error font-bold shadow-xs">J</kbd> નામંજૂર
+      </div>
+<div class="flex items-center gap-1">
+<button class="flex items-center gap-1 h-9 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+<span class="hidden sm:inline">પાછલી અરજી</span>
+</button>
+<span class="px-2 text-on-surface-variant font-label-md text-label-md">૧૪ / ૮૬</span>
+<button class="flex items-center gap-1 h-9 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors">
+<span class="hidden sm:inline">આગામી અરજી</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main 60 / 40 Split View Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- LEFT COLUMN: 60% Width (col-span-7) Interactive Document Viewer -->
+<div class="lg:col-span-7 flex flex-col gap-4">
+<!-- Document Category Tabs -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary-container text-on-primary font-label-lg text-label-lg shadow-sm whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">description</span>
+<span>આવકનું પ્રમાણપત્ર (Income Cert)</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary text-on-secondary font-caption text-[11px] font-bold">ધ્યાન જરૂરી</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors whitespace-nowrap shadow-xs">
+<span class="material-symbols-outlined text-[18px] text-primary">verified</span>
+<span>જાતિનું પ્રમાણપત્ર (OBC)</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors whitespace-nowrap shadow-xs">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">school</span>
+<span>ધોરણ ૮ માર્કશીટ</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors whitespace-nowrap shadow-xs">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">account_balance</span>
+<span>બેંક પાસબુક (SBI)</span>
+</button>
+</div>
+<!-- Document Frame & Canvas -->
+<div class="flex flex-col bg-surface-container-lowest rounded-2xl shadow-sm overflow-hidden">
+<!-- Viewer Toolbar -->
+<div class="flex items-center justify-between px-4 py-3 bg-surface-container-low">
+<div class="flex items-center gap-3">
+<span class="font-title-md text-title-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">document_scanner</span>
+<span>રાજસ્વ વિભાગ • આવક પ્રમાણપત્ર સ્કેન</span>
+</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-caption text-caption font-mono">
+              REV/AND/2026/049182
+            </span>
+</div>
+<div class="flex items-center gap-2">
+<!-- AI Toggle -->
+<label class="flex items-center gap-2 cursor-pointer bg-surface-container px-3 py-1.5 rounded-lg select-none">
+<span class="material-symbols-outlined text-[18px] text-primary">auto_fix_high</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">AI ઓવરલે સક્રિય</span>
+<input checked="" class="w-4 h-4 accent-primary rounded cursor-pointer" id="aiOverlayToggle" type="checkbox"/>
+</label>
+<div class="h-5 w-px bg-surface-variant"></div>
+<button class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" title="ઝૂમ આઉટ">
+<span class="material-symbols-outlined text-[18px]">zoom_out</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" title="ઝૂમ ઇન">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" title="ફેરવો">
+<span class="material-symbols-outlined text-[18px]">rotate_right</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center hover:opacity-90 transition-opacity" title="PDF ડાઉનલોડ">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Simulated Authentic High-Fidelity Gujarat Govt Certificate -->
+<div class="relative p-6 sm:p-8 bg-surface-bright flex justify-center items-center overflow-auto min-h-[580px]">
+<div class="w-full max-w-[560px] bg-surface-container-lowest p-8 rounded-xl shadow-md relative text-on-surface">
+<!-- Watermark Coat of Arms -->
+<div class="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none select-none">
+<span class="material-symbols-outlined text-[240px]">shield</span>
+</div>
+<!-- Certificate Header -->
+<div class="flex flex-col items-center text-center gap-1.5 pb-4 border-b-2 border-surface-variant">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary mb-1">
+<span class="material-symbols-outlined text-[30px]">account_balance</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-primary tracking-tight">ગુજરાત સરકાર • મહેસૂલ વિભાગ</h2>
+<p class="font-title-md text-title-md text-on-surface-variant">મામલતદાર કચેરી, આણંદ (ગ્રામ્ય)</p>
+<div class="flex items-center justify-between w-full mt-2 font-caption text-caption text-on-surface-variant">
+<span>પ્રમાણપત્ર ક્રમાંક: <strong>REV/AND/2026/049182</strong></span>
+<span>તારીખ: <strong>15/04/2025</strong></span>
+</div>
+</div>
+<!-- Barcode strip mock -->
+<div class="flex items-center justify-between my-3 px-2 py-1 bg-surface-container-low rounded">
+<div class="flex items-center gap-1 text-[11px] font-mono tracking-widest text-on-surface-variant">
+                ||| | ||||| || ||| |||| || ||||| |||| || ||| ||||
+              </div>
+<span class="font-caption text-[11px] text-on-surface-variant font-mono">DIGITAL-BARCODE-VERIFIED</span>
+</div>
+<!-- Body of Certificate with AI Highlights -->
+<div class="space-y-4 my-6 font-body-sm text-body-sm leading-relaxed text-on-surface">
+<p>
+                આથી પ્રમાણપત્ર આપવામાં આવે છે કે અરજદાર શ્રીમતી/કુમારી <strong class="font-semibold text-on-surface">રિયા પટેલ</strong> ના પિતાશ્રી 
+                
+                <!-- Bounding Box 1: Guardian Name (Flagged - Yellow pulse) -->
+<span class="relative inline-block my-1 px-2.5 py-1 rounded-md bg-secondary-fixed/50 ring-2 ring-secondary-container shadow-xs animate-pulse">
+<span class="font-title-md text-title-md font-bold text-on-secondary-container">મનસુખલાલ આર. પટેલ</span>
+<span class="absolute -top-3 -right-2 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-secondary-container text-on-primary font-caption text-[10px] font-bold">
+<span class="material-symbols-outlined text-[12px]">flag</span> ૮૪% મેળ
+                  </span>
+</span>
+                
+                રહેવાસી: મુ.પો. મોગરી, તાલુકો: આણંદ, જીલ્લો: આણંદ ના કાયદેસરના રહેવાસી છે.
+              </p>
+<p>
+                તલાટીશ્રી તેમજ સંબંધિત મહેસૂલી પંચના દસ્તાવેજી ચકાસણી અહેવાલ મુજબ તેઓના કુટુંબની તમામ સાધનોમાંથી થતી વાર્ષિક આવક 
+                
+                <!-- Bounding Box 2: Annual Income (Valid - Green ring) -->
+<span class="relative inline-block my-1 px-3 py-1 rounded-md bg-surface-container-high ring-2 ring-primary text-primary font-bold text-title-md shadow-xs">
+                  ₹ ૯૬,૦૦૦/- (અંકે રૂપિયા છન્નું હજાર પુરા)
+                  <span class="absolute -top-3 -right-3 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-primary text-on-primary font-caption text-[10px]">
+<span class="material-symbols-outlined text-[12px]">check</span> માન્ય
+                  </span>
+</span>
+                
+                છે.
+              </p>
+<p class="text-on-surface-variant font-caption text-caption">
+                આ પ્રમાણપત્ર ઈસ્યુ થયા તારીખથી સતત ૩ (ત્રણ) નાણાકીય વર્ષ એટલે કે તારીખ <strong>૩૧/૦૩/૨૦૨૮</strong> સુધી માન્ય ગણાશે.
+              </p>
+</div>
+<!-- Certificate Footer: Mamlatdar Seal & Digital Sign -->
+<div class="mt-8 pt-4 border-t border-surface-variant flex items-end justify-between">
+<!-- QR Code Mock -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-16 h-16 bg-surface-container-highest rounded-lg p-1.5 flex flex-col justify-between">
+<div class="grid grid-cols-3 gap-0.5 h-full">
+<div class="bg-on-surface rounded-xs"></div>
+<div class="bg-surface"></div>
+<div class="bg-on-surface rounded-xs"></div>
+<div class="bg-surface"></div>
+<div class="bg-on-surface rounded-xs"></div>
+<div class="bg-surface"></div>
+<div class="bg-on-surface rounded-xs"></div>
+<div class="bg-surface"></div>
+<div class="bg-on-surface rounded-xs"></div>
+</div>
+</div>
+<span class="font-caption text-[10px] text-on-surface-variant font-mono">e-SEAL QR</span>
+</div>
+<!-- Digital Signature Stamp -->
+<div class="flex flex-col items-end text-right">
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low text-primary">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<div class="flex flex-col text-left">
+<span class="font-caption text-[11px] font-bold">DIGITALLY SIGNED</span>
+<span class="font-caption text-[10px] text-on-surface-variant">ડી. જે. પરમાર (મામલતદાર, આણંદ)</span>
+</div>
+</div>
+<span class="font-caption text-[10px] text-on-surface-variant mt-1">15-04-2025 14:22:18 IST</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Document Authenticity & Forensic Checks Card -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between pb-2 border-b border-surface-variant/40">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">policy</span>
+<h3 class="font-title-lg text-title-lg text-on-surface">દસ્તાવેજ પ્રમાણીકરણ અને ફોરેન્સિક તપાસ (Forensic Checks)</h3>
+</div>
+<span class="px-3 py-0.5 rounded-full bg-surface-container-high text-primary font-label-md text-label-md font-semibold">
+            ૧૦૦% પ્રામાણિક
+          </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-body-sm font-body-sm">
+<!-- Check 1 -->
+<div class="flex items-start gap-2.5 p-3 rounded-xl bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">verified</span>
+<div>
+<div class="font-title-md text-title-md text-on-surface">ડિજિટલ સહી (Digital Signature)</div>
+<p class="text-on-surface-variant font-caption text-caption">મામલતદાર આણંદ (ગ્રામ્ય) ની અધિકૃત ક્રિપ્ટોગ્રાફિક કી વડે હસ્તાક્ષર થયેલ છે. અમાન્યતા નથી.</p>
+</div>
+</div>
+<!-- Check 2 -->
+<div class="flex items-start gap-2.5 p-3 rounded-xl bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">sync_saved_locally</span>
+<div>
+<div class="font-title-md text-title-md text-on-surface">મહેસૂલ પોર્ટલ API મેળ (Revenue Sync)</div>
+<p class="text-on-surface-variant font-caption text-caption">i-Khedut / e-Dhara રેકોર્ડ #GUJ-REV-849102 સાથે સીધો ઓનલાઈન તાળો મળેલ છે.</p>
+</div>
+</div>
+<!-- Check 3 -->
+<div class="flex items-start gap-2.5 p-3 rounded-xl bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">security</span>
+<div>
+<div class="font-title-md text-title-md text-on-surface">મેટાડેટા વિશ્લેષણ (Tamper Detection)</div>
+<p class="text-on-surface-variant font-caption text-caption">0% વિસંગતતા. પીડીએફ ફાઇલમાં કોઈ ફોટોશોપ કે એડિટિંગ અંશ મળેલ નથી.</p>
+</div>
+</div>
+<!-- Check 4 -->
+<div class="flex items-start gap-2.5 p-3 rounded-xl bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">qr_code_scanner</span>
+<div>
+<div class="font-title-md text-title-md text-on-surface">QR કોડ સ્કેન (Encrypted Payload)</div>
+<p class="text-on-surface-variant font-caption text-caption">ડીકોડેડ ડેટા સર્ટિફિકેટ સિરિયલ નંબર અને નામ સાથે સંપૂર્ણ સુસંગત છે.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: 40% Width (col-span-5) Verification & Decision Desk -->
+<div class="lg:col-span-5 flex flex-col gap-4">
+<!-- Student Profile & Scheme Summary Card -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-4">
+<div class="flex items-start justify-between gap-4">
+<div class="flex items-center gap-3.5">
+<img class="w-16 h-16 rounded-xl object-cover ring-2 ring-primary/20 shrink-0" data-alt="Official high-resolution passport photograph of 14-year-old Gujarati high school girl student Riya Patel wearing neat school uniform badge, neutral serene studio lighting with soft ivory backdrop, high clarity government educational database record photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeNax6hszfAiqYCzbJYMVYH5LzotNrjJ7xDBB-sAnyBpdXvV8F5hTNYahynaXqAy8h3db3WW4tLcRAYDHheNIXLAEFK5C3ATeAZAiz1BgS6dRj1LCM0IkCBoj8Fq39bfhoC_QcaiGeG8i6Zg6oxUQwuM9fkk5rGNlAAtDXigub-gT-6eHZl26jybQ4QbvH39GWwBTHi3YW5tlN4dKt6yNno0yTC2DnpyiuqDT13IE"/>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<h3 class="font-title-lg text-title-lg text-on-surface font-bold truncate">રિયા પટેલ (Riya Patel)</h3>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-caption text-caption font-semibold">વર્ગ ૯-બી</span>
+</div>
+<span class="text-on-surface-variant font-caption text-caption">રોલ નંબર: ૨૮ • જન્મ તારીખ: 12/08/2011</span>
+<span class="text-on-surface-variant font-caption text-caption font-mono">CTS ID: GJ-AND-2026-004512</span>
+</div>
+</div>
+<div class="px-3 py-1 rounded-lg bg-surface-container text-on-surface-variant font-caption text-caption text-right">
+<span>શાળા કોડ:</span>
+<div class="font-bold text-on-surface font-mono">SPH-AND-042</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-caption font-caption bg-surface-container-low p-3 rounded-xl">
+<div>
+<span class="text-on-surface-variant block">માતાનું નામ:</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold">હેતલબેન પટેલ</span>
+</div>
+<div>
+<span class="text-on-surface-variant block">પિતાનું નામ (CTS):</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold">મનસુખભાઈ રણછોડભાઈ પટેલ</span>
+</div>
+</div>
+<!-- Scheme Grant Highlight Banner -->
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-primary text-on-primary">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-on-primary/15 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">savings</span>
+</div>
+<div>
+<span class="font-caption text-caption opacity-90 block">અરજી કરેલ યોજના:</span>
+<span class="font-title-md text-title-md font-bold">નમો લક્ષ્મી યોજના (Namo Lakshmi)</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-caption text-caption opacity-90 block">વાર્ષિક સહાય DBT</span>
+<span class="font-title-lg text-title-lg font-bold">₹ ૧૦,૦૦૦</span>
+</div>
+</div>
+</div>
+<!-- Rule-by-Rule Eligibility Checklist -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between pb-2 border-b border-surface-variant/40">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">checklist</span>
+<h4 class="font-title-md text-title-md text-on-surface">નિયમાનુસાર પાત્રતા ચકાસણી (Eligibility Criteria)</h4>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">૬/૬ શરતો ચકાસાયેલ</span>
+</div>
+<div class="space-y-2.5">
+<!-- Item 1 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low text-body-sm font-body-sm">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0">check_circle</span>
+<span class="truncate">જાતિ / કેટેગરી: <strong>SEBC / OBC</strong> (માન્ય પ્રમાણપત્ર)</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-primary font-caption text-caption font-semibold shrink-0">પાત્ર</span>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low text-body-sm font-body-sm">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0">check_circle</span>
+<span class="truncate">ધોરણ અને લિંગ: <strong>ધોરણ ૯-બી, કન્યા વિદ્યાર્થી</strong></span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-primary font-caption text-caption font-semibold shrink-0">પાત્ર</span>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low text-body-sm font-body-sm">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0">check_circle</span>
+<span class="truncate">શાળાનો પ્રકાર: <strong>સરકારી માન્ય અનુદાનિત હાઈસ્કૂલ</strong></span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-primary font-caption text-caption font-semibold shrink-0">માન્ય</span>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low text-body-sm font-body-sm">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0">check_circle</span>
+<span class="truncate">લઘુત્તમ હાજરી: <strong>૮૨%</strong> (જરૂરી ૮૦% કરતાં વધુ)</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-primary font-caption text-caption font-semibold shrink-0">માન્ય</span>
+</div>
+<!-- Item 5 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low text-body-sm font-body-sm">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0">check_circle</span>
+<span class="truncate">કૌટુંબિક વાર્ષિક આવક: <strong>₹ ૯૬,૦૦૦</strong> (&lt; ₹ ૬,૦૦,૦૦૦)</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-primary font-caption text-caption font-semibold shrink-0">પાત્ર</span>
+</div>
+<!-- Item 6: Flagged Item -->
+<div class="flex flex-col gap-1.5 p-3 rounded-lg bg-secondary-fixed/40 ring-1 ring-secondary-container">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">warning</span>
+<span class="font-title-md text-title-md text-secondary font-bold">પિતાના નામમાં વિસંગતતા (Spelling Divergence)</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-primary font-caption text-caption font-bold">AI મેળ ૮૪%</span>
+</div>
+<div class="text-caption font-caption text-on-surface pl-7 space-y-1">
+<div>• શાળા CTS રજીસ્ટર: <code class="font-bold bg-surface-container-lowest px-1 py-0.5 rounded">મનસુખભાઈ રણછોડભાઈ પટેલ</code></div>
+<div>• મહેસૂલ આવક દાખલો: <code class="font-bold bg-surface-container-lowest px-1 py-0.5 rounded">મનસુખલાલ આર. પટેલ</code></div>
+<p class="text-secondary font-semibold pt-1">
+                આચાર્યશ્રીના વિશેષાધિકાર અંતર્ગત સામાન્ય બોલીભેદ ('ભાઈ' / 'લાલ' અને મધ્યનામ 'આર.') સ્વીકાર્ય ગણી શકાય છે.
+              </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Anti-Fraud & De-duplication Verification Panel -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-3">
+<div class="flex items-center gap-2 pb-2 border-b border-surface-variant/40">
+<span class="material-symbols-outlined text-primary text-[20px]">fingerprint</span>
+<h4 class="font-title-md text-title-md text-on-surface">ડી-ડુપ્લિકેશન અને ફ્રોડ ચકાસણી (Anti-Fraud Check)</h4>
+</div>
+<div class="space-y-2 text-body-sm font-body-sm">
+<div class="flex items-start gap-2.5 p-2 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">account_balance_wallet</span>
+<div>
+<span class="font-semibold text-on-surface">બેંક ખાતા ડુપ્લિકેશન ચેક:</span>
+<p class="font-caption text-caption text-on-surface-variant">રાજ્યના અન્ય કોઈ વિદ્યાર્થી સાથે લિંક નથી (SBI A/C ••••4521 - માતા હેતલબેન પટેલ).</p>
+</div>
+</div>
+<div class="flex items-start gap-2.5 p-2 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">badge</span>
+<div>
+<span class="font-semibold text-on-surface">NPCI આધાર સીડિંગ સ્ટેટસ:</span>
+<p class="font-caption text-caption text-on-surface-variant">માતાના આધાર સાથે NPCI મેપિંગ સક્રિય અને એકમાત્ર નોંધાયેલ છે (Active DBT Bridge).</p>
+</div>
+</div>
+<div class="flex items-start gap-2.5 p-2 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">merge_type</span>
+<div>
+<span class="font-semibold text-on-surface">સમાંતર સ્કીમ અથડામણ (Scheme Clash):</span>
+<p class="font-caption text-caption text-on-surface-variant">સરસ્વતી સાધના કે અન્ય પ્રતિબંધિત DBT સહાય સાથે કોઈ ટકરાવ નથી.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Principal Remarks & AI Suggestion Action -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<label class="font-title-md text-title-md text-on-surface font-semibold flex items-center gap-1.5" for="principalRemark">
+<span class="material-symbols-outlined text-primary text-[18px]">rate_review</span>
+<span>આચાર્યશ્રીની નોંધ અને અભિપ્રાય (Principal Remarks)</span>
+</label>
+<button class="flex items-center gap-1 text-primary hover:text-primary-container font-caption text-caption font-bold" id="insertAiRemarkBtn" type="button">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+<span>AI ભલામણ લાગુ કરો</span>
+</button>
+</div>
+<textarea class="w-full p-3 rounded-xl bg-surface-container-low text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary" id="principalRemark" placeholder="અહીં નિર્ણયનું કારણ અથવા નોંધ લખો..." rows="3"></textarea>
+</div>
+<!-- Sticky Final Decision Action Bar -->
+<div class="sticky bottom-4 z-30 bg-surface-container-lowest/95 backdrop-blur-md p-4 rounded-2xl shadow-lg border-t border-surface-variant/40 flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<!-- Primary Approve Button -->
+<button class="flex-1 h-12 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-sm transition-transform active:scale-[0.98]" id="approveBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">task_alt</span>
+<span>વિશેષાધિકારથી મંજૂર કરો (Approve)</span>
+</button>
+<!-- Request Fix Amber Button -->
+<button class="h-12 px-4 rounded-xl bg-secondary-container/20 hover:bg-secondary-container/30 text-secondary font-label-lg text-label-lg font-bold flex items-center justify-center gap-1.5 transition-colors" id="fixBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">build</span>
+<span class="hidden sm:inline">સુધારો મોકલો</span>
+</button>
+<!-- Reject Red Button -->
+<button class="h-12 px-3 rounded-xl bg-error-container/40 hover:bg-error-container text-error font-label-lg text-label-lg flex items-center justify-center transition-colors" id="rejectBtn" title="અરજી નામંજૂર કરો" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="text-center font-caption text-[11px] text-on-surface-variant">
+          મંજૂર કરવાથી DBT પોર્ટલ પર ₹ 10,000 ની વાર્ષિક હપ્તા મંજૂરી માટે ડેટા જિલ્લા શિક્ષણાધિકારી (DEO) કચેરીને અગ્રેસર થશે.
+        </p>
+</div>
+<!-- Application Audit Trail / Activity Log Accordion -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between cursor-pointer" id="logToggle">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">history</span>
+<span class="font-title-md text-title-md text-on-surface">અરજી સમયરેખા (Audit Trail &amp; Log)</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" id="logIcon">expand_more</span>
+</div>
+<div class="space-y-3 pt-2 border-t border-surface-variant/40 font-caption text-caption text-on-surface-variant" id="logContent">
+<div class="flex items-start gap-2.5">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5 shrink-0"></div>
+<div>
+<div class="font-bold text-on-surface">12 ઓક્ટોબર 2026, 09:30 AM</div>
+<div>AI સ્ક્રુટિની એન્જિને પિતાના નામના તફાવત માટે 84% સ્કોર ફ્લેગ કર્યો.</div>
+</div>
+</div>
+<div class="flex items-start gap-2.5">
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5 shrink-0"></div>
+<div>
+<div class="font-bold text-on-surface">11 ઓક્ટોબર 2026, 04:15 PM</div>
+<div>DigiLocker મારફતે OBC પ્રમાણપત્ર અને આધાર e-KYC સફળતાપૂર્વક મેળવાયું.</div>
+</div>
+</div>
+<div class="flex items-start gap-2.5">
+<div class="w-2 h-2 rounded-full bg-on-surface-variant mt-1.5 shrink-0"></div>
+<div>
+<div class="font-bold text-on-surface">10 ઓક્ટોબર 2026, 02:40 PM</div>
+<div>વિદ્યાર્થી પોર્ટલ પરથી અરજી સબમિટ થઈ (OTP મોન્ટેરિફાઇડ: ••••8912).</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Micro-interactions for Review Workspace
+  (function() {
+    const aiBtn = document.getElementById('insertAiRemarkBtn');
+    const remarkArea = document.getElementById('principalRemark');
+    const approveBtn = document.getElementById('approveBtn');
+    const fixBtn = document.getElementById('fixBtn');
+    const rejectBtn = document.getElementById('rejectBtn');
+    const logToggle = document.getElementById('logToggle');
+    const logContent = document.getElementById('logContent');
+    const logIcon = document.getElementById('logIcon');
+
+    // Pre-fill AI Suggestion
+    if (aiBtn && remarkArea) {
+      aiBtn.addEventListener('click', function() {
+        remarkArea.value = "પિતાના નામમાં સામાન્ય પ્રાદેશિક બોલીભેદ ('ભાઈ' / 'લાલ' તથા 'આર.') છે. આધાર નંબર અને રહેઠાણ સરનામું સમાન હોવાથી આચાર્ય વિવેકબુદ્ધિ અંતર્ગત અરજી મંજૂર કરવામાં આવે છે.";
+        remarkArea.focus();
+      });
+    }
+
+    // Toggle Audit Log
+    if (logToggle && logContent && logIcon) {
+      logToggle.addEventListener('click', function() {
+        const isHidden = logContent.classList.contains('hidden');
+        if (isHidden) {
+          logContent.classList.remove('hidden');
+          logIcon.textContent = 'expand_more';
+        } else {
+          logContent.classList.add('hidden');
+          logIcon.textContent = 'chevron_right';
+        }
+      });
+    }
+
+    // Interactive Button Feedback
+    if (approveBtn) {
+      approveBtn.addEventListener('click', function() {
+        const confirmApprove = confirm("શું તમે રિયા પટેલની નમો લક્ષ્મી યોજના અરજી (APP-2026-008712) વિશેષાધિકારથી મંજૂર કરવા માંગો છો?");
+        if (confirmApprove) {
+          approveBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check_circle</span><span>મંજૂર થયેલ! આગામી અરજી લોડ થાય છે...</span>';
+          approveBtn.classList.replace('bg-primary', 'bg-surface-tint');
+        }
+      });
+    }
+
+    if (fixBtn) {
+      fixBtn.addEventListener('click', function() {
+        prompt("વિદ્યાર્થીને મોકલવા માટે સુધારાની સૂચના દાખલ કરો:", "કૃપા કરીને પિતાનું નામ મેળ બેસતું સોગંદનામું અથવા અપડેટ કરેલ આધાર અપલોડ કરો.");
+      });
+    }
+
+    if (rejectBtn) {
+      rejectBtn.addEventListener('click', function() {
+        prompt("અરજી નામંજૂર કરવાનું સત્તાવાર કારણ દર્શાવો:", "અયોગ્ય દસ્તાવેજ અથવા વિસંગતતા.");
+      });
+    }
+
+    // Keyboard Shortcuts (A: Approve, R: Request Fix, J: Reject)
+    window.addEventListener('keydown', function(e) {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+        return;
+      }
+      if (e.key === 'a' || e.key === 'A') {
+        approveBtn && approveBtn.click();
+      } else if (e.key === 'r' || e.key === 'R') {
+        fixBtn && fixBtn.click();
+      } else if (e.key === 'j' || e.key === 'J') {
+        rejectBtn && rejectBtn.click();
+      }
+    });
+  })();
+</script></main></div></body></html>

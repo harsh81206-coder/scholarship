@@ -1,0 +1,22 @@
+# Archived legacy backend retained for reference; canonical backend is api/.
+/_archive/
+/.git-backups/
+.DS_Store
+
+# Local configuration and databases
+api/.env
+api/*.db
+!api/vps.demo.db
+api/data/
+web/.env.local
+
+# Python and frontend build outputs
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+web/node_modules/
+web/.next/
+web/*.tsbuildinfo
+playwright-report/
+test-results/

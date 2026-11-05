@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container-highest":"#dae2fd","on-tertiary-container":"#c9d3ff","outline":"#747686","primary-fixed":"#dce1ff","tertiary-container":"#3e57a8","surface-container-lowest":"#ffffff","on-primary-container":"#cad3ff","on-primary-fixed":"#001551","on-tertiary":"#ffffff","surface":"#faf8ff","outline-variant":"#c4c5d7","error":"#ba1a1a","surface-variant":"#dae2fd","surface-container":"#eaedff","error-container":"#ffdad6","surface-tint":"#2151da","primary-fixed-dim":"#b7c4ff","inverse-primary":"#b7c4ff","surface-container-low":"#f2f3ff","secondary-fixed-dim":"#ffb690","surface-bright":"#faf8ff","inverse-surface":"#283044","surface-dim":"#d2d9f4","on-secondary-fixed-variant":"#783200","on-secondary":"#ffffff","on-surface-variant":"#434655","on-error-container":"#93000a","on-primary":"#ffffff","primary-container":"#1d4ed8","on-background":"#131b2e","on-surface":"#131b2e","secondary":"#9d4300","surface-container-high":"#e2e7ff","tertiary-fixed-dim":"#b6c4ff","on-secondary-fixed":"#341100","on-tertiary-fixed":"#00164e","on-primary-fixed-variant":"#0039b5","background":"#faf8ff","tertiary":"#233f8f","on-tertiary-fixed-variant":"#264191","on-error":"#ffffff","secondary-fixed":"#ffdbca","secondary-container":"#fd761a","primary":"#0037b0","tertiary-fixed":"#dce1ff","inverse-on-surface":"#eef0ff","on-secondary-container":"#5c2400"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin":"2rem","space-md":"1rem","gutter-mobile":"1rem","space-lg":"1.5rem","space-xl":"2rem","margin-mobile":"1rem","space-xs":"0.25rem","space-sm":"0.5rem","gutter":"1.5rem"},fontFamily:{"body-md":["Inter"],"headline-lg-mobile":["Inter"],"display":["Inter"],"label-lg":["Inter"],"title-md":["Inter"],"headline-lg":["Inter"],"display-mobile":["Inter"],"headline-sm":["Inter"],"headline-md":["Inter"],"title-lg":["Inter"],"body-sm":["Inter"],"label-md":["Inter"],"body-lg":["Inter"],"caption":["Inter"]},fontSize:{"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"display":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"title-md":["16px",{"lineHeight":"24px","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"display-mobile":["30px",{"lineHeight":"38px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"title-lg":["18px",{"lineHeight":"26px","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"caption":["12px",{"lineHeight":"16px","fontWeight":"400"}]}}}};</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-[260px] bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col flex-1 overflow-y-auto"><div class="px-5 py-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[24px]">account_balance</span></div><div class="leading-tight"><p class="font-label-lg text-label-lg text-primary font-bold tracking-tight">ગુજરાત સરકાર</p><p class="font-caption text-caption text-on-surface-variant font-medium">શિક્ષણ વિભાગ</p></div></div></div><div class="px-5 pt-3 pb-2"><p class="font-label-md text-label-md uppercase tracking-wider text-outline font-semibold">DISTRICT MODULES</p></div><nav class="flex-1 px-3 space-y-1" data-active-classes="bg-primary-container text-on-primary font-semibold"><a aria-current="page" class="flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors bg-primary-container text-on-primary font-semibold" data-path="dashboard" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-label-lg text-label-lg">Dashboard (ડેશબોર્ડ)</span></div></a><a class="flex items-center justify-between px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="bulk-approvals" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">check_box</span><span class="font-label-lg text-label-lg">Bulk Approvals</span></div><span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md font-bold">1,240</span></a><a class="flex items-center justify-between px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cycle-supply-chain" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">directions_bike</span><span class="font-label-lg text-label-lg">Cycle Supply Chain</span></div></a><a class="flex items-center justify-between px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="at-risk-students" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">warning</span><span class="font-label-lg text-label-lg">At-Risk Students</span></div><span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-md text-label-md font-bold">312</span></a><a class="flex items-center justify-between px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="grievance-redressal" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">chat</span><span class="font-label-lg text-label-lg">Grievance Redressal</span></div><span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-primary font-label-md text-label-md font-bold">48</span></a><a class="flex items-center justify-between px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="school-performance" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">apartment</span><span class="font-label-lg text-label-lg">School Performance</span></div></a></nav></div><div class="p-4 space-y-3 bg-surface-container-low"><div class="flex items-center justify-between px-3 py-2 rounded-lg bg-surface-container-highest"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span><span class="font-label-md text-label-md text-on-surface font-medium">State Server Synced</span></div><span class="font-label-md text-label-md text-primary font-bold">100%</span></div><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-error hover:bg-error-container hover:text-on-error-container transition-colors" data-path="logout" href="#"><span class="material-symbols-outlined text-[20px]">logout</span><span class="font-label-lg text-label-lg font-medium">Logout</span></a></div></aside><div class="pl-[260px]"><header class="fixed top-0 left-[260px] right-0 h-20 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-6"><div class="h-20 max-w-[1440px] mx-auto flex items-center justify-between gap-4"><div class="flex items-center gap-3.5 min-w-[280px]"><div class="w-11 h-11 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0"><span class="material-symbols-outlined text-[26px]">assured_workload</span></div><div class="flex flex-col"><div class="flex items-center gap-2"><h1 class="font-title-md text-title-md text-on-surface font-bold tracking-tight">વિદ્યા પ્રગતિ સેતુ</h1><span class="text-outline font-caption text-caption">|</span><h2 class="font-title-md text-title-md text-primary font-bold">Vidya Pragati Setu</h2></div><p class="font-caption text-caption text-on-surface-variant">જિલ્લા શિક્ષણ અધિકારી કચેરી, આણંદ (DEO Office, Anand District - Code: DEO-GJ-AND-04)</p></div></div><div class="flex-1 max-w-md mx-2"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px]">search</span><input class="w-full h-11 pl-10 pr-4 rounded-lg bg-surface-container-low text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Search schools, talukas, schemes, or CTS ID..." type="text"/></div></div><div class="flex items-center gap-4 shrink-0"><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">translate</span><span>ગુજરાતી / English</span></button><button aria-label="Notifications" class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-1 w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-[10px] font-bold flex items-center justify-center">14</span></button><div class="flex items-center gap-3 pl-2"><div class="flex flex-col text-right"><span class="font-label-lg text-label-lg text-on-surface font-semibold leading-tight">શ્રી હસમુખ જે. ત્રિવેદી (DEO, Anand)</span><span class="font-caption text-caption text-primary font-medium">District Education Officer</span></div><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-20 bg-surface min-h-screen"><div class="max-w-[1440px] mx-auto p-space-lg"><div class="flex flex-col w-full space-y-6">
+<!-- 1. Top Breadcrumbs, Context Header & Interactive Filter Bar -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col gap-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md mb-2">
+<span class="flex items-center gap-1 hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">domain</span>
+<span>જિલ્લા કચેરી (District HQ)</span>
+</span>
+<span class="text-outline">/</span>
+<span class="text-primary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">analytics</span>
+<span>જિલ્લા કમાન્ડ ડેશબોર્ડ (DEO Command Center)</span>
+</span>
+</nav>
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">
+            આણંદ જિલ્લા શિષ્યવૃત્તિ અને કલ્યાણ મોનિટરિંગ ડેશબોર્ડ
+          </h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+            શૈક્ષણિક વર્ષ ૨૦૨૫-૨૬ • ૮ તાલુકા, ૬૪૨ માન્ય શાળાઓ અને ૧,૨૪,૩૦૦ નોંધાયેલ વિદ્યાર્થીઓનું સમન્વય
+          </p>
+</div>
+</div>
+<!-- Quick Action Buttons -->
+<div class="flex items-center gap-3 shrink-0 self-start md:self-auto">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high text-primary font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>જિલ્લા સારાંશ ડાઉનલોડ (.xlsx)</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-secondary-container text-on-secondary font-label-lg text-label-lg font-bold shadow-md hover:bg-secondary transition-all transform active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">approval_delegation</span>
+<span>જથ્થાબંધ મંજૂરી ડેસ્ક (Bulk Approvals) →</span>
+</button>
+</div>
+</div>
+<!-- Filter Ribbon Bar -->
+<div class="pt-4 bg-surface-container-low p-4 rounded-xl flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-outline text-[18px]">calendar_month</span>
+<label class="font-caption text-caption text-on-surface-variant font-medium">શૈક્ષણિક વર્ષ:</label>
+<select class="bg-transparent font-label-lg text-label-lg text-on-surface font-bold focus:outline-none cursor-pointer">
+<option selected="">૨૦૨૫-૨૬ (ચાલુ)</option>
+<option>૨૦૨૪-૨૫ (સંપન્ન)</option>
+</select>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-outline text-[18px]">school</span>
+<label class="font-caption text-caption text-on-surface-variant font-medium">યોજના:</label>
+<select class="bg-transparent font-label-lg text-label-lg text-on-surface font-bold focus:outline-none cursor-pointer">
+<option selected="">તમામ ૮ સરકારી યોજનાઓ</option>
+<option>નમો લક્ષ્મી યોજના</option>
+<option>સરસ્વતી સાધના સાયકલ</option>
+<option>જ્ઞાન સાધના સ્કોલરશીપ</option>
+<option>OBC / SEBC પૂર્વ-મેટ્રિક</option>
+<option>NMMS મેરિટ સ્કોલરશીપ</option>
+</select>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-outline text-[18px]">location_on</span>
+<label class="font-caption text-caption text-on-surface-variant font-medium">તાલુકો:</label>
+<select class="bg-transparent font-label-lg text-label-lg text-on-surface font-bold focus:outline-none cursor-pointer">
+<option selected="">સમગ્ર આણંદ જિલ્લો (તમામ ૮ તાલુકા)</option>
+<option>આણંદ (મુખ્ય મથક)</option>
+<option>બોરસદ</option>
+<option>ખંભાત</option>
+<option>પેટલાદ</option>
+<option>ઉમરેઠ</option>
+<option>આંકલાવ</option>
+<option>સોજિત્રા</option>
+<option>તારાપુર</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-caption text-caption">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span>છેલ્લું સિંક: ૧૮ મિનિટ પહેલાં • NIC સર્વર કનેક્ટેડ</span>
+</div>
+</div>
+</div>
+<!-- 2. KPI Metric Cards Row (6 Cards Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-md text-label-md text-on-surface-variant">કુલ પાત્ર વિદ્યાર્થીઓ</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">group</span>
+</div>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">૧,૨૪,૩૦૦</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<span class="font-caption text-caption text-primary font-semibold">૧૦૦% UDISE & CTS</span>
+<span class="material-symbols-outlined text-primary text-[14px]">verified</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-md text-label-md text-on-surface-variant">પ્રાપ્ત અરજીઓ</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</div>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">૯૮,૪૫૦</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant">૭૯.૨% સંતૃપ્તિ</span>
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-[11px] font-bold">+૧૪% આ સપ્તાહ</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-md text-label-md text-on-surface-variant">DEO સ્તર મંજૂર</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">૮૧,૨૦૦</div>
+</div>
+<div class="mt-4 pt-3 flex flex-col gap-1">
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>૮૨.૫% નિકાલ ગુણોત્તર</span>
+</div>
+<span class="px-2 py-0.5 rounded-md bg-secondary-fixed text-on-secondary-fixed-variant font-label-md text-[10px] font-bold text-center">
+          ૧,૨૪૦ જથ્થાબંધ માટે તૈયાર
+        </span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-md text-label-md text-on-surface-variant">ચૂકવાયેલ DBT સહાય</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary font-bold">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">₹ ૪૨.૬૦ Cr</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant">PFMS સીડેડ</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-label-md text-[11px] font-bold">શૂન્ય વચેટિયા</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-md text-label-md text-on-surface-variant">સરસ્વતી સાયકલ</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">directions_bike</span>
+</div>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">૭૧% વિતરિત</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant">૮,૫૨૦ / ૧૨,૦૦૦</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">verified</span>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-md text-label-md text-on-surface-variant">ખુલ્લી ફરિયાદો</span>
+<div class="w-8 h-8 rounded-lg bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[18px]">report_problem</span>
+</div>
+</div>
+<div class="font-headline-md text-headline-md text-error font-bold tracking-tight">૪૮ સક્રિય</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant">TAT: ૨.૧ દિવસ</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-md text-[10px] font-bold">૬ SLA નજીક</span>
+</div>
+</div>
+</div>
+<!-- 3. Urgent Action Alert Strip (Full Width) -->
+<div class="p-4 rounded-xl bg-error-container/60 flex flex-col lg:flex-row items-center justify-between gap-4 shadow-sm">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-full bg-error text-on-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">warning</span>
+</div>
+<div>
+<p class="font-title-md text-title-md text-on-error-container font-bold">
+          તાકીદનું પગલું: ૧૨ શાળાઓએ આ મહિનાની ઓક્ટોબર હાજરી પોર્ટલ પર અપલોડ કરી નથી.
+        </p>
+<p class="font-body-sm text-body-sm text-on-error-container/90">
+          શિષ્યવૃત્તિ વિતરણ સમયસર રાખવા માટે જિલ્લા શિક્ષણ કચેરી તરફથી તાત્કાલિક નોટિસ ઇશ્યૂ કરવાની ભલામણ છે.
+        </p>
+</div>
+</div>
+<div class="shrink-0 flex items-center gap-3 w-full lg:w-auto justify-end">
+<button class="px-4 py-2 rounded-lg bg-error text-on-error font-label-lg text-label-lg font-bold shadow hover:bg-on-error-container transition-colors flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">sms</span>
+<span>ડિફોલ્ટર ૧૨ શાળાઓની યાદી જુઓ & SMS નોટિસ મોકલો →</span>
+</button>
+</div>
+</div>
+<!-- 4. Middle Section - Two-Column Analytics Layout (65% / 35%) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Taluka Distribution & Backlog Matrix (8 cols ~ 66%) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 gap-3">
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold tracking-tight">
+              આણંદ જિલ્લાના તાલુકાવાર ચક્રીય વિશ્લેષણ (Taluka-wise Saturation & Backlog Matrix)
+            </h2>
+<p class="font-caption text-caption text-on-surface-variant">
+              ૮ તાલુકાઓ: આણંદ, બોરસદ, ખંભાત, પેટલાદ, ઉમરેઠ, આંકલાવ, સોજિત્રા, તારાપુર
+            </p>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-lg text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>સોર્ટિંગ: મંજૂર દર (ચડતો ક્રમ)</span>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md">
+<tr>
+<th class="px-4 py-3 rounded-l-lg font-semibold">તાલુકો</th>
+<th class="px-3 py-3 font-semibold">શાળાઓ</th>
+<th class="px-3 py-3 font-semibold">પાત્ર વિદ્યાર્થીઓ</th>
+<th class="px-3 py-3 font-semibold w-40">મંજૂર ટકાવારી</th>
+<th class="px-3 py-3 font-semibold">પેન્ડિંગ</th>
+<th class="px-3 py-3 font-semibold">સાયકલ %</th>
+<th class="px-3 py-3 font-semibold">જોખમી</th>
+<th class="px-3 py-3 rounded-r-lg font-semibold text-center">સ્થિતિ</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 space-y-1">
+<!-- Anand -->
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="px-4 py-3 font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                  આણંદ (મુખ્યાલય)
+                </td>
+<td class="px-3 py-3 text-on-surface">૧૪૨</td>
+<td class="px-3 py-3 font-semibold text-on-surface">૨૮,૫૦૦</td>
+<td class="px-3 py-3">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-bold text-primary">૯૨%</span>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 92%"></div>
+</div>
+</div>
+</td>
+<td class="px-3 py-3 text-on-surface-variant">૨,૨૮૦</td>
+<td class="px-3 py-3 font-medium text-on-surface">૮૮%</td>
+<td class="px-3 py-3 font-medium text-on-surface-variant">૧૮</td>
+<td class="px-3 py-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-label-md text-[11px] font-bold">ઉત્કૃષ્ટ</span>
+</td>
+</tr>
+<!-- Sojitra -->
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="px-4 py-3 font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                  સોજિત્રા
+                </td>
+<td class="px-3 py-3 text-on-surface">૪૮</td>
+<td class="px-3 py-3 font-semibold text-on-surface">૯,૧૨૦</td>
+<td class="px-3 py-3">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-bold text-primary">૮૮%</span>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 88%"></div>
+</div>
+</div>
+</td>
+<td class="px-3 py-3 text-on-surface-variant">૧,૦૯૦</td>
+<td class="px-3 py-3 font-medium text-on-surface">૭૯%</td>
+<td class="px-3 py-3 font-medium text-on-surface-variant">૧૪</td>
+<td class="px-3 py-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-label-md text-[11px] font-bold">ઉત્કૃષ્ટ</span>
+</td>
+</tr>
+<!-- Borsad -->
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="px-4 py-3 font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                  બોરસદ
+                </td>
+<td class="px-3 py-3 text-on-surface">૧૧૬</td>
+<td class="px-3 py-3 font-semibold text-on-surface">૨૨,૮૦૦</td>
+<td class="px-3 py-3">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-bold text-primary">૮૫%</span>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</td>
+<td class="px-3 py-3 text-on-surface-variant">૩,૪૨૦</td>
+<td class="px-3 py-3 font-medium text-on-surface">૭૪%</td>
+<td class="px-3 py-3 font-medium text-on-surface-variant">૫૨</td>
+<td class="px-3 py-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-md text-[11px] font-bold">સામાન્ય</span>
+</td>
+</tr>
+<!-- Umreth -->
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="px-4 py-3 font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                  ઉમરેઠ
+                </td>
+<td class="px-3 py-3 text-on-surface">૬૬</td>
+<td class="px-3 py-3 font-semibold text-on-surface">૧૨,૪૫૦</td>
+<td class="px-3 py-3">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-bold text-primary">૮૪%</span>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 84%"></div>
+</div>
+</div>
+</td>
+<td class="px-3 py-3 text-on-surface-variant">૧,૯૯૦</td>
+<td class="px-3 py-3 font-medium text-on-surface">૭૬%</td>
+<td class="px-3 py-3 font-medium text-on-surface-variant">૨૬</td>
+<td class="px-3 py-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-md text-[11px] font-bold">સામાન્ય</span>
+</td>
+</tr>
+<!-- Petlad -->
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="px-4 py-3 font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                  પેટલાદ
+                </td>
+<td class="px-3 py-3 text-on-surface">૮૬</td>
+<td class="px-3 py-3 font-semibold text-on-surface">૧૬,૮૦૦</td>
+<td class="px-3 py-3">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-bold text-primary">૮૧%</span>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 81%"></div>
+</div>
+</div>
+</td>
+<td class="px-3 py-3 text-on-surface-variant">૩,૧૯૦</td>
+<td class="px-3 py-3 font-medium text-on-surface">૬૮%</td>
+<td class="px-3 py-3 font-medium text-on-surface-variant">૩૮</td>
+<td class="px-3 py-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-md text-[11px] font-bold">સામાન્ય</span>
+</td>
+</tr>
+<!-- Anklav -->
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="px-4 py-3 font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                  આંકલાવ
+                </td>
+<td class="px-3 py-3 text-on-surface">૫૨</td>
+<td class="px-3 py-3 font-semibold text-on-surface">૧૦,૬૪૦</td>
+<td class="px-3 py-3">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-bold text-secondary">૭૯%</span>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 79%"></div>
+</div>
+</div>
+</td>
+<td class="px-3 py-3 text-on-surface-variant">૨,૨૩૦</td>
+<td class="px-3 py-3 font-medium text-on-surface">૬૩%</td>
+<td class="px-3 py-3 font-medium text-secondary font-bold">૪૪</td>
+<td class="px-3 py-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-label-md text-[11px] font-bold">નિરીક્ષણ</span>
+</td>
+</tr>
+<!-- Khambhat -->
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="px-4 py-3 font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                  ખંભાત
+                </td>
+<td class="px-3 py-3 text-on-surface">૮૪</td>
+<td class="px-3 py-3 font-semibold text-on-surface">૧૬,૧૪૦</td>
+<td class="px-3 py-3">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-bold text-error">૭૬%</span>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 76%"></div>
+</div>
+</div>
+</td>
+<td class="px-3 py-3 text-error font-bold">૩,૮૭૦</td>
+<td class="px-3 py-3 font-medium text-on-surface">૫૯%</td>
+<td class="px-3 py-3 font-bold text-error">૬૮</td>
+<td class="px-3 py-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-md text-[11px] font-bold">તાકીદનું ધ્યાન</span>
+</td>
+</tr>
+<!-- Tarapur -->
+<tr class="hover:bg-surface-container-low transition-colors rounded-lg">
+<td class="px-4 py-3 font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                  તારાપુર
+                </td>
+<td class="px-3 py-3 text-on-surface">૪૮</td>
+<td class="px-3 py-3 font-semibold text-on-surface">૭,૧૯૦</td>
+<td class="px-3 py-3">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-bold text-error">૭૪%</span>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 74%"></div>
+</div>
+</div>
+</td>
+<td class="px-3 py-3 text-error font-bold">૧,૮૭૦</td>
+<td class="px-3 py-3 font-medium text-on-surface">૫૪%</td>
+<td class="px-3 py-3 font-bold text-error">૫૨</td>
+<td class="px-3 py-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-md text-[11px] font-bold">તાકીદનું ધ્યાન</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Geographic Mini Insight Card -->
+<div class="mt-6 pt-4 bg-surface-container-low rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">map</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface font-bold">
+                ભૌગોલિક સમન્વય (Geospatial Saturation Map)
+              </p>
+<p class="font-caption text-caption text-on-surface-variant">
+                દક્ષિણ-પશ્ચિમ ખંભાતના દરિયાકાંઠાના વિસ્તારોમાં આધાર લિંકેજ કેમ્પનું આયોજન જરૂરી છે.
+              </p>
+</div>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-primary font-label-md text-label-md font-bold shadow-sm hover:bg-surface-container-high transition-colors shrink-0" type="button">
+            GIS નકશો ખોલો
+          </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Lagging Schools & Immediate Intervention (4 cols ~ 34%) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-between h-full">
+<div>
+<div class="flex items-start justify-between pb-4">
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">
+                પાછળ રહેલી શાળાઓ
+              </h2>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">
+                ઓછી સંતૃપ્તિ અને વધુ પેન્ડિંગ ધરાવતી ટોચની ૫ શાળાઓ
+              </p>
+</div>
+<span class="w-3 h-3 rounded-full bg-error animate-ping"></span>
+</div>
+<!-- School List -->
+<div class="space-y-3.5 mt-2">
+<!-- School 1 -->
+<div class="p-3.5 rounded-xl bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface">૧. શ્રી વિનય મંદિર હાઈસ્કૂલ</h3>
+<p class="font-caption text-caption text-on-surface-variant">તાલુકો: ખંભાત • UDISE: 24150302101</p>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-md text-[10px] font-bold">૪૮% મંજૂર</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 48%"></div>
+</div>
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant pt-1">
+<span class="text-error font-semibold">૮૬ અરજીઓ પેન્ડિંગ</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-medium">હાજરી ડેટા બાકી</span>
+</div>
+</div>
+<!-- School 2 -->
+<div class="p-3.5 rounded-xl bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface">૨. જનતા વિદ્યાલય</h3>
+<p class="font-caption text-caption text-on-surface-variant">તાલુકો: તારાપુર • UDISE: 24150801402</p>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-md text-[10px] font-bold">૫૨% મંજૂર</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 52%"></div>
+</div>
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant pt-1">
+<span class="text-error font-semibold">૬૪ અરજીઓ પેન્ડિંગ</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-medium">આચાર્ય મંજૂરી અટકી</span>
+</div>
+</div>
+<!-- School 3 -->
+<div class="p-3.5 rounded-xl bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface">૩. સાર્વજનિક હાઈસ્કૂલ</h3>
+<p class="font-caption text-caption text-on-surface-variant">તાલુકો: આંકલાવ • UDISE: 24150600801</p>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-label-md text-[10px] font-bold">૫૮% મંજૂર</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 58%"></div>
+</div>
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant pt-1">
+<span class="text-on-surface font-semibold">૫૧ અરજીઓ પેન્ડિંગ</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-medium">સાયકલ હેન્ડઓવર વિલંબ</span>
+</div>
+</div>
+<!-- School 4 -->
+<div class="p-3.5 rounded-xl bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface">૪. શ્રી સરદાર વલ્લભભાઈ પટેલ વિનય મંદિર</h3>
+<p class="font-caption text-caption text-on-surface-variant">તાલુકો: બોરસદ • UDISE: 24150201905</p>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface font-label-md text-[10px] font-bold">૬૨% મંજૂર</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 62%"></div>
+</div>
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant pt-1">
+<span class="text-on-surface font-semibold">૪૩ અરજીઓ પેન્ડિંગ</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-medium">આધાર વિસંગતતા</span>
+</div>
+</div>
+<!-- School 5 -->
+<div class="p-3.5 rounded-xl bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-label-lg text-label-lg font-bold text-on-surface">૫. શ્રી કલ્યાણ હાઈસ્કૂલ</h3>
+<p class="font-caption text-caption text-on-surface-variant">તાલુકો: પેટલાદ • UDISE: 24150400503</p>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface font-label-md text-[10px] font-bold">૬૫% મંજૂર</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 65%"></div>
+</div>
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant pt-1">
+<span class="text-on-surface font-semibold">૩૯ અરજીઓ પેન્ડિંગ</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-medium">બેંક ખાતું અપડેટ બાકી</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Issue Notice CTA -->
+<div class="pt-5 mt-4">
+<button class="w-full py-2.5 px-4 rounded-xl bg-error-container text-on-error-container font-label-lg text-label-lg font-bold hover:bg-error hover:text-on-error transition-colors flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px]">notification_important</span>
+<span>સંબંધિત આચાર્યોને ચેતવણી પત્ર મોકલો (Issue Formal Warning Notice)</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 5. Bottom Section - In-depth Trends & Scheme Breakdown (3 Columns Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Block A: Scheme Applications & Fund Status -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4">
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">
+            યોજનાવાર અરજી સ્થિતિ અને ફંડ ફાળવણી
+          </h2>
+<span class="material-symbols-outlined text-primary text-[22px]">payments</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mb-4">
+          મુખ્ય રાજ્ય અને કેન્દ્રીય શિષ્યવૃત્તિ યોજનાઓ
+        </p>
+<div class="space-y-4">
+<!-- Scheme 1 -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">નમો લક્ષ્મી યોજના (Namo Lakshmi)</span>
+<span class="text-primary font-bold">₹ ૨૧.૦૦ Cr (૯૨%)</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 92%"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">૪૨,૦૦૦ અરજીઓ મંજૂર</span>
+</div>
+<!-- Scheme 2 -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">સરસ્વતી સાધના સાયકલ યોજના</span>
+<span class="text-secondary font-bold">૮,૫૨૦ વિતરિત (૭૧%)</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 71%"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">૧૨,૦૦૦ વાર્ષિક લક્ષ્યાંક</span>
+</div>
+<!-- Scheme 3 -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">જ્ઞાન સાધના સ્કોલરશીપ</span>
+<span class="text-primary font-bold">₹ ૯.૨૦ Cr (૮૬%)</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 86%"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">૧૮,૪૦૦ મેરિટ પાત્ર વિદ્યાર્થીઓ</span>
+</div>
+<!-- Scheme 4 -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">OBC / SEBC પૂર્વ-મેટ્રિક</span>
+<span class="text-primary font-bold">₹ ૫.૯૨ Cr (૮૧%)</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 81%"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">૧૪,૮૦૦ અરજીઓ</span>
+</div>
+<!-- Scheme 5 -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">NMMS મેરિટ સ્કોલરશીપ</span>
+<span class="text-primary font-bold">₹ ૫.૦૪ Cr (૯૪%)</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 94%"></div>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">૪,૨૦૦ અરજીઓ</span>
+</div>
+</div>
+</div>
+<div class="pt-4 mt-2">
+<span class="font-caption text-caption text-on-surface-variant">અન્ય સહાય યોજનાઓ: ૭,૦૫૦ અરજીઓ • ₹ ૧.૪૪ Cr</span>
+</div>
+</div>
+<!-- Block B: Turnaround Time Trend (Month over Month) -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4">
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">
+            સરેરાશ નિકાલ સમય પ્રવાહ
+          </h2>
+<span class="material-symbols-outlined text-primary text-[22px]">speed</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mb-6">
+          DEO સ્તરે અરજી મંજૂર કરવાનો સરેરાશ સમય (દિવસે)
+        </p>
+<!-- Inline Visual TAT Bar / Trend -->
+<div class="space-y-4">
+<div>
+<div class="flex justify-between font-label-md text-label-md text-on-surface-variant mb-1">
+<span>જુલાઈ ૨૦૨૫</span>
+<span class="font-bold text-on-surface">૫.૪ દિવસ</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-3">
+<div class="bg-outline h-3 rounded-full" style="width: 80%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-md text-label-md text-on-surface-variant mb-1">
+<span>ઓગસ્ટ ૨૦૨૫</span>
+<span class="font-bold text-on-surface">૪.૧ દિવસ</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-3">
+<div class="bg-outline h-3 rounded-full" style="width: 60%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-md text-label-md text-on-surface-variant mb-1">
+<span>સપ્ટેમ્બર ૨૦૨૫</span>
+<span class="font-bold text-on-surface">૨.૮ દિવસ</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-3">
+<div class="bg-primary h-3 rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-md text-label-md text-primary font-bold mb-1">
+<span>ઓક્ટોબર ૨૦૨૫ (ચાલુ)</span>
+<span class="font-bold text-primary">૧.૮ દિવસ (૬૬% ઝડપી)</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-3">
+<div class="bg-primary-container h-3 rounded-full" style="width: 27%"></div>
+</div>
+</div>
+</div>
+<div class="mt-6 p-3.5 rounded-xl bg-surface-container-low flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px]">military_tech</span>
+<p class="font-caption text-caption text-on-surface font-medium leading-relaxed">
+            રાજ્ય સ્તર લક્ષ્યાંક: <strong>< ૩.૦ દિવસ</strong>.<br/>આણંદ જિલ્લો હાલ સમગ્ર ગુજરાત રાજ્યમાં <strong>ત્રીજા ક્રમે</strong> છે.
+          </p>
+</div>
+</div>
+<div class="pt-4 flex items-center gap-2 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[16px] text-primary">auto_awesome</span>
+<span>AI સ્માર્ટ ઓટો-વેરિફિકેશન અને બલ્ક અપ્રૂવલ પ્રણાલી સક્રિય</span>
+</div>
+</div>
+<!-- Block C: Digital Audit & DEO e-Sign Action Center -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4">
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">
+            ડિજિટલ ઓડિટ અને કમાન્ડ કંટ્રોલ
+          </h2>
+<span class="material-symbols-outlined text-primary text-[22px]">security</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mb-4">
+          DEO Digital Sign & Integrity Summary
+        </p>
+<!-- e-Sign Highlight Box -->
+<div class="p-4 rounded-xl bg-surface-container-high/60 flex flex-col gap-3">
+<div class="flex items-center gap-2 text-primary font-label-lg text-label-lg font-bold">
+<span class="material-symbols-outlined text-[20px]">draw</span>
+<span>Digital e-Sign સજ્જતા</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface leading-normal">
+<strong>૧,૨૪૦ અરજીઓ</strong> ઓટો-વેરિફાઈડ અને આધાર-સીડેડ છે. માત્ર એક ક્લિકમાં ડિજિટલ સહી દ્વારા મંજૂરી આપી શકાય છે.
+          </p>
+<div class="flex items-center gap-2 text-primary font-caption text-caption font-bold">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>DSC Token: માન્ય (શ્રી હસમુખ જે. ત્રિવેદી)</span>
+</div>
+</div>
+<!-- Grievance Redressal Status -->
+<div class="mt-4 pt-3 flex flex-col gap-2">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="font-bold text-on-surface">ફરિયાદ નિવારણ સ્થિતિ</span>
+<span class="font-bold text-on-surface">૪૮ કુલ</span>
+</div>
+<div class="flex gap-2">
+<div class="flex-1 p-2 rounded-lg bg-surface-container-low text-center">
+<span class="block font-label-lg text-label-lg font-bold text-primary">૪૨</span>
+<span class="font-caption text-caption text-on-surface-variant">સમયમર્યાદામાં</span>
+</div>
+<div class="flex-1 p-2 rounded-lg bg-error-container text-center">
+<span class="block font-label-lg text-label-lg font-bold text-error">૬</span>
+<span class="font-caption text-caption text-on-error-container">તાકીદની (SLA)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="pt-5">
+<button class="w-full py-3 px-4 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg font-bold shadow-md hover:bg-tertiary transition-all flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px]">fingerprint</span>
+<span>બલ્ક અપ્રૂવલ સ્ક્રીન ખોલો (Review & Sign 1,240)</span>
+</button>
+</div>
+</div>
+</div>
+</div></div></main></div></body></html>

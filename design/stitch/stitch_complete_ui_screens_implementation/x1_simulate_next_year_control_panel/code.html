@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+<html lang="gu"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary-fixed-variant": "#783200", "primary-fixed-dim": "#b7c4ff", "tertiary-fixed-dim": "#b6c4ff", "primary-fixed": "#dce1ff", "secondary": "#9d4300", "on-secondary-fixed": "#341100", "on-tertiary-fixed-variant": "#264191", "inverse-surface": "#283044", "on-surface-variant": "#434655", "primary": "#0037b0", "secondary-fixed-dim": "#ffb690", "surface-container": "#eaedff", "on-background": "#131b2e", "on-tertiary-fixed": "#00164e", "on-tertiary": "#ffffff", "surface-dim": "#d2d9f4", "surface-container-high": "#e2e7ff", "on-error-container": "#93000a", "surface-container-low": "#f2f3ff", "on-primary-fixed": "#001551", "inverse-primary": "#b7c4ff", "tertiary-fixed": "#dce1ff", "error-container": "#ffdad6", "outline-variant": "#c4c5d7", "error": "#ba1a1a", "on-primary-fixed-variant": "#0039b5", "primary-container": "#1d4ed8", "on-error": "#ffffff", "on-secondary-container": "#5c2400", "on-primary": "#ffffff", "surface-variant": "#dae2fd", "on-secondary": "#ffffff", "surface": "#faf8ff", "secondary-fixed": "#ffdbca", "secondary-container": "#fd761a", "outline": "#747686", "tertiary-container": "#3e57a8", "on-tertiary-container": "#c9d3ff", "inverse-on-surface": "#eef0ff", "surface-container-highest": "#dae2fd", "surface-bright": "#faf8ff", "on-primary-container": "#cad3ff", "surface-tint": "#2151da", "on-surface": "#131b2e", "background": "#faf8ff", "tertiary": "#233f8f", "surface-container-lowest": "#ffffff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter-mobile": "1rem", "space-sm": "0.5rem", "space-xl": "2rem", "space-lg": "1.5rem", "gutter": "1.5rem", "margin-mobile": "1rem", "space-md": "1rem", "space-xs": "0.25rem", "margin": "2rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "caption": ["Inter"], "body-lg": ["Inter"], "headline-md": ["Inter"], "display": ["Inter"], "body-sm": ["Inter"], "body-md": ["Inter"], "display-mobile": ["Inter"], "label-lg": ["Inter"], "title-md": ["Inter"], "headline-sm": ["Inter"], "label-md": ["Inter"], "headline-lg": ["Inter"], "title-lg": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "display-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }] } } } };</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased min-h-screen"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.02)]"><div class="w-9 h-9 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-title-lg text-title-lg">સ</div><div class="flex flex-col"><span class="font-label-lg text-label-lg text-primary tracking-tight leading-tight">વિદ્યા પ્રગતિ સેતુ</span><span class="font-caption text-caption text-on-surface-variant leading-none">શિક્ષણ વિભાગ, ગુજરાત</span></div></div><div class="p-space-md"><div class="bg-surface-container px-space-sm py-space-xs rounded-lg flex items-center justify-between mb-space-md"><span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">સંચાલન મોડ</span><span class="bg-secondary-container text-on-secondary px-space-xs rounded-full font-label-md text-label-md font-semibold">Sandbox Live</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-lg shadow-sm"><div class="px-space-sm pt-space-xs pb-space-xs font-label-md text-label-md text-on-surface-variant font-semibold uppercase tracking-wider">રાજ્ય સિમ્યુલેશન</div><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-primary-container text-on-primary font-title-md rounded-lg shadow-sm" data-path="academic-rollover" href="#"><span class="material-symbols-outlined text-[20px]">update</span><span>શૈક્ષણિક રોલઓવર</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="bulk-promotion" href="#"><span class="material-symbols-outlined text-[20px]">group_add</span><span>બલ્ક પ્રમોશન</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="dbt-payment-tester" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>DBT પેમેન્ટ ટેસ્ટર</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="dropout-modeler" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span>ડ્રોપઆઉટ મોડેલર</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-md text-label-md text-on-surface-variant font-semibold uppercase tracking-wider">વહીવટી ડેસ્ક</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="state-analytics" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span>સ્ટેટ એનાલિટિક્સ</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="rule-builder" href="#"><span class="material-symbols-outlined text-[20px]">rule</span><span>રૂલ બિલ્ડર</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="fund-tracker" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>ફંડ ટ્રેકર</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="fraud-detection" href="#"><span class="material-symbols-outlined text-[20px]">security</span><span>ફ્રોડ ડિટેક્શન</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>ઓડિટ લૉગ્સ</span></a></nav></div></div><div class="p-space-md bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.02)]"><nav class="flex flex-col" data-active-classes="bg-error text-on-error font-title-md rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-error hover:bg-error-container hover:text-on-error-container transition-colors font-title-md text-title-md" data-path="system-reset" href="#"><span class="material-symbols-outlined text-[20px]">restart_alt</span><span>સિસ્ટમ રીસેટ</span></a></nav><div class="mt-space-sm pt-space-xs text-center"><span class="font-caption text-caption text-outline">આવૃત્તિ v3.2.0 • ગુજરાત સરકાર</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-1 rounded-full"><span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse"></span><span class="font-label-md text-label-md text-on-surface font-semibold">Sandbox Mode Active</span></div><div class="h-4 w-px bg-outline-variant"></div><div class="flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 rounded-lg"><span class="material-symbols-outlined text-primary text-[18px]">calendar_today</span><span class="font-label-md text-label-md text-on-surface-variant">શૈક્ષણિક વર્ષ:</span><div class="flex items-center gap-1 font-label-lg text-label-lg"><span class="font-bold text-primary">2025-26</span><span class="material-symbols-outlined text-on-surface-variant text-[16px]">trending_flat</span><span class="text-on-surface font-semibold">2026-27</span></div></div></div><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container rounded-lg p-0.5"><button class="px-space-xs py-0.5 font-label-md text-label-md font-bold rounded bg-primary text-on-primary">ગુજરાતી</button><button class="px-space-xs py-0.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface">हिन्दी</button><button class="px-space-xs py-0.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface">English</button></div><div class="flex items-center gap-space-sm pl-space-sm bg-surface-container-low py-1 px-space-sm rounded-lg"><div class="text-right leading-tight"><p class="font-label-lg text-label-lg text-on-surface font-semibold">મુખ્ય સચિવ / State Admin</p><p class="font-caption text-caption text-on-surface-variant">ઉચ્ચ શિક્ષણ નિયંત્રણ કક્ષ</p></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 bg-surface min-h-screen px-space-lg py-space-lg w-full"><div class="flex flex-col w-full">
+<!-- Top Sandbox Alert Bar -->
+<div class="bg-secondary-fixed text-on-secondary-fixed p-space-md rounded-xl shadow-sm mb-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-9 h-9 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-title-md text-title-md text-on-secondary-fixed">સેન્ડબોક્સ વાતાવરણ (Demo Sandbox Mode)</span>
+<span class="bg-surface-container-lowest px-2 py-0.5 rounded text-secondary font-label-md text-label-md">માત્ર પ્રેઝન્ટેશન અને ટેસ્ટિંગ</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant">કોઈપણ લાઈવ પ્રોડક્શન ડેટાબેઝ બદલાશે નહીં. વાસ્તવિક લાભાર્થી રેકોર્ડ સુરક્ષિત છે.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<div class="bg-surface-container-lowest/80 px-space-sm py-1 rounded-lg text-on-surface-variant font-label-md text-label-md">
+        Session: <span class="font-bold text-primary font-mono">#SIM-GUJ-2026-X1</span>
+</div>
+<button class="bg-surface-container-lowest hover:bg-surface-container text-secondary px-space-md py-1.5 rounded-lg font-label-lg text-label-lg transition-colors flex items-center gap-1 shadow-sm" id="btn-quick-reset">
+<span class="material-symbols-outlined text-[18px]">replay</span>
+<span>રીસેટ ડેટા</span>
+</button>
+</div>
+</div>
+<!-- Page Header & Academic Transition Widget -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm mb-space-xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-space-lg">
+<div class="flex flex-col max-w-3xl">
+<div class="flex items-center gap-space-xs mb-space-xs">
+<span class="bg-primary-fixed text-on-primary-fixed px-space-sm py-0.5 rounded-full font-label-md text-label-md">સિમ્યુલેશન ડેસ્ક</span>
+<span class="text-on-surface-variant font-caption text-caption">• સ્ટેટ સ્કોલરશિપ નોડલ એન્જિન</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+        શૈક્ષણિક વર્ષ રોલઓવર અને પ્રમોશન સિમ્યુલેટર
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+        વિદ્યાર્થીઓની આપોઆપ વર્ગબઢતી, નવી શિષ્યવૃત્તિ પાત્રતા એન્જિન રિ-રન, ઓટો-રિન્યુઅલ સંમતિ (Consent) અને DBT સિમ્યુલેશનનું લાઈવ પ્રદર્શન.
+      </p>
+</div>
+<!-- Transition Control Widget -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col sm:flex-row items-center gap-space-md w-full lg:w-auto shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="text-left">
+<span class="font-caption text-caption text-on-surface-variant block uppercase tracking-wide">વર્તમાન વર્ષ</span>
+<span class="font-title-lg text-title-lg text-on-surface">AY 2025-26</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+<div class="text-left">
+<span class="font-caption text-caption text-secondary block uppercase tracking-wide">આગામી (સિમ્યુલેટેડ)</span>
+<span class="font-title-lg text-title-lg text-secondary">AY 2026-27</span>
+</div>
+</div>
+<div class="h-8 w-px bg-outline-variant hidden sm:block"></div>
+<div class="flex flex-col text-left">
+<span class="font-caption text-caption text-on-surface-variant">ટાર્ગેટ જિલ્લો / પાયલોટ</span>
+<div class="flex items-center gap-1 font-label-lg text-label-lg text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">location_on</span>
+<span>આણંદ (Anand)</span>
+<span class="bg-surface-container px-1.5 py-0.5 rounded font-caption text-caption text-primary">૧,૨૪૦ વિદ્યાર્થીઓ</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Key KPI Summary Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg mb-space-xl">
+<!-- KPI 1 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block uppercase tracking-wider">કુલ સિમ્યુલેટેડ વિદ્યાર્થીઓ</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">૧,૨૪,૩૦૦</h2>
+</div>
+<div class="w-12 h-12 rounded-xl bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">groups</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center gap-space-xs">
+<span class="bg-surface-container text-primary font-label-md text-label-md px-2 py-0.5 rounded-full flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +૧૦૦%
+        </span>
+<span class="font-caption text-caption text-on-surface-variant">વર્ગબઢતી માટે સક્ષમ</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block uppercase tracking-wider">ઓટો-રિન્યુઅલ યોજનાઓ</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mt-1">૮૨,૪૫૦</h2>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-high text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">autorenew</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center gap-space-xs">
+<span class="bg-surface-container text-primary font-label-md text-label-md px-2 py-0.5 rounded-full flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> ૬૬.૩%
+        </span>
+<span class="font-caption text-caption text-on-surface-variant">સંમતિ મોકલેલ &amp; વેરિફાઇડ</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block uppercase tracking-wider">નવી અનલોક થયેલ યોજનાઓ</span>
+<h2 class="font-headline-lg text-headline-lg text-secondary mt-1">૪૧,૮૫૦</h2>
+</div>
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">lock_open</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center gap-space-xs">
+<span class="bg-secondary-fixed-dim text-on-secondary-fixed font-label-md text-label-md px-2 py-0.5 rounded-full flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">add_circle</span> +New
+        </span>
+<span class="font-caption text-caption text-on-surface-variant">નવી પાત્રતા શરતો મેચ</span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block uppercase tracking-wider">સ્કીમ એક્સ્પાયરી / ગ્રેજ્યુએશન</span>
+<h2 class="font-headline-lg text-headline-lg text-outline mt-1">૧૮,૨૦૦</h2>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container text-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">school</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center gap-space-xs">
+<span class="bg-surface-container-high text-outline font-label-md text-label-md px-2 py-0.5 rounded-full">
+          ધોરણ ૧૨ પાસ
+        </span>
+<span class="font-caption text-caption text-on-surface-variant">સફળતાપૂર્વક પૂર્ણ</span>
+</div>
+</div>
+</div>
+<!-- Main Dual Column Layout (62% Left, 38% Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
+<!-- LEFT COLUMN: Engine & Diff Viewer (8 cols out of 12 ~ 66%) -->
+<div class="lg:col-span-8 flex flex-col gap-space-xl">
+<!-- Student Grade Rollover Simulator Card -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-md pb-space-lg">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[24px]">person_check</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">વિદ્યાર્થી સિમ્યુલેશન અને વર્ગબઢતી કંટ્રોલ</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Student Grade Rollover Simulator &amp; Rule Engine Tester</p>
+</div>
+<span class="bg-surface-container px-space-sm py-1 rounded-full text-primary font-label-md text-label-md flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span> Live Profile
+          </span>
+</div>
+<!-- Student Profile Box -->
+<div class="bg-surface-container-low p-space-lg rounded-xl mb-space-lg flex flex-col md:flex-row gap-space-lg items-start md:items-center justify-between">
+<div class="flex items-center gap-space-md">
+<img class="w-16 h-16 rounded-xl object-cover shadow-sm shrink-0" data-alt="Official portrait photograph of a confident young Gujarati female high school student wearing a clean neat school uniform with her hair tied neatly, photographed against a neutral educational institution backdrop with soft warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtIsS4DMxRcyxYsqXO7_OhTIJELT-lE_w9LWFjE31sCdAr0o__mJ1KqS1PqXpBKuulu2FHoNC5ToOvCsVbxlGVDA-2Zz8HZJaHcT51Xp9G-BhS9qb33Mi_tVW2SYPurXsZzAsy5e7KmTKoZ6ogB_xnWMOizMiGM8bJcr68uZ6Ai0aYtBNxI1javZaOahN6TdB0gedZh3yt0Uy7jNZHoGYGU40QdYiK5_F9Mfi2QPw"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-title-lg text-title-lg text-on-surface">રિયા હસમુખભાઈ પટેલ (Riya Patel)</span>
+<span class="bg-primary text-on-primary font-caption text-caption px-2 py-0.5 rounded-full font-mono">GJ-AND-2026-004512</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">શ્રી સરદાર પટેલ હાઇસ્કૂલ, આણંદ • કેટેગરી: SEBC • ધોરણ ૯-બી</p>
+<div class="flex items-center gap-space-sm mt-1">
+<span class="font-caption text-caption bg-surface-container px-2 py-0.5 rounded text-on-surface">વાર્ષિક સ્કોર: ૭૮%</span>
+<span class="font-caption text-caption bg-surface-container px-2 py-0.5 rounded text-on-surface" id="current-attendance-badge">હાજરી: ૮૨% (નિયમિત)</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:items-end gap-1 w-full md:w-auto">
+<span class="font-caption text-caption text-on-surface-variant">લક્ષિત પ્રમોશન વર્ગ</span>
+<div class="bg-surface-container-lowest px-3 py-1.5 rounded-lg shadow-sm flex items-center gap-2">
+<span class="font-label-lg text-label-lg text-on-surface">ધોરણ ૧૦ (SSC Board)</span>
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+</div>
+</div>
+</div>
+<!-- Action Promote Bar -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md bg-surface-container p-space-md rounded-xl">
+<div class="flex items-center gap-space-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] text-primary">psychology</span>
+<span class="font-body-sm text-body-sm">પ્રમોશન રન કરવાથી ગુજરાત સ્કોલરશિપ પોર્ટલના તમામ નિયમો આપોઆપ લાગુ થશે.</span>
+</div>
+<button class="w-full sm:w-auto bg-secondary-container hover:bg-secondary text-on-secondary px-space-lg py-3 rounded-lg font-title-md text-title-md transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-95" id="btn-run-simulation">
+<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+<span>પ્રમોટ કરો અને નિયમ એન્જિન ચલાવો</span>
+</button>
+</div>
+</div>
+<!-- Live Animated Diff & Eligibility Engine Output -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-sm pb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-primary animate-pulse" id="engine-status-dot"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">સ્કીમ પાત્રતા ડિફ આઉટપુટ (Live Eligibility Diff)</h3>
+</div>
+<span class="bg-surface-container-low text-primary font-caption text-caption px-space-sm py-1 rounded-full flex items-center gap-1 font-mono" id="engine-status-time">
+<span class="material-symbols-outlined text-[14px]">speed</span> Engine Re-Run Complete in 140ms
+          </span>
+</div>
+<div class="flex flex-col gap-space-md mt-space-md">
+<!-- Category 1: Newly Eligible -->
+<div class="bg-surface-container-low p-space-lg rounded-xl">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded font-label-md text-label-md font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">stars</span> નવી પાત્ર થયેલ યોજનાઓ (+New Eligible Schemes)
+                </span>
+<span class="text-on-surface-variant font-caption text-caption">૨ યોજનાઓ નવી અનલોક</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Scheme Card 1 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-title-md text-title-md text-on-surface">મુખ્યમંત્રી જ્ઞાન સાધના મેરિટ સ્કોલરશિપ</h4>
+<span class="bg-surface-container text-primary font-label-md text-label-md px-2 py-0.5 rounded-full shrink-0 font-bold">+ NEW</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Class 10 SSC Special Incentive Quota</p>
+<div class="my-space-sm p-space-sm bg-surface-container-low rounded-lg">
+<p class="font-body-sm text-body-sm text-on-surface">
+                      ધોરણ ૧૦ બોર્ડ પરીક્ષા પ્રોત્સાહન હેઠળ રિયા હવે વાર્ષિક રકમ માટે આપોઆપ લાયક બની છે.
+                    </p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block">સહાય રકમ</span>
+<span class="font-title-lg text-title-lg text-primary">₹ ૧૫,૦૦૦/વર્ષ</span>
+</div>
+<span class="bg-surface-container-high text-primary px-2 py-1 rounded text-caption font-caption flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">send</span> વાલી સંમતિ SMS મોકલાયો
+                  </span>
+</div>
+</div>
+<!-- Scheme Card 2 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-title-md text-title-md text-on-surface">સરસ્વતી સાધના સાયકલ મેન્ટેનન્સ ગ્રાન્ટ</h4>
+<span class="bg-surface-container text-primary font-label-md text-label-md px-2 py-0.5 rounded-full shrink-0 font-bold">+ UNLOCKED</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Bicycle Annual Upkeep Allowance</p>
+<div class="my-space-sm p-space-sm bg-surface-container-low rounded-lg">
+<p class="font-body-sm text-body-sm text-on-surface">
+                      અગાઉ પ્રાપ્ત સાયકલનું વેરિફિકેશન મંજૂર થયેલ છે. વાર્ષિક જાળવણી ભથ્થું એકાઉન્ટમાં જમા થશે.
+                    </p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div>
+<span class="font-caption text-caption text-on-surface-variant block">સહાય રકમ</span>
+<span class="font-title-lg text-title-lg text-primary">₹ ૧,૫૦૦/વર્ષ</span>
+</div>
+<span class="bg-surface-container-high text-on-surface px-2 py-1 rounded text-caption font-caption flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">inventory_2</span> ગ્રાન્ટ પાત્ર
+                  </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Category 2: Auto-Renewed with Consent -->
+<div class="bg-surface-container-low p-space-lg rounded-xl">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded font-label-md text-label-md font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">sync</span> આપોઆપ નવીકરણ (Auto-Renewed with Consent)
+                </span>
+<span class="text-on-surface-variant font-caption text-caption">૧ યોજના સક્રિય રિન્યુ</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm hover:shadow-md transition-shadow" id="namo-lakshmi-card">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-space-sm">
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-title-lg text-title-lg text-on-surface">નમો લક્ષ્મી યોજના (Namo Lakshmi Yojana - Phase 2)</h4>
+<span class="bg-surface-container text-primary font-caption text-caption px-2 py-0.5 rounded font-semibold">ધોરણ ૧૦ હપ્તો</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                    નિયમિત શિક્ષણ જાળવણી પ્રોત્સાહન • પાત્રતા માપદંડ પૂર્ણ
+                  </p>
+</div>
+<div class="text-right">
+<span class="font-title-lg text-title-lg text-primary">₹ ૧૫,૦૦૦</span>
+<span class="block font-caption text-caption text-secondary">+₹ ૨,૫૦૦ ગત વર્ષ કરતાં વધારો</span>
+</div>
+</div>
+<!-- Rule Verification Pill Chain -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mt-space-md pt-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex items-center gap-2 text-on-surface" id="rule-attendance-box">
+<span class="material-symbols-outlined text-primary text-[18px]" id="rule-attendance-icon">check_circle</span>
+<span class="font-caption text-caption" id="rule-attendance-text">હાજરી ૮૨% (જરૂરિયાત ૮૦%) ✓</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+<span class="font-caption text-caption">આધાર સીડિંગ માન્ય ✓</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">description</span>
+<span class="font-caption text-caption">વાર્ષિક આવક દાખલો માન્ય ✓</span>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between flex-wrap gap-2 text-on-surface-variant font-caption text-caption">
+<span class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[16px]">fingerprint</span> ઓટો-રિન્યુઅલ કન્સેન્ટ સક્રિય (DPDP Act 2023 મુજબ માન્ય સંમતિ)
+                </span>
+<span class="bg-surface-container px-2 py-0.5 rounded text-on-surface">સંમતિ તારીખ: ૧૨ માર્ચ ૨૦૨૬</span>
+</div>
+</div>
+</div>
+<!-- Category 3: Discontinued / Graduated Out -->
+<div class="bg-surface-container-low p-space-lg rounded-xl">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded font-label-md text-label-md font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">block</span> હવે લાગુ પડતી નથી / આપોઆપ મુક્ત
+                </span>
+<span class="text-on-surface-variant font-caption text-caption">૧ યોજના મર્યાદા સમાપ્ત</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-sm opacity-80">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">history_edu</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-on-surface">પૂર્વ-મેટ્રિક પ્રાથમિક શિષ્યવૃત્તિ (Pre-Matric Lower School)</h4>
+<p class="font-caption text-caption text-on-surface-variant">આ યોજના ધોરણ ૮-૯ સુધી પૂરતી મર્યાદિત હતી. ધોરણ ૧૦ માં વિદ્યાર્થી આપોઆપ મુક્ત થાય છે.</p>
+</div>
+</div>
+<span class="bg-surface-container px-3 py-1 rounded-full font-label-md text-label-md text-outline shrink-0">
+                મર્યાદા સમાપ્ત (Discontinued)
+              </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bulk School Simulation Bar -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[24px]">domain_verification</span>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">સમગ્ર શાળા / જિલ્લા સ્તરે રોલઓવર કરો</h3>
+<p class="font-caption text-caption text-on-surface-variant">શ્રી સરદાર પટેલ હાઇસ્કૂલ, આણંદ • બલ્ક રોલઓવર બેચ પરિણામ</p>
+</div>
+</div>
+<button class="bg-surface-container hover:bg-surface-container-high text-primary px-space-md py-1.5 rounded-lg font-label-lg text-label-lg transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">forward_to_inbox</span>
+<span>બલ્ક SMS / વોટ્સએપ ટ્રિગર કરો</span>
+</button>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<div class="flex justify-between items-center mb-1.5 font-label-md text-label-md">
+<span class="text-on-surface">૮૪૨ વિદ્યાર્થીઓમાંથી ૮૩૦ સફળતાપૂર્વક પ્રમોટ</span>
+<span class="text-primary font-bold">૯૮.૬% સફળતા દર</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-3 overflow-hidden">
+<div class="bg-primary h-3 rounded-full transition-all duration-700" style="width: 98.6%"></div>
+</div>
+<div class="flex justify-between items-center mt-2 text-on-surface-variant font-caption text-caption">
+<span>૧૨ કેસ વેરિફિકેશન માટે પેન્ડિંગ (આધાર / ટ્રાન્સફર સર્ટિફિકેટ વિલંબ)</span>
+<span class="text-primary font-semibold">ઓટો-રોલઓવર બેચ ID: #BAT-AND-098</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Interactive Scenario Triggers & Sanity Sandbox (4 cols out of 12 ~ 34%) -->
+<div class="lg:col-span-4 flex flex-col gap-space-xl">
+<!-- Scenario Triggers Card -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm">
+<div class="flex items-center gap-2 mb-space-md">
+<span class="material-symbols-outlined text-secondary text-[24px]">tune</span>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">લાઇવ પરિસ્થિતિ ટ્રિગર્સ</h3>
+<p class="font-caption text-caption text-on-surface-variant">Interactive Scenario Testing Sandbox</p>
+</div>
+</div>
+<div class="flex flex-col gap-space-lg">
+<!-- Scenario 1: Attendance Drop Test -->
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<div class="flex items-center justify-between mb-1">
+<span class="font-title-md text-title-md text-on-surface">૧. હાજરી ઘટાડાની અસર</span>
+<span class="bg-surface-container px-2 py-0.5 rounded text-primary font-bold font-mono" id="attendance-percent-label">૮૨%</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mb-space-sm">
+              હાજરી સ્લાઇડર ખસેડીને સ્કોલરશિપ અટકાવાનો નિયમ ચકાસો.
+            </p>
+<div class="flex flex-col gap-2">
+<input class="w-full accent-primary cursor-pointer h-2 bg-surface-container rounded-lg" id="attendance-slider" max="95" min="60" type="range" value="82"/>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>૬૦% (ગંભીર)</span>
+<span>૭૫% (કટ-ઓફ)</span>
+<span>૯૫% (ઉત્કૃષ્ટ)</span>
+</div>
+</div>
+<div class="mt-space-sm p-space-sm rounded-lg bg-surface-container text-on-surface text-caption font-caption flex items-start gap-1.5 transition-all" id="attendance-alert-box">
+<span class="material-symbols-outlined text-primary text-[18px]" id="attendance-alert-icon">info</span>
+<span id="attendance-alert-text">હાજરી નિયમ મુજબ માન્ય છે (૮૦% ઉપર).</span>
+</div>
+<button class="w-full mt-space-sm bg-surface-container hover:bg-surface-container-high text-primary py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center justify-center gap-1" id="btn-trigger-attendance">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+<span>હાજરી પરિણામ લાગુ કરો</span>
+</button>
+</div>
+<!-- Scenario 2: DBT Payment Simulate -->
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<div class="flex items-center justify-between mb-1">
+<span class="font-title-md text-title-md text-on-surface">૨. DBT ચૂકવણી ટેસ્ટિંગ</span>
+<span class="bg-surface-container px-2 py-0.5 rounded text-on-surface font-caption text-caption">PFMS Bridge</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mb-space-sm">
+              બેંક ટ્રાન્સફર સફળતા અથવા નિષ્ફળતાનું લાઈવ સિમ્યુલેશન.
+            </p>
+<div class="grid grid-cols-2 gap-2 mb-space-sm">
+<button class="p-2 rounded-lg bg-surface-container-lowest shadow-sm font-label-md text-label-md text-primary flex items-center justify-center gap-1 active:scale-95 transition-all" id="btn-dbt-success">
+<span class="material-symbols-outlined text-[16px]">check_circle</span> સફળ DBT
+              </button>
+<button class="p-2 rounded-lg bg-surface-container-lowest shadow-sm font-label-md text-label-md text-error flex items-center justify-center gap-1 active:scale-95 transition-all" id="btn-dbt-fail">
+<span class="material-symbols-outlined text-[16px]">cancel</span> NPCI અનસીડેડ
+              </button>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container text-on-surface text-caption font-caption flex items-center gap-2" id="dbt-status-box">
+<span class="material-symbols-outlined text-primary text-[18px]">account_balance</span>
+<span id="dbt-status-text">સ્ટેટ બેંક ઓફ ઇન્ડિયા (Aadhaar Seeding: Active)</span>
+</div>
+</div>
+<!-- Scenario 3: Income Certificate Expiry -->
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<div class="flex items-center justify-between mb-1">
+<span class="font-title-md text-title-md text-on-surface">૩. આવક પ્રમાણપત્ર ચકાસણી</span>
+<span class="bg-surface-container text-primary font-caption text-caption px-2 py-0.5 rounded">Digital Seva</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">
+              પ્રમાણપત્ર માન્યતા: ૩૧ માર્ચ ૨૦૨૭ (માન્ય છે). ડીજીલોકર કનેક્શન સક્રિય.
+            </p>
+<div class="mt-space-sm flex items-center justify-between text-caption font-caption bg-surface-container-lowest p-2 rounded-lg">
+<span class="text-on-surface">વાર્ષિક આવક: ₹ ૧,૨૦,૦૦૦</span>
+<span class="text-primary font-bold">પાત્રતા મર્યાદા અંદર</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Projected Fiscal Impact Mini Chart -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">શૈક્ષણિક વર્ષ ૨૦૨૬-૨૭ બજેટ અંદાજ</h3>
+<p class="font-caption text-caption text-on-surface-variant">Projected Fiscal Impact &amp; Treasury Demand</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[24px]">query_stats</span>
+</div>
+<!-- Inline SVG Bar Comparison -->
+<div class="bg-surface-container-low p-space-md rounded-xl mb-space-md">
+<div class="flex items-center justify-between text-caption font-caption text-on-surface-variant mb-2">
+<span>બજેટ સરખામણી (કરોડમાં)</span>
+<span class="text-secondary font-bold">+૨૦.૧% અંદાજિત વધારો</span>
+</div>
+<svg aria-hidden="true" class="w-full h-24 overflow-visible" viewbox="0 0 320 90">
+<!-- Grid lines -->
+<line class="text-outline-variant" stroke="currentColor" stroke-dasharray="2" x1="60" x2="310" y1="20" y2="20"></line>
+<line class="text-outline-variant" stroke="currentColor" stroke-dasharray="2" x1="60" x2="310" y1="55" y2="55"></line>
+<!-- 2025-26 Bar -->
+<text class="fill-current text-on-surface-variant text-[11px] font-sans" x="0" y="24">2025-26</text>
+<rect class="fill-current text-primary" height="16" rx="4" width="180" x="65" y="12"></rect>
+<text class="fill-current text-on-surface text-[11px] font-bold" x="252" y="24">₹ ૪૨.૬ કરોડ</text>
+<!-- 2026-27 Bar -->
+<text class="fill-current text-on-surface-variant text-[11px] font-sans" x="0" y="59">2026-27</text>
+<rect class="fill-current text-secondary-container" height="16" rx="4" width="216" x="65" y="47"></rect>
+<text class="fill-current text-secondary text-[11px] font-bold" x="288" y="59">₹ ૫૧.૨ કરોડ</text>
+</svg>
+<div class="mt-2 pt-2 flex items-center justify-between text-caption font-caption text-on-surface-variant">
+<span>તિજોરી સલામતી ગુણાંક:</span>
+<span class="text-primary font-bold">૯૪% ફાળવણી અંદર (Safe Surplus)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container text-on-surface">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0">shield</span>
+<p class="font-caption text-caption">
+            આણંદ જિલ્લા સ્કોલરશિપ નોડલ ફંડ ૨૦૨૬ માટે પૂરતું ઉપલબ્ધ છે. કોઈ વધારાની ગ્રાન્ટ મંજૂરીની જરૂર નથી.
+          </p>
+</div>
+</div>
+<!-- Danger / Reset Zone Card -->
+<div class="bg-surface-container-lowest p-space-xl rounded-xl shadow-sm">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-error text-[24px]">history</span>
+<h3 class="font-title-lg text-title-lg text-on-surface">ડેમો ડેટા રીસેટ (Reset Sandbox)</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+          બધા સિમ્યુલેટેડ ફેરફારો સાફ કરી મૂળ ડેમો સ્થિતિ (Riya Patel Class 9 Base Profile) પર પાછા ફરો.
+        </p>
+<button class="w-full bg-surface-container-low hover:bg-error-container text-error hover:text-on-error-container p-space-md rounded-xl font-title-md text-title-md transition-all flex items-center justify-center gap-2" id="btn-master-reset">
+<span class="material-symbols-outlined text-[20px]">restart_alt</span>
+<span>મૂળ સ્થિતિમાં રીસેટ કરો (Reset Base State)</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    // Interactive Elements
+    const btnRunSim = document.getElementById('btn-run-simulation');
+    const engineDot = document.getElementById('engine-status-dot');
+    const engineTime = document.getElementById('engine-status-time');
+    
+    // Attendance Elements
+    const attSlider = document.getElementById('attendance-slider');
+    const attLabel = document.getElementById('attendance-percent-label');
+    const attBadge = document.getElementById('current-attendance-badge');
+    const attAlertBox = document.getElementById('attendance-alert-box');
+    const attAlertIcon = document.getElementById('attendance-alert-icon');
+    const attAlertText = document.getElementById('attendance-alert-text');
+    const btnTriggerAtt = document.getElementById('btn-trigger-attendance');
+    const ruleAttIcon = document.getElementById('rule-attendance-icon');
+    const ruleAttText = document.getElementById('rule-attendance-text');
+    
+    // DBT Elements
+    const btnDbtSuccess = document.getElementById('btn-dbt-success');
+    const btnDbtFail = document.getElementById('btn-dbt-fail');
+    const dbtStatusBox = document.getElementById('dbt-status-box');
+    const dbtStatusText = document.getElementById('dbt-status-text');
+    
+    // Reset Elements
+    const btnQuickReset = document.getElementById('btn-quick-reset');
+    const btnMasterReset = document.getElementById('btn-master-reset');
+
+    // Run Engine Simulation Click
+    if (btnRunSim) {
+      btnRunSim.addEventListener('click', function() {
+        btnRunSim.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">refresh</span><span>નિયમ એન્જિન ચકાસી રહ્યું છે...</span>';
+        btnRunSim.disabled = true;
+
+        setTimeout(function() {
+          btnRunSim.innerHTML = '<span class="material-symbols-outlined text-[20px]">check_circle</span><span>સફળતાપૂર્વક પ્રમોટ થયેલ!</span>';
+          if (engineDot) {
+            engineDot.className = 'w-3 h-3 rounded-full bg-secondary animate-ping';
+            setTimeout(() => {
+              engineDot.className = 'w-3 h-3 rounded-full bg-primary';
+            }, 1000);
+          }
+          if (engineTime) {
+            engineTime.innerHTML = '<span class="material-symbols-outlined text-[14px]">speed</span> Engine Re-Run Complete in 92ms';
+          }
+          setTimeout(() => {
+            btnRunSim.innerHTML = '<span class="material-symbols-outlined text-[20px]">rocket_launch</span><span>ફરીથી નિયમ એન્જિન ચલાવો</span>';
+            btnRunSim.disabled = false;
+          }, 2200);
+        }, 600);
+      });
+    }
+
+    // Attendance slider change
+    if (attSlider) {
+      const updateAttendanceUI = function(val) {
+        if (attLabel) attLabel.innerText = val + '%';
+        if (attBadge) attBadge.innerText = 'હાજરી: ' + val + '%';
+
+        if (val < 75) {
+          if (attAlertBox) {
+            attAlertBox.className = 'mt-space-sm p-space-sm rounded-lg bg-error-container text-on-error-container text-caption font-caption flex items-start gap-1.5 transition-all';
+          }
+          if (attAlertIcon) {
+            attAlertIcon.innerText = 'warning';
+            attAlertIcon.className = 'material-symbols-outlined text-error text-[18px]';
+          }
+          if (attAlertText) {
+            attAlertText.innerText = 'ચેતવણી: ૭૫% થી ઓછી હાજરી! નમો લક્ષ્મી યોજના હપ્તો અટકી શકે છે.';
+          }
+          if (ruleAttIcon) {
+            ruleAttIcon.innerText = 'cancel';
+            ruleAttIcon.className = 'material-symbols-outlined text-error text-[18px]';
+          }
+          if (ruleAttText) {
+            ruleAttText.innerText = 'હાજરી ' + val + '% (જરૂરિયાત ૮૦%) ✕ અયોગ્ય';
+            ruleAttText.className = 'font-caption text-caption text-error font-semibold';
+          }
+        } else {
+          if (attAlertBox) {
+            attAlertBox.className = 'mt-space-sm p-space-sm rounded-lg bg-surface-container text-on-surface text-caption font-caption flex items-start gap-1.5 transition-all';
+          }
+          if (attAlertIcon) {
+            attAlertIcon.innerText = 'check_circle';
+            attAlertIcon.className = 'material-symbols-outlined text-primary text-[18px]';
+          }
+          if (attAlertText) {
+            attAlertText.innerText = 'હાજરી નિયમ મુજબ માન્ય છે (૮૦% ઉપર). યોજના સુરક્ષિત.';
+          }
+          if (ruleAttIcon) {
+            ruleAttIcon.innerText = 'check_circle';
+            ruleAttIcon.className = 'material-symbols-outlined text-primary text-[18px]';
+          }
+          if (ruleAttText) {
+            ruleAttText.innerText = 'હાજરી ' + val + '% (જરૂરિયાત ૮૦%) ✓ માન્ય';
+            ruleAttText.className = 'font-caption text-caption text-on-surface';
+          }
+        }
+      };
+
+      attSlider.addEventListener('input', function(e) {
+        updateAttendanceUI(e.target.value);
+      });
+
+      if (btnTriggerAtt) {
+        btnTriggerAtt.addEventListener('click', function() {
+          updateAttendanceUI(attSlider.value);
+          btnTriggerAtt.classList.add('bg-surface-container-high');
+          setTimeout(() => btnTriggerAtt.classList.remove('bg-surface-container-high'), 400);
+        });
+      }
+    }
+
+    // DBT Triggers
+    if (btnDbtSuccess && dbtStatusBox && dbtStatusText) {
+      btnDbtSuccess.addEventListener('click', function() {
+        dbtStatusBox.className = 'p-space-sm rounded-lg bg-surface-container text-primary text-caption font-caption flex items-center gap-2';
+        dbtStatusText.innerText = 'DBT સફળ: ₹ ૧૫,૦૦૦ એકાઉન્ટ (A/C **4589) માં ક્રેડિટ સિમ્યુલેટ થયું ✓';
+      });
+    }
+
+    if (btnDbtFail && dbtStatusBox && dbtStatusText) {
+      btnDbtFail.addEventListener('click', function() {
+        dbtStatusBox.className = 'p-space-sm rounded-lg bg-error-container text-on-error-container text-caption font-caption flex items-center gap-2';
+        dbtStatusText.innerText = 'DBT નિષ્ફળ: NPCI મેપર અન-સીડેડ (Reject Code: NPCI-042)';
+      });
+    }
+
+    // Reset Handlers
+    const resetBaseState = function() {
+      if (attSlider) {
+        attSlider.value = 82;
+        if (attLabel) attLabel.innerText = '૮૨%';
+        if (attBadge) attBadge.innerText = 'હાજરી: ૮૨% (નિયમિત)';
+      }
+      if (attAlertBox) {
+        attAlertBox.className = 'mt-space-sm p-space-sm rounded-lg bg-surface-container text-on-surface text-caption font-caption flex items-start gap-1.5 transition-all';
+      }
+      if (attAlertIcon) {
+        attAlertIcon.innerText = 'info';
+        attAlertIcon.className = 'material-symbols-outlined text-primary text-[18px]';
+      }
+      if (attAlertText) {
+        attAlertText.innerText = 'હાજરી નિયમ મુજબ માન્ય છે (૮૦% ઉપર).';
+      }
+      if (ruleAttIcon) {
+        ruleAttIcon.innerText = 'check_circle';
+        ruleAttIcon.className = 'material-symbols-outlined text-primary text-[18px]';
+      }
+      if (ruleAttText) {
+        ruleAttText.innerText = 'હાજરી ૮૨% (જરૂરિયાત ૮૦%) ✓';
+        ruleAttText.className = 'font-caption text-caption text-on-surface';
+      }
+      if (dbtStatusBox && dbtStatusText) {
+        dbtStatusBox.className = 'p-space-sm rounded-lg bg-surface-container text-on-surface text-caption font-caption flex items-center gap-2';
+        dbtStatusText.innerText = 'સ્ટેટ બેંક ઓફ ઇન્ડિયા (Aadhaar Seeding: Active)';
+      }
+      if (engineTime) {
+        engineTime.innerHTML = '<span class="material-symbols-outlined text-[14px]">speed</span> Engine Re-Run Complete in 140ms';
+      }
+    };
+
+    if (btnQuickReset) btnQuickReset.addEventListener('click', resetBaseState);
+    if (btnMasterReset) btnMasterReset.addEventListener('click', resetBaseState);
+
+  })();
+</script></main></div></body></html>
