@@ -196,7 +196,7 @@ export default function LoginPage() {
                 <div className="flex items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-primary font-label-md text-label-md font-semibold">
                     <span className="w-2 h-2 rounded-full bg-primary animate-pulse-dot" />
-                    <T gu="સ્વાગત છે • Vidya Pragati Setu" en="Welcome to Vidya Pragati Setu" hi="Vidya Pragati Setu में स्वागत है" />
+                    <T gu="સ્વાગત છે • Vidya Pragati Setu" en="Welcome to Vidya Pragati Setu" hi="विद्या प्रगति सेतु में स्वागत है" />
                   </span>
                 </div>
                 <h2 className="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">

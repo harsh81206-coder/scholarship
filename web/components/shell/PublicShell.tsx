@@ -73,8 +73,8 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
             </p>
           </div>
           <div className="text-on-primary/70 font-body-sm text-body-sm">
-            <p>Helpline: 1800-233-5500</p>
-            <p>Email: support@vps.gujarat.gov.in</p>
+            <p><T gu="સહાયવાણી:" en="Helpline:" hi="हेल्पलाइन:" /> 1800-233-5500</p>
+            <p><T gu="ઇમેઇલ:" en="Email:" hi="ईमेल:" /> support@vps.gujarat.gov.in</p>
           </div>
           <div className="text-on-primary/70 font-caption text-caption">
             <T

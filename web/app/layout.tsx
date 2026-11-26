@@ -20,7 +20,7 @@ const notoGujarati = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "વિદ્યા પ્રગતિ સેતુ | Vidya Pragati Setu — Gujarat Scholarship Portal",
+  title: "Vidya Pragati Setu — Gujarat Scholarship Portal",
   description:
     "Gujarat Government scholarship platform for students — apply for Namo Lakshmi, NMMS, Saraswati Sadhna Cycle and more. Single ID, one-click application, direct DBT to bank.",
   keywords: ["Gujarat scholarship", "Namo Lakshmi", "NMMS", "student portal", "DBT", "vidya pragati setu"],
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="gu" className={`${inter.variable} ${notoGujarati.variable}`}>
+    <html lang="en" className={`${inter.variable} ${notoGujarati.variable}`}>
       <body className="font-sans bg-surface text-on-surface antialiased">
         <Providers>
           <DemoBar />

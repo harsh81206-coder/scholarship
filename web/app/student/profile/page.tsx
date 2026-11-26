@@ -1078,9 +1078,9 @@ export default function StudentProfilePage() {
         <footer className="pt-4 pb-6 text-center space-y-1">
           <p className="font-caption text-caption text-on-surface-variant">
             <T
-              gu="ગુજરાત સરકાર શિક્ષણ વિભાગ • DPDP Act 2023 Compliant"
+              gu="ગુજરાત સરકાર શિક્ષણ વિભાગ • DPDP અધિનિયમ 2023નું પાલન"
               en="Government of Gujarat Education Department • DPDP Act 2023 Compliant"
-              hi="गुजरात सरकार शिक्षा विभाग • DPDP Act 2023 Compliant"
+              hi="गुजरात सरकार शिक्षा विभाग • DPDP अधिनियम 2023 का अनुपालन"
             />
           </p>
           <p className="font-caption text-caption text-outline text-[11px]">

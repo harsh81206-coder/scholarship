@@ -65,7 +65,7 @@ export const useAppStore = create<AppStore>()(
   persist(
     (set, get) => ({
       // ── Language ──────────────────────────────────────────────────────────
-      lang: "gu",
+      lang: "en",
       setLang: (lang) => set({ lang }),
 
       // ── Role ──────────────────────────────────────────────────────────────

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { StudentShell } from "@/components/shell/StudentShell";
 import { T } from "@/components/T";
+import { localizedName } from "@/lib/i18n";
 import { Icon } from "@/components/Icon";
 import { Skeleton } from "@/components/states/Skeleton";
 import { ErrorState } from "@/components/states/ErrorState";
@@ -137,7 +138,7 @@ export default function DocumentUploadOCRPage() {
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
                 <span className="font-title-md text-title-md text-on-surface font-semibold truncate">
-                  {profile?.name_en ?? "Student"}
+                  {profile ? localizedName(profile, lang) : "Student"}
                 </span>
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-surface-container text-primary font-label-md text-[11px] font-bold">
                   {profile?.grade ? `Gr ${profile.grade}` : <T gu="ધોરણ અજ્ઞાત" en="Grade unavailable" hi="कक्षा उपलब्ध नहीं" />}

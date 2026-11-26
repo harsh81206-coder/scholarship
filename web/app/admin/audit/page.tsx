@@ -1140,12 +1140,12 @@ export default function AdminAuditPage() {
                 }}
                 className="w-full h-11 px-3 rounded-lg bg-surface border border-outline-variant/70 text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary shadow-sm cursor-pointer"
               >
-                <option value="all">ભૂમિકા: તમામ (All Actors)</option>
-                <option value="user">વપરાશકર્તા (All Users)</option>
-                <option value="system">સિસ્ટમ / AI (System Services)</option>
-                <option value="state_admin">State Admin (સચિવાલય)</option>
-                <option value="deo">DEO Office (જિલ્લા)</option>
-                <option value="principal">School Principal (શાળા)</option>
+                <option value="all"><T gu="ભૂમિકા: તમામ" en="All Actors" /></option>
+                <option value="user"><T gu="વપરાશકર્તા" en="All Users" /></option>
+                <option value="system"><T gu="સિસ્ટમ / AI" en="System Services" /></option>
+                <option value="state_admin"><T gu="સચિવાલય" en="State Admin" /></option>
+                <option value="deo"><T gu="જિલ્લા" en="DEO Office" /></option>
+                <option value="principal"><T gu="શાળા" en="School Principal" /></option>
               </select>
             </div>
 
@@ -1159,12 +1159,12 @@ export default function AdminAuditPage() {
                 }}
                 className="w-full h-11 px-3 rounded-lg bg-surface border border-outline-variant/70 text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary shadow-sm cursor-pointer"
               >
-                <option value="all">ક્રિયા: તમામ (All Actions)</option>
-                <option value="APPROVE">APPROVE (મંજૂર)</option>
-                <option value="REJECT">REJECT (નામંજૂર)</option>
-                <option value="CREATE">CREATE (બનાવો)</option>
-                <option value="UPDATE">UPDATE (સુધારો)</option>
-                <option value="DELETE">DELETE (કાઢી નાખો)</option>
+                <option value="all"><T gu="ક્રિયા: તમામ" en="All Actions" /></option>
+                <option value="APPROVE"><T gu="મંજૂર" en="APPROVE" /></option>
+                <option value="REJECT"><T gu="નામંજૂર" en="REJECT" /></option>
+                <option value="CREATE"><T gu="બનાવો" en="CREATE" /></option>
+                <option value="UPDATE"><T gu="સુધારો" en="UPDATE" /></option>
+                <option value="DELETE"><T gu="કાઢી નાખો" en="DELETE" /></option>
               </select>
             </div>
 
@@ -1178,10 +1178,10 @@ export default function AdminAuditPage() {
                 }}
                 className="w-full h-11 px-3 rounded-lg bg-surface border border-outline-variant/70 text-on-surface font-body-sm text-body-sm focus:outline-none focus:border-primary shadow-sm cursor-pointer"
               >
-                <option value="all">એન્ટિટી: તમામ (All Entities)</option>
-                <option value="Application">Application (અરજી)</option>
-                <option value="Scheme">Scheme (યોજના)</option>
-                <option value="User">User / Account (વપરાશકર્તા)</option>
+                <option value="all"><T gu="એન્ટિટી: તમામ" en="All Entities" /></option>
+                <option value="Application"><T gu="અરજી" en="Application" /></option>
+                <option value="Scheme"><T gu="યોજના" en="Scheme" /></option>
+                <option value="User"><T gu="વપરાશકર્તા" en="User / Account" /></option>
               </select>
             </div>
 
@@ -1192,10 +1192,10 @@ export default function AdminAuditPage() {
                 onChange={(e) => setDateRange(e.target.value)}
                 className="flex-1 h-11 px-2.5 rounded-lg bg-surface border border-outline-variant/70 text-on-surface font-label-md text-label-md focus:outline-none focus:border-primary shadow-sm cursor-pointer truncate"
               >
-                <option value="today">આજે (Today)</option>
+                <option value="today"><T gu="આજે" en="Today" /></option>
                 <option value="7d">૧૯ ફેબ્રુ - ૨૬ ફેબ્રુ ૨૦૨૬ (7d)</option>
                 <option value="30d">છેલ્લા ૩૦ દિવસ (30d)</option>
-                <option value="all">તમામ તારીખો (All Time)</option>
+                <option value="all"><T gu="તમામ તારીખો" en="All Time" /></option>
               </select>
 
               <button

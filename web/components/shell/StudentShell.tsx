@@ -51,7 +51,7 @@ export function StudentShell({ children }: { children: React.ReactNode }) {
         <div className="flex items-center justify-around h-16">
           {navItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/student" && pathname.startsWith(item.href));
-            const label = lang === "en" ? item.en : lang === "hi" ? item.hi : item.gu;
+            const label = item[lang];
             return (
               <Link
                 key={item.href}

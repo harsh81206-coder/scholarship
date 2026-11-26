@@ -1,0 +1,6 @@
+{
+  "language": { "en": "English", "gu": "Gujarati", "hi": "Hindi", "switchTo": "Switch to {language}" },
+  "common": { "loading": "Loading…", "retry": "Retry", "cancel": "Cancel", "save": "Save", "close": "Close", "search": "Search", "noResults": "No results found", "back": "Back", "home": "Home", "login": "Login", "help": "Help & Support" },
+  "demo": { "control": "Demo Control Bar", "switchRole": "Switch Role", "role": "Role", "language": "Language", "otp": "OTP", "cts": "CTS", "switchedTo": "Switched to {role}", "switchFailed": "Could not switch demo role" },
+  "roles": { "student": "Student", "school": "School / Principal", "deo": "District Education Officer", "admin": "State Admin", "vendor": "Vendor", "tpeo": "Taluka Officer", "demo": "Demo Control" }
+}

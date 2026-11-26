@@ -11,6 +11,7 @@ import { ErrorState } from "@/components/states/ErrorState";
 import { EmptyState } from "@/components/states/EmptyState";
 import { ApiModeBadge } from "@/app/student/components/ApiModeBadge";
 import { useApplications, useApplicationTimeline, useMe } from "@/lib/api/hooks";
+import { localizedName, useLang } from "@/lib/i18n";
 
 type TabFilter = "all" | "active" | "completed" | "action";
 
@@ -58,6 +59,7 @@ function ApplicationTimelineView({ appCode }: { appCode: string }) {
 }
 
 export default function ApplicationTrackerPage() {
+  const lang = useLang();
   const { data: profile, isLoading: loadingProfile, error: profileError, refetch: refetchProfile } = useMe();
   const { data, isLoading, error, refetch } = useApplications();
   const [tab, setTab] = useState<TabFilter>("all");
@@ -148,7 +150,11 @@ export default function ApplicationTrackerPage() {
                     <div className="min-w-0">
                       <p className="text-xs font-mono text-primary font-semibold">{app.app_code}</p>
                       <h3 className="text-sm font-bold text-on-surface truncate">
-                        {String(app.scheme_name_en ?? app.scheme_code)}
+                        {localizedName({
+                          name_en: app.scheme_name_en ?? app.scheme_code,
+                          name_gu: app.scheme_name_gu,
+                          name_hi: app.scheme_name_hi,
+                        }, lang)}
                       </h3>
                       <p className="text-[11px] text-on-surface-variant mt-0.5">
                         {app.amount > 0 ? `₹${Number(app.amount).toLocaleString("en-IN")}` : "Free Bicycle"} •{" "}

@@ -452,7 +452,7 @@ export default function AdminAnalyticsDashboard() {
                 </label>
                 <div className="relative">
                   <select className="w-full h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer font-medium border border-outline-variant">
-                    <option>AY 2025-26 (ચાલુ / Live)</option>
+                    <option><T gu="ચાલુ / Live" en="AY 2025-26" /></option>
                     <option>AY 2024-25</option>
                     <option>AY 2023-24</option>
                   </select>
@@ -469,8 +469,8 @@ export default function AdminAnalyticsDashboard() {
                 </label>
                 <div className="relative">
                   <select className="w-full h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer font-medium border border-outline-variant">
-                    <option>તમામ ૮ યોજનાઓ (All 8 Schemes)</option>
-                    <option>નમો લક્ષ્મી યોજના (Namo Lakshmi)</option>
+                    <option><T gu="તમામ ૮ યોજનાઓ" en="All 8 Schemes" /></option>
+                    <option><T gu="નમો લક્ષ્મી યોજના" en="Namo Lakshmi" /></option>
                     <option>સરસ્વતી સાધના સાયકલ યોજના</option>
                     <option>NMMS મેરિટ સ્કોલરશિપ</option>
                     <option>OBC/SEBC પૂર્વ-મેટ્રિક સહાય</option>
@@ -493,17 +493,17 @@ export default function AdminAnalyticsDashboard() {
                     onChange={(e) => setSelectedDistrictId(e.target.value)}
                     className="w-full h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer font-medium border border-outline-variant"
                   >
-                    <option value="anand">આણંદ (Anand - Top Rank)</option>
-                    <option value="gandhinagar">ગાંધીનગર (Gandhinagar)</option>
-                    <option value="mehsana">મહેસાણા (Mehsana)</option>
-                    <option value="navsari">નવસારી (Navsari)</option>
-                    <option value="ahmedabad">અમદાવાદ (Ahmedabad)</option>
-                    <option value="rajkot">રાજકોટ (Rajkot)</option>
-                    <option value="vadodara">વડોદરા (Vadodara)</option>
-                    <option value="surat">સુરત (Surat)</option>
-                    <option value="bhavnagar">ભાવનગર (Bhavnagar)</option>
-                    <option value="dahod">દાહોદ (Dahod - Focus)</option>
-                    <option value="dang">ડાંગ (Dang - Focus)</option>
+                    <option value="anand"><T gu="આણંદ" en="Anand - Top Rank" /></option>
+                    <option value="gandhinagar"><T gu="ગાંધીનગર" en="Gandhinagar" /></option>
+                    <option value="mehsana"><T gu="મહેસાણા" en="Mehsana" /></option>
+                    <option value="navsari"><T gu="નવસારી" en="Navsari" /></option>
+                    <option value="ahmedabad"><T gu="અમદાવાદ" en="Ahmedabad" /></option>
+                    <option value="rajkot"><T gu="રાજકોટ" en="Rajkot" /></option>
+                    <option value="vadodara"><T gu="વડોદરા" en="Vadodara" /></option>
+                    <option value="surat"><T gu="સુરત" en="Surat" /></option>
+                    <option value="bhavnagar"><T gu="ભાવનગર" en="Bhavnagar" /></option>
+                    <option value="dahod"><T gu="દાહોદ" en="Dahod - Focus" /></option>
+                    <option value="dang"><T gu="ડાંગ" en="Dang - Focus" /></option>
                   </select>
                   <span className="material-symbols-outlined absolute right-2.5 top-2.5 text-outline pointer-events-none text-[20px]">
                     map
@@ -518,8 +518,8 @@ export default function AdminAnalyticsDashboard() {
                 </label>
                 <div className="relative">
                   <select className="w-full h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm appearance-none focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer font-medium border border-outline-variant">
-                    <option>આ શૈક્ષણિક સત્ર (This Session)</option>
-                    <option>છેલ્લા ૩૦ દિવસ (Last 30 Days)</option>
+                    <option><T gu="આ શૈક્ષણિક સત્ર" en="This Session" /></option>
+                    <option><T gu="છેલ્લા ૩૦ દિવસ" en="Last 30 Days" /></option>
                     <option>ચાલુ નાણાકીય ત્રિમાસિક (Q3)</option>
                     <option>સંપૂર્ણ વાર્ષિક હિસાબ (FY 2025-26)</option>
                   </select>
@@ -1259,10 +1259,10 @@ export default function AdminAnalyticsDashboard() {
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setTierFilter(e.target.value as "all" | "high" | "average" | "focus")}
                     className="h-9 px-2.5 rounded-lg bg-surface-container-low text-on-surface text-body-sm border border-outline-variant focus:outline-none focus:ring-1 focus:ring-primary"
                   >
-                    <option value="all">બધા જિલ્લા (All)</option>
-                    <option value="high">&gt;૯૦% (High)</option>
-                    <option value="average">૭૫-૯૦% (Avg)</option>
-                    <option value="focus">&lt;૭૫% (Alerts)</option>
+                    <option value="all"><T gu="બધા જિલ્લા" en="All" /></option>
+                    <option value="high"><T gu="&gt;૯૦%" en="High" /></option>
+                    <option value="average"><T gu="૭૫-૯૦%" en="Avg" /></option>
+                    <option value="focus"><T gu="&lt;૭૫%" en="Alerts" /></option>
                   </select>
                 </div>
               </div>
@@ -1853,8 +1853,7 @@ export default function AdminAnalyticsDashboard() {
                     <T gu="સૂચિત સમય" en="Proposed Time" hi="प्रस्तावित समय" />
                   </label>
                   <div className="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant text-body-sm font-medium">
-                    આજે સાંજે ૦૫:૦૦ PM • VSK વિડીયો કોન્ફરન્સ હબ (NIC)
-                  </div>
+                    <T gu="આજે સાંજે ૦૫:૦૦ PM • VSK વિડીયો કોન્ફરન્સ હબ" en="NIC" /></div>
                 </div>
               </div>
 

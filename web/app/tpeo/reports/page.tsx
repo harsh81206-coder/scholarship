@@ -22,7 +22,7 @@ export default function TpeoReportsPage() {
             <T gu="TPEO Re." en="TPEO Reports & Analytics" hi="TPEO रिपोर्ट" />
           </h1>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-            <T gu="Anand Taluka · Jun–Nov 2026" en="Anand Taluka · Jun–Nov 2026" hi="आणंद तालुका · Jun–Nov 2026" />
+            <T gu="Anand Taluka · Jun–Nov 2026" en="Anand Taluka · Jun–Nov 2026" hi="आणंद तालुका · जून–नवंबर 2026" />
           </p>
         </div>
 

@@ -992,12 +992,12 @@ export default function SchoolRecordsPage() {
                 onChange={(e) => setSelectedClass(e.target.value)}
                 className="h-9 pl-3 pr-8 rounded-lg bg-surface-container border border-outline-variant/60 text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary appearance-none cursor-pointer"
               >
-                <option value="all">વર્ગ: તમામ વર્ગો (All Classes)</option>
-                <option value="9-B">ધોરણ ૯-B (Class 9-B)</option>
-                <option value="9-A">ધોરણ ૯-A (Class 9-A)</option>
-                <option value="10-A">ધોરણ ૧૦-A (Class 10-A)</option>
-                <option value="11-Science">ધોરણ ૧૧-વિજ્ઞાન (Class 11-Sci)</option>
-                <option value="12-General">ધોરણ ૧૨-સામાન્ય (Class 12-Gen)</option>
+                <option value="all"><T gu="વર્ગ: તમામ વર્ગો" en="All Classes" /></option>
+                <option value="9-B"><T gu="ધોરણ ૯-B" en="Class 9-B" /></option>
+                <option value="9-A"><T gu="ધોરણ ૯-A" en="Class 9-A" /></option>
+                <option value="10-A"><T gu="ધોરણ ૧૦-A" en="Class 10-A" /></option>
+                <option value="11-Science"><T gu="ધોરણ ૧૧-વિજ્ઞાન" en="Class 11-Sci" /></option>
+                <option value="12-General"><T gu="ધોરણ ૧૨-સામાન્ય" en="Class 12-Gen" /></option>
               </select>
               <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant text-[16px]">
                 expand_more

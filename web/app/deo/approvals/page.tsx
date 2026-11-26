@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/states/Skeleton";
 import { ErrorState } from "@/components/states/ErrorState";
 import { EmptyState } from "@/components/states/EmptyState";
 import { useAppStore } from "@/lib/store";
+import { localizedName } from "@/lib/i18n";
 import { useApplications, useBulkApprove, useCreateDelegation, useDelegations } from "@/lib/api/hooks";
 import type { ApplicationSummary } from "@/lib/api/resources";
 
@@ -17,6 +18,7 @@ const EMPTY_APPLICATIONS: ApplicationSummary[] = [];
 type RouteTab = "all" | "auto" | "taluka" | "deo";
 
 export default function DeOApprovalsPage() {
+  const lang = useAppStore((s) => s.lang);
   const showSuccess = useAppStore((s) => s.showSuccess);
   const showError = useAppStore((s) => s.showError);
 
@@ -232,7 +234,11 @@ export default function DeOApprovalsPage() {
                         </div>
                       </td>
                       <td className="p-3 font-mono text-xs text-primary font-semibold">{app.app_code}</td>
-                      <td className="p-3">{String(app.scheme_name_en ?? app.scheme_code)}</td>
+                      <td className="p-3">{localizedName({
+                        name_en: app.scheme_name_en ?? app.scheme_code,
+                        name_gu: app.scheme_name_gu,
+                        name_hi: app.scheme_name_hi,
+                      }, lang)}</td>
                       <td className="p-3 font-semibold">
                         {app.amount > 0 ? `₹${Number(app.amount).toLocaleString("en-IN")}` : "Bicycle"}
                       </td>

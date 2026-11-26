@@ -27,7 +27,11 @@ export function MobileShell({ children, role }: { children: React.ReactNode; rol
               <T gu="વિદ્યા પ્રગતિ સેતુ" en="Vidya Pragati Setu" hi="विद्या प्रगति सेतु" />
             </p>
             <p className="truncate font-caption text-on-surface-variant">
-              {role === "school" ? "Dr. Kalpesh Shah" : "TPEO Borsad"}
+              {role === "school" ? (
+                <T gu="ડૉ. કલ્પેશ શાહ" en="Dr. Kalpesh Shah" hi="डॉ. कल्पेश शाह" />
+              ) : (
+                <T gu="TPEO બોરસદ" en="TPEO Borsad" hi="TPEO बोरसद" />
+              )}
             </p>
           </div>
         </div>

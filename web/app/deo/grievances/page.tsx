@@ -1051,10 +1051,10 @@ export default function DeoGrievancePage() {
                 onChange={(e) => setTypeFilter(e.target.value)}
                 className="h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer appearance-none border border-outline-variant"
               >
-                <option value="all">પ્રકાર: તમામ (All Types)</option>
-                <option value="Payment">Payment (DBT / બેંક / PFMS)</option>
-                <option value="Process">Process (સાયકલ / OTP)</option>
-                <option value="Document">Document (દાખલા / KYC)</option>
+                <option value="all"><T gu="પ્રકાર: તમામ" en="All Types" /></option>
+                <option value="Payment"><T gu="DBT / બેંક / PFMS" en="Payment" /></option>
+                <option value="Process"><T gu="સાયકલ / OTP" en="Process" /></option>
+                <option value="Document"><T gu="દાખલા / KYC" en="Document" /></option>
               </select>
               <span className="absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none">
                 <Icon name="arrow_drop_down" size={18} />
@@ -1068,13 +1068,13 @@ export default function DeoGrievancePage() {
                 onChange={(e) => setTalukaFilter(e.target.value)}
                 className="h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer appearance-none border border-outline-variant"
               >
-                <option value="all">તાલુકો: તમામ (All Talukas)</option>
-                <option value="Anand">આણંદ (Anand)</option>
-                <option value="Tarapur">તારાપુર (Tarapur)</option>
-                <option value="Umreth">ઉમરેઠ (Umreth)</option>
-                <option value="Anklav">આંકલાવ (Anklav)</option>
-                <option value="Khambhat">ખંભાત (Khambhat)</option>
-                <option value="Petlad">પેટલાદ (Petlad)</option>
+                <option value="all"><T gu="તાલુકો: તમામ" en="All Talukas" /></option>
+                <option value="Anand"><T gu="આણંદ" en="Anand" /></option>
+                <option value="Tarapur"><T gu="તારાપુર" en="Tarapur" /></option>
+                <option value="Umreth"><T gu="ઉમરેઠ" en="Umreth" /></option>
+                <option value="Anklav"><T gu="આંકલાવ" en="Anklav" /></option>
+                <option value="Khambhat"><T gu="ખંભાત" en="Khambhat" /></option>
+                <option value="Petlad"><T gu="પેટલાદ" en="Petlad" /></option>
               </select>
               <span className="absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none">
                 <Icon name="arrow_drop_down" size={18} />
@@ -1088,10 +1088,10 @@ export default function DeoGrievancePage() {
                 onChange={(e) => setPriorityFilter(e.target.value)}
                 className="h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer appearance-none border border-outline-variant"
               >
-                <option value="all">પ્રાથમિકતા: તમામ (All Priority)</option>
-                <option value="critical">ગંભીર (Critical / SLA Risk)</option>
-                <option value="medium">મધ્યમ (Medium)</option>
-                <option value="normal">સામાન્ય (Normal)</option>
+                <option value="all"><T gu="પ્રાથમિકતા: તમામ" en="All Priority" /></option>
+                <option value="critical"><T gu="ગંભીર" en="Critical / SLA Risk" /></option>
+                <option value="medium"><T gu="મધ્યમ" en="Medium" /></option>
+                <option value="normal"><T gu="સામાન્ય" en="Normal" /></option>
               </select>
               <span className="absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none">
                 <Icon name="arrow_drop_down" size={18} />
@@ -1105,11 +1105,11 @@ export default function DeoGrievancePage() {
                 onChange={(e) => setStatusFilter(e.target.value)}
                 className="h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer appearance-none border border-outline-variant"
               >
-                <option value="all">સ્થિતિ: તમામ (All Status)</option>
-                <option value="new">નવી (New)</option>
-                <option value="inprogress">પ્રક્રિયા હેઠળ (In Progress)</option>
-                <option value="escalated">રાજ્ય સ્તરે (Escalated)</option>
-                <option value="resolved">ઉકેલાયેલ (Resolved)</option>
+                <option value="all"><T gu="સ્થિતિ: તમામ" en="All Status" /></option>
+                <option value="new"><T gu="નવી" en="New" /></option>
+                <option value="inprogress"><T gu="પ્રક્રિયા હેઠળ" en="In Progress" /></option>
+                <option value="escalated"><T gu="રાજ્ય સ્તરે" en="Escalated" /></option>
+                <option value="resolved"><T gu="ઉકેલાયેલ" en="Resolved" /></option>
               </select>
               <span className="absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none">
                 <Icon name="arrow_drop_down" size={18} />
@@ -1416,10 +1416,10 @@ export default function DeoGrievancePage() {
                           <div className="mt-3 pt-2.5 border-t border-surface-container-low flex items-center justify-between text-xs">
                             <div className="flex items-center gap-1 text-emerald-700 font-semibold text-[11px]">
                               <Icon name="star" size={13} className="text-amber-500" />
-                              5-Star સંતોષ
+                              <T gu="૫-સ્ટાર સંતોષ" en="5-Star satisfaction" hi="5-स्टार संतुष्टि" />
                             </div>
                             <span className="text-on-surface-variant text-[11px]">
-                              {item.daysOpen} દિવસમાં નિકાલ
+                              <T gu="{days} દિવસમાં નિકાલ" en="Resolved in {days} days" hi="{days} दिनों में हल" values={{ days: item.daysOpen }} />
                             </span>
                           </div>
                         </div>
@@ -1735,10 +1735,10 @@ export default function DeoGrievancePage() {
                     onChange={(e) => setResponseTemplate(e.target.value)}
                     className="w-full h-10 pl-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-xs focus:outline-none focus:ring-2 focus:ring-primary appearance-none border border-outline-variant"
                   >
-                    <option value="vendor">વેન્ડર રિપ્લેસમેન્ટ નોટિસ (Vendor Replacement 48hr Order)</option>
-                    <option value="principal">આચાર્યને તાકીદ સૂચના (Expedite School Principal Notice)</option>
-                    <option value="bank">બેંક કેમ્પિંગ વિશેષ સૂચના (Direct Bank Mandate Order)</option>
-                    <option value="clarification">દસ્તાવેજ પુનઃ ચકાસણી સુનાવણી (Document Clarification Notice)</option>
+                    <option value="vendor"><T gu="વેન્ડર રિપ્લેસમેન્ટ નોટિસ" en="Vendor Replacement 48hr Order" /></option>
+                    <option value="principal"><T gu="આચાર્યને તાકીદ સૂચના" en="Expedite School Principal Notice" /></option>
+                    <option value="bank"><T gu="બેંક કેમ્પિંગ વિશેષ સૂચના" en="Direct Bank Mandate Order" /></option>
+                    <option value="clarification"><T gu="દસ્તાવેજ પુનઃ ચકાસણી સુનાવણી" en="Document Clarification Notice" /></option>
                   </select>
                   <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-outline pointer-events-none">
                     <Icon name="expand_more" size={18} />
@@ -1791,10 +1791,10 @@ export default function DeoGrievancePage() {
                       }}
                       className="w-full text-on-surface bg-transparent font-label-md text-xs font-bold focus:outline-none cursor-pointer appearance-none"
                     >
-                      <option value="new">નવી (New)</option>
-                      <option value="inprogress">પ્રક્રિયા હેઠળ (In Progress)</option>
-                      <option value="escalated">રાજ્ય સ્તરે (Escalated)</option>
-                      <option value="resolved">નિકાલ પૂર્ણ (Resolved)</option>
+                      <option value="new"><T gu="નવી" en="New" /></option>
+                      <option value="inprogress"><T gu="પ્રક્રિયા હેઠળ" en="In Progress" /></option>
+                      <option value="escalated"><T gu="રાજ્ય સ્તરે" en="Escalated" /></option>
+                      <option value="resolved"><T gu="નિકાલ પૂર્ણ" en="Resolved" /></option>
                     </select>
                     <span className="absolute right-0 top-1/2 -translate-y-1/2 text-outline pointer-events-none">
                       <Icon name="arrow_drop_down" size={16} />
@@ -1928,7 +1928,7 @@ export default function DeoGrievancePage() {
 
               <div>
                 <label className="font-label-md text-xs font-semibold text-on-surface block mb-1">
-                  સત્તાવાર નિવારણ નોંધ (Resolution Remarks):
+                  <T gu="સત્તાવાર નિવારણ નોંધ:" en="Resolution Remarks:" hi="आधिकारिक समाधान टिप्पणी:" />
                 </label>
                 <textarea
                   value={actionNotes}
@@ -1993,23 +1993,23 @@ export default function DeoGrievancePage() {
 
               <div>
                 <label className="font-label-md text-xs font-semibold text-on-surface block mb-1">
-                  રાજ્ય વિભાગ પસંદ કરો (Target Directorate):
+                  <T gu="રાજ્ય વિભાગ પસંદ કરો:" en="Select Target Directorate:" hi="लक्षित विभाग चुनें:" />
                 </label>
                 <select
                   value={escalateDepartment}
                   onChange={(e) => setEscalateDepartment(e.target.value)}
                   className="w-full h-10 px-3 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface text-xs focus:ring-2 focus:ring-primary focus:outline-none"
                 >
-                  <option value="ગાંધીનગર શિષ્યવૃત્તિ નિયામક કચેરી">ગાંધીનગર શિષ્યવૃત્તિ નિયામક કચેરી (State Scholarship Directorate)</option>
-                  <option value="PFMS રાજ્ય નોડલ સેલ">PFMS રાજ્ય નોડલ સેલ (PFMS State Finance Cell)</option>
-                  <option value="GSRDA સાયકલ મોનિટરિંગ કમિટી">GSRDA સાયકલ મોનિટરિંગ કમિટી (Supply Chain Committee)</option>
-                  <option value="ડાયરેક્ટર ઓફ પ્રાઇમરી એજ્યુકેશન">ડાયરેક્ટર ઓફ પ્રાઇમરી એજ્યુકેશન (DPE Gandhinagar)</option>
+                  <option value="ગાંધીનગર શિષ્યવૃત્તિ નિયામક કચેરી"><T gu="ગાંધીનગર શિષ્યવૃત્તિ નિયામક કચેરી" en="State Scholarship Directorate" /></option>
+                  <option value="PFMS રાજ્ય નોડલ સેલ"><T gu="PFMS રાજ્ય નોડલ સેલ" en="PFMS State Finance Cell" /></option>
+                  <option value="GSRDA સાયકલ મોનિટરિંગ કમિટી"><T gu="GSRDA સાયકલ મોનિટરિંગ કમિટી" en="Supply Chain Committee" /></option>
+                  <option value="ડાયરેક્ટર ઓફ પ્રાઇમરી એજ્યુકેશન"><T gu="ડાયરેક્ટર ઓફ પ્રાઇમરી એજ્યુકેશન" en="DPE Gandhinagar" /></option>
                 </select>
               </div>
 
               <div className="p-3 bg-error-container/40 rounded-lg text-error text-xs flex items-center gap-2 border border-error/30">
                 <Icon name="crisis_alert" size={16} />
-                <span>આ કેસને રાજ્ય પોર્ટલ પર &apos;તાકીદ / ક્રિટિકલ&apos; તરીકે ફ્લેગ કરવામાં આવશે.</span>
+                <span>આ કેસને રાજ્ય પોર્ટલ પર ‘તાકીદ / ક્રિટિકલ’ તરીકે ચિહ્નિત કરવામાં આવશે.</span>
               </div>
             </div>
 
@@ -2131,10 +2131,10 @@ export default function DeoGrievancePage() {
                   onChange={(e) => setInfoRecipient(e.target.value)}
                   className="w-full h-10 px-3 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface text-xs focus:ring-2 focus:ring-primary focus:outline-none"
                 >
-                  <option value="આચાર્યશ્રી (School Principal)">આચાર્યશ્રી (School Principal)</option>
-                  <option value="વિદ્યાર્થી / વાલી (Parent)">વિદ્યાર્થી / વાલી (Parent)</option>
-                  <option value="સાયકલ સપ્લાયર વેન્ડર (Vendor)">સાયકલ સપ્લાયર વેન્ડર (Vendor)</option>
-                  <option value="તાલુકા શિક્ષણ અધિકારી (TPEO)">તાલુકા શિક્ષણ અધિકારી (TPEO)</option>
+                  <option value="આચાર્યશ્રી (School Principal)"><T gu="આચાર્યશ્રી" en="School Principal" /></option>
+                  <option value="વિદ્યાર્થી / વાલી (Parent)"><T gu="વિદ્યાર્થી / વાલી" en="Parent" /></option>
+                  <option value="સાયકલ સપ્લાયર વેન્ડર (Vendor)"><T gu="સાયકલ સપ્લાયર વેન્ડર" en="Vendor" /></option>
+                  <option value="તાલુકા શિક્ષણ અધિકારી (TPEO)"><T gu="તાલુકા શિક્ષણ અધિકારી" en="TPEO" /></option>
                 </select>
               </div>
 
@@ -2223,10 +2223,10 @@ export default function DeoGrievancePage() {
                   ફરિયાદ પ્રકાર:
                 </label>
                 <select className="w-full h-10 px-3 rounded-lg bg-surface-container-low border border-outline-variant text-xs">
-                  <option>સાયકલ વિતરણ / ક્ષતિગ્રસ્ત (Cycles)</option>
-                  <option>નમો લક્ષ્મી DBT જમા (Scholarship DBT)</option>
-                  <option>બેંક NPCI આધાર અસંગતતા (Aadhaar Seeding)</option>
-                  <option>આવક / જાતિ પ્રમાણપત્ર મિસમેચ (Certificates)</option>
+                  <option><T gu="સાયકલ વિતરણ / ક્ષતિગ્રસ્ત" en="Cycles" /></option>
+                  <option><T gu="નમો લક્ષ્મી DBT જમા" en="Scholarship DBT" /></option>
+                  <option><T gu="બેંક NPCI આધાર અસંગતતા" en="Aadhaar Seeding" /></option>
+                  <option><T gu="આવક / જાતિ પ્રમાણપત્ર મિસમેચ" en="Certificates" /></option>
                 </select>
               </div>
 

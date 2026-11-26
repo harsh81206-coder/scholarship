@@ -128,7 +128,7 @@ export default function TpeoDashboardPage() {
               <T gu="TPEO Threshold Rule — GR No. SCH/2026/TPEO-11" en="TPEO Threshold Rule — GR No. SCH/2026/TPEO-11" hi="TPEO Threshold Rule" />
             </p>
             <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-              <T gu="₹10,000+ TPEO pre-clearance. DEO auto-routed." en="All disbursements above ₹10,000 require TPEO pre-clearance before DEO final approval. Auto-routed by system." hi="₹10,000 से अधिक सभी छात्रवृत्ति के लिए TPEO pre-clearance आवश्यक।" />
+              <T gu="₹10,000+ TPEO pre-clearance. DEO auto-routed." en="All disbursements above ₹10,000 require TPEO pre-clearance before DEO final approval. Auto-routed by system." hi="₹10,000 से अधिक की सभी छात्रवृत्तियों के लिए TPEO की पूर्व मंज़ूरी आवश्यक।" />
             </p>
           </div>
         </div>

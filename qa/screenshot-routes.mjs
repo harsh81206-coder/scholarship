@@ -83,7 +83,7 @@ try {
       ]));
       await context.addInitScript(({ session, appRole }) => {
         localStorage.setItem("vps-auth-session", JSON.stringify({ state: session, version: 0 }));
-        localStorage.setItem("vps-app-store", JSON.stringify({ state: { lang: "gu", role: appRole, isAuthenticated: true }, version: 0 }));
+        localStorage.setItem("vps-app-store", JSON.stringify({ state: { lang: "en", role: appRole, isAuthenticated: true }, version: 0 }));
       }, { session: auth, appRole: role });
     }
     const page = await context.newPage();

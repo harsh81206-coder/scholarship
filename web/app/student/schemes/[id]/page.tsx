@@ -10,6 +10,7 @@ import { ErrorState } from "@/components/states/ErrorState";
 import { EmptyState } from "@/components/states/EmptyState";
 import { ApiModeBadge } from "@/app/student/components/ApiModeBadge";
 import { useAppStore } from "@/lib/store";
+import { localizedName } from "@/lib/i18n";
 import { useExplain, useMySchemes, useMe } from "@/lib/api/hooks";
 
 interface PageProps {
@@ -61,10 +62,11 @@ export default function SchemeDetailPage({ params }: PageProps) {
       </StudentShell>
     );
   }
-  const title =
-    lang === "gu"
-      ? scheme?.scheme_name_gu || scheme?.scheme_name_en || schemeCode
-      : scheme?.scheme_name_en || schemeCode;
+  const title = localizedName({
+    name_en: scheme.scheme_name_en ?? schemeCode,
+    name_gu: scheme.scheme_name_gu,
+    name_hi: scheme.scheme_name_hi,
+  }, lang);
   const status = String(explain?.status ?? scheme.status ?? "unknown");
   const isEligible = status === "eligible";
   const reasons = Array.isArray(scheme?.reasons) ? scheme.reasons : [];

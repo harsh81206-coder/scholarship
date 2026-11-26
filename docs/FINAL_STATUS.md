@@ -11,6 +11,7 @@ Updated: 2026-11-26. This report separates API wiring, browser interaction cover
 | Backend regression | Done for current test suite | 79 tests passed, including deterministic seed counts/role queues/hash chains; Ruff is clean. |
 | Demo seed | Done for Prompt 1 | 1,500 students, 40 schools, 2,200 applications, 900 DBT rows, 400 cycles, and 2,016 chart points; reset is under 5 seconds. See [`SEED_DATA.md`](SEED_DATA.md). |
 | Seeded ML artifacts | Done for Prompt 1 | `make seed-reset` trains dropout on 1,500 seeded students with simulated proxy labels, fraud on 2,200 seeded applications, and forecast on 40 seeded school allocations. These are demo models, not real-world accuracy claims. |
+| Global i18n (G1) | Partial | English is now the persisted default; `t()`, locale JSON, language-aware `<T>`, locale formatting helpers, localized role labels, and API name localization are in place. `node scripts/i18n_audit.mjs` reports no mixed-script strings but still finds 355 raw JSX text nodes, so full copy localization and all-route language verification remain incomplete. |
 | Contract check | Partial | `80` endpoint calls passed across six seeded roles. This is not a 33-page UI wiring check or full runtime Zod validation. |
 | Browser E2E | Done for stated path | Latest `make e2e` passed three consecutive runs against fresh temporary databases, including Riya’s seeded pending cycle and mock DBT credit. |
 | Route and visual QA | Partial | Latest production sweep captured 33/33 authenticated screens: all HTTP 200, with zero page/API errors, broken images, or document-level overflow. Full Stitch pixel comparison and all-language layout review are still outstanding; focused manual review found fidelity gaps on dense officer screens. |
@@ -18,6 +19,32 @@ Updated: 2026-11-26. This report separates API wiring, browser interaction cover
 | Production local demo | Done | `make demo` runs a production Next build and `next start` alongside FastAPI. Server URLs and current health are reported in the completion message. |
 | Offline demo | Done | `make demo-offline` builds and serves the mock-only frontend without requiring the API. |
 | Deployment / Docker | Partial | Deployment files are present. Docker is unavailable in this environment, so Compose validation and container startup are not verified. No hosted URL has been deployed or tested. |
+
+## Current language milestone
+
+The English default, persistent `en`/`gu`/`hi` selector, locale JSON, translation helper, `<T>` component, role/nav labels, API name localization, and English/Gujarati/Hindi number/date formatters are implemented. The remaining text audit and full language verification are not complete.
+
+Commands run for this milestone:
+
+```text
+make test
+79 passed, 3 warnings in 2.90s
+All checks passed!
+✔ No ESLint warnings or errors
+
+node scripts/i18n_audit.mjs
+i18n audit: 355 remaining source issues
+unlocalized JSX text: 355
+
+QA_BASE_URL=http://localhost:3000 QA_API_URL=http://localhost:8000 QA_TOKEN_FILE=/tmp/vps-i18n-tokens.json node qa/playwright-login.mjs
+Playwright login: student OTP, /students/me, school role switch, scoped applications, and wrong-role redirect passed.
+
+QA_BASE_URL=http://localhost:3000 QA_API_URL=http://localhost:8000 QA_TOKEN_FILE=/tmp/vps-i18n-tokens.json node qa/screenshot-routes.mjs
+Screenshots: 33/33
+HTTP/page errors: 0
+```
+
+The screenshots verify route rendering in English at the planned viewports; they do not verify language parity or visual comparison to Stitch.
 
 ## Evidence
 
@@ -27,6 +54,7 @@ Commands run from the repository root unless noted:
 make test
 make check-contract
 make e2e
+node scripts/i18n_audit.mjs
 ```
 
 Latest full output summary:
@@ -67,11 +95,19 @@ The command runs the browser Golden Path three times against a new disposable SQ
 
 The contract check currently reports `Endpoint contract check: 80 calls passed across 6 seeded roles.` It validates declared OpenAPI response schemas where available and checks explicit response keys for other handlers. It does not parse every screen response with Zod in the browser.
 
+Current G1 audit output:
+
+```text
+i18n audit: 355 remaining source issues
+unlocalized JSX text: 355
+```
+
 ## Not verified
 
 - Docker was not available (`command -v docker` returned no executable); `docker compose config` and container startup were not run.
 - No Render/Vercel deployment was created, and there is no verified public demo URL.
 - Full pixel-by-pixel comparison of all 33 Stitch references, every nested table/panel clipping check, and complete `gu`/`hi`/`en` switching on all Tier 1 and Tier 2 routes were not completed.
+- G1 remains partial: the language switcher and translation foundation are present, but raw JSX text remains and no automated all-route language-mix assertion has passed.
 - Tier 2/3 screens remain fixture-backed; route screenshots prove rendering, not real data behavior.
 - X1 has no UI controls for attendance simulation, forced DBT success/failure, or demo reset. These backend/demo endpoints are not part of the current click path.
 - E2E forces mock DBT completion through the simulator API after the UI starts payment. It does not prove the asynchronous mock worker always completes before the user navigates, nor any external PFMS transfer.

@@ -10,6 +10,7 @@ import { Avatar, StatusChip } from "@/components/ui";
 import { Skeleton } from "@/components/states/Skeleton";
 import { ErrorState } from "@/components/states/ErrorState";
 import { useAppStore } from "@/lib/store";
+import { localizedName } from "@/lib/i18n";
 import { useApplication, useApprove, useReject, useRequestCorrection } from "@/lib/api/hooks";
 
 export default function SchoolQueueDetailPage() {
@@ -19,6 +20,7 @@ export default function SchoolQueueDetailPage() {
 
   const showSuccess = useAppStore((s) => s.showSuccess);
   const showError = useAppStore((s) => s.showError);
+  const lang = useAppStore((s) => s.lang);
 
   const { data: detail, isLoading, error, refetch } = useApplication(appCode);
   const approveMutation = useApprove();
@@ -112,9 +114,9 @@ export default function SchoolQueueDetailPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="card p-4 space-y-3">
             <div className="flex items-center gap-3">
-              <Avatar name={String(student.name_en ?? "Student")} size="md" />
+              <Avatar name={localizedName(student, lang)} size="md" />
               <div>
-                <h2 className="font-title-md font-bold text-on-surface">{String(student.name_en ?? "Student")}</h2>
+                <h2 className="font-title-md font-bold text-on-surface">{localizedName(student, lang)}</h2>
                 <p className="text-xs font-mono text-on-surface-variant">{String(student.cts_id ?? "")}</p>
               </div>
             </div>
@@ -122,7 +124,11 @@ export default function SchoolQueueDetailPage() {
 
           <div className="card p-4 space-y-2">
             <p className="text-xs text-on-surface-variant uppercase font-semibold">Scheme & Benefit</p>
-            <h2 className="font-title-md font-bold text-on-surface">{String(scheme.name_en ?? scheme.code ?? "")}</h2>
+            <h2 className="font-title-md font-bold text-on-surface">{localizedName({
+              name_en: scheme.name_en ?? scheme.code,
+              name_gu: scheme.name_gu,
+              name_hi: scheme.name_hi,
+            }, lang)}</h2>
             <p className="text-sm font-bold text-primary">
               {Number(detail.amount ?? 0) > 0 ? `₹${Number(detail.amount).toLocaleString("en-IN")}` : "Free Bicycle"} • Route:{" "}
               {String(detail.route ?? "auto")} ({String(detail.risk_level ?? "low")} risk)

@@ -644,15 +644,15 @@ export default function CycleSupplyChainPage() {
                     onChange={(e) => setSelectedTaluka(e.target.value)}
                     className="w-full h-11 px-3.5 pr-8 rounded-xl bg-surface-container-low text-on-surface font-label-md text-label-md font-medium appearance-none cursor-pointer focus:outline-none border border-outline-variant"
                   >
-                    <option value="all">તમામ ૮ તાલુકાઓ / All 8 Talukas</option>
-                    <option value="anand">આણંદ (Anand)</option>
-                    <option value="borsad">બોરસદ (Borsad)</option>
-                    <option value="khambhat">ખંભાત (Khambhat)</option>
-                    <option value="petlad">પેટલાદ (Petlad)</option>
-                    <option value="umreth">ઉમરેઠ (Umreth)</option>
-                    <option value="anklav">આંકલાવ (Anklav)</option>
-                    <option value="sojitra">સોજિત્રા (Sojitra)</option>
-                    <option value="tarapur">તારાપુર (Tarapur)</option>
+                    <option value="all"><T gu="બધા ૮ તાલુકાઓ" en="All 8 Talukas" hi="सभी 8 तालुका" /></option>
+                    <option value="anand"><T gu="આણંદ" en="Anand" /></option>
+                    <option value="borsad"><T gu="બોરસદ" en="Borsad" /></option>
+                    <option value="khambhat"><T gu="ખંભાત" en="Khambhat" /></option>
+                    <option value="petlad"><T gu="પેટલાદ" en="Petlad" /></option>
+                    <option value="umreth"><T gu="ઉમરેઠ" en="Umreth" /></option>
+                    <option value="anklav"><T gu="આંકલાવ" en="Anklav" /></option>
+                    <option value="sojitra"><T gu="સોજિત્રા" en="Sojitra" /></option>
+                    <option value="tarapur"><T gu="તારાપુર" en="Tarapur" /></option>
                   </select>
                   <Icon name="expand_more" size={20} className="absolute right-2.5 top-3 pointer-events-none text-outline" />
                 </div>
@@ -664,7 +664,7 @@ export default function CycleSupplyChainPage() {
                     onChange={(e) => setSelectedVendor(e.target.value)}
                     className="w-full h-11 px-3.5 pr-8 rounded-xl bg-surface-container-low text-on-surface font-label-md text-label-md font-medium appearance-none cursor-pointer focus:outline-none border border-outline-variant"
                   >
-                    <option value="all">તમામ વેન્ડર્સ / All Vendors</option>
+                    <option value="all"><T gu="બધા વિક્રેતાઓ" en="All Vendors" hi="सभी विक्रेता" /></option>
                     <option value="atlas">Atlas Logistics Ltd.</option>
                     <option value="hero">Hero Cycles Gujarat</option>
                     <option value="avon">Avon Nodal Delivery</option>
@@ -679,10 +679,10 @@ export default function CycleSupplyChainPage() {
                     onChange={(e) => setSelectedStatus(e.target.value)}
                     className="w-full h-11 px-3.5 pr-8 rounded-xl bg-surface-container-low text-on-surface font-label-md text-label-md font-medium appearance-none cursor-pointer focus:outline-none border border-outline-variant"
                   >
-                    <option value="all">તમામ સ્થિતિ / All Status</option>
-                    <option value="100">૧૦૦% વિતરિત (Completed)</option>
-                    <option value="progress">પ્રગતિમાં (In Progress)</option>
-                    <option value="delayed">વિલંબિત (Delayed Alert)</option>
+                    <option value="all"><T gu="બધી સ્થિતિઓ" en="All Statuses" hi="सभी स्थितियां" /></option>
+                    <option value="100"><T gu="૧૦૦% વિતરિત" en="Completed" /></option>
+                    <option value="progress"><T gu="પ્રગતિમાં" en="In Progress" /></option>
+                    <option value="delayed"><T gu="વિલંબિત" en="Delayed Alert" /></option>
                   </select>
                   <Icon name="expand_more" size={20} className="absolute right-2.5 top-3 pointer-events-none text-outline" />
                 </div>
@@ -873,9 +873,9 @@ export default function CycleSupplyChainPage() {
                         </h2>
                         <p className="font-caption text-caption text-on-surface-variant">
                           <T
-                            gu="કરમસદ Nodal Hub થી ૮ તાલુકાઓના ક્લસ્ટર પોઈન્ટ્સ અને રીઅલ-ટાઇમ ટ્રક લોકેશન"
+                            gu="કરમસદના કેન્દ્રથી ૮ તાલુકાઓના ક્લસ્ટર બિંદુઓ અને ટ્રકનું તાજું સ્થાન"
                             en="Real-time routes from Karamsad Nodal Hub to 8 taluka cluster points & active trucks"
-                            hi="करमसद नोडल हब से 8 तालुका क्लस्टर पॉइंट्स और रियल-टाइम ट्रक लोकेशन"
+                            hi="करमसद केंद्र से 8 तालुका समूह बिंदुओं और ट्रक की वर्तमान स्थिति"
                           />
                         </p>
                       </div>
@@ -912,14 +912,12 @@ export default function CycleSupplyChainPage() {
                       {/* Gulf of Khambhat (Bottom Left Water Curve) */}
                       <path d="M -20 640 Q 140 540 180 430 T 260 380 L -20 380 Z" fill="url(#waterGrad)" />
                       <text x="35" y="550" className="font-label-md text-xs font-semibold tracking-wider" fill="#1e3a8a" opacity="0.6">
-                        ખંભાતનો અખાત (GULF OF KHAMBHAT)
-                      </text>
+                        <T gu="ખંભાતનો અખાત" en="GULF OF KHAMBHAT" /></text>
 
                       {/* Mahi River Course (South-East edge) */}
                       <path d="M 720 180 Q 640 320 610 460 T 560 640" fill="none" stroke="#93c5fd" strokeLinecap="round" strokeOpacity="0.7" strokeWidth="9" />
                       <text x="590" y="380" transform="rotate(70 590 380)" className="font-caption text-xs font-semibold" fill="#1e3a8a" opacity="0.7">
-                        મહી નદી (Mahi River)
-                      </text>
+                        <T gu="મહી નદી" en="Mahi River" /></text>
 
                       {/* Taluka Boundary Polygons (Subtle dashed traces) */}
                       <path d="M 170 240 L 310 170 L 450 190 L 410 340 L 250 360 Z" fill="#ffffff" fillOpacity="0.35" stroke="#94a3b8" strokeDasharray="4,4" strokeWidth="1.5" />
@@ -941,26 +939,19 @@ export default function CycleSupplyChainPage() {
 
                     {/* Taluka Name Watermark Labels */}
                     <div className="absolute top-[200px] left-[100px] font-label-md text-xs text-on-surface font-bold opacity-45 pointer-events-none">
-                      તારાપુર (TARAPUR)
-                    </div>
+                      <T gu="તારાપુર" en="TARAPUR" /></div>
                     <div className="absolute top-[140px] left-[310px] font-label-md text-xs text-on-surface font-bold opacity-45 pointer-events-none">
-                      સોજિત્રા (SOJITRA)
-                    </div>
+                      <T gu="સોજિત્રા" en="SOJITRA" /></div>
                     <div className="absolute top-[130px] right-[130px] font-label-md text-xs text-on-surface font-bold opacity-45 pointer-events-none">
-                      ઉમરેઠ (UMRETH)
-                    </div>
+                      <T gu="ઉમરેઠ" en="UMRETH" /></div>
                     <div className="absolute bottom-[220px] left-[290px] font-label-md text-xs text-on-surface font-bold opacity-45 pointer-events-none">
-                      પેટલાદ (PETLAD)
-                    </div>
+                      <T gu="પેટલાદ" en="PETLAD" /></div>
                     <div className="absolute bottom-[150px] left-[400px] font-label-md text-xs text-on-surface font-bold opacity-45 pointer-events-none">
-                      બોરસદ (BORSAD)
-                    </div>
+                      <T gu="બોરસદ" en="BORSAD" /></div>
                     <div className="absolute bottom-[80px] right-[200px] font-label-md text-xs text-on-surface font-bold opacity-45 pointer-events-none">
-                      આંકલાવ (ANKLAV)
-                    </div>
+                      <T gu="આંકલાવ" en="ANKLAV" /></div>
                     <div className="absolute bottom-[160px] left-[130px] font-label-md text-xs text-on-surface font-bold opacity-45 pointer-events-none">
-                      ખંભાત (KHAMBHAT)
-                    </div>
+                      <T gu="ખંભાત" en="KHAMBHAT" /></div>
 
                     {/* Central Depot Warehouse: કરમસદ સેન્ટ્રલ ડેપો */}
                     {showDepot && (
@@ -1053,7 +1044,7 @@ export default function CycleSupplyChainPage() {
                             <span className="w-2 h-2 rounded-full bg-secondary animate-ping" />
                           </div>
                           <div className="hidden group-hover:block absolute top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-on-inverse-surface px-2.5 py-1 rounded-lg text-[10px] whitespace-nowrap z-40 shadow-xl">
-                            Atlas Logistics | ૨૨ કિમી બાકી (ETA: ૧ કલાક)
+                            <T gu="એટલસ લોજિસ્ટિક્સ | ૨૨ કિમી બાકી (અંદાજિત સમય: ૧ કલાક)" en="Atlas Logistics | 22 km remaining (ETA: 1 hour)" hi="एटलस लॉजिस्टिक्स | 22 किमी शेष (अनुमानित समय: 1 घंटा)" />
                           </div>
                         </div>
 
@@ -1192,7 +1183,7 @@ export default function CycleSupplyChainPage() {
                         </div>
                         <div className="flex items-center gap-1.5">
                           <Icon name="local_shipping" size={12} className="text-secondary" />
-                          <span>ટ્રક જીપીએસ (GPS)</span>
+                          <span><T gu="ટ્રક જીપીએસ" en="GPS" /></span>
                         </div>
                       </div>
                     </div>
@@ -1457,7 +1448,7 @@ export default function CycleSupplyChainPage() {
                       <T gu="વિલંબિત / ધ્યાન આકર્ષિત શાળાઓ" en="Delayed / Attention Needed" hi="विलंबित / ध्यानाकर्षित स्कूल" />
                     </p>
                     <p className="font-title-md text-title-md font-bold text-error">
-                      ૦૭ શાળાઓ (ખંભાત &amp; બોરસદ)
+                      <T gu="૦૭ શાળાઓ (ખંભાત અને બોરસદ)" en="7 schools (Khambhat and Borsad)" hi="7 स्कूल (खंभात और बोरसद)" />
                     </p>
                   </div>
                 </div>

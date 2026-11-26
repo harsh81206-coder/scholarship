@@ -11,6 +11,7 @@ import { ErrorState } from "@/components/states/ErrorState";
 import { EmptyState } from "@/components/states/EmptyState";
 import { ApiModeBadge } from "@/app/student/components/ApiModeBadge";
 import { useAppStore } from "@/lib/store";
+import { localizedName } from "@/lib/i18n";
 import { useMe, useMySchemes, useApplications, useBulkApply, useSendGuardianOtp } from "@/lib/api/hooks";
 
 function formatCountdown(seconds: number) {
@@ -158,7 +159,7 @@ export default function OneClickApplyPage() {
                 <Icon name="arrow_back" size={24} />
               </Link>
               <h1 className="font-headline-sm text-headline-sm text-on-surface tracking-tight">
-                <T gu="One-Click અરજી" en="One-Click Apply" hi="एक-क्लिक आवेदन" />
+                <T gu="એક ક્લિકમાં અરજી" en="One-Click Apply" hi="एक-क्लिक आवेदन" />
               </h1>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant">
@@ -178,7 +179,7 @@ export default function OneClickApplyPage() {
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-1">
                     <span className="font-title-md text-title-md text-on-surface truncate">
-                      {profile?.name_en ?? "Student"}
+                      {profile ? localizedName(profile, lang) : "Student"}
                     </span>
                     <span className="font-caption text-caption px-1.5 py-0.5 rounded-full bg-surface-container-high text-primary font-semibold shrink-0">
                       {profile?.grade ? `Gr ${profile.grade}` : <T gu="ધોરણ અજ્ઞાત" en="Grade unavailable" hi="कक्षा उपलब्ध नहीं" />}
@@ -213,7 +214,11 @@ export default function OneClickApplyPage() {
               const alreadyApplied = appliedCodes.has(scheme.scheme_code);
               const isEligible = scheme.status === "eligible" || scheme.status === "pending_docs";
               const disabled = alreadyApplied || !isEligible;
-              const title = lang === "gu" ? scheme.scheme_name_gu || scheme.scheme_name_en : scheme.scheme_name_en;
+              const title = localizedName({
+                name_en: scheme.scheme_name_en ?? scheme.scheme_code,
+                name_gu: scheme.scheme_name_gu,
+                name_hi: scheme.scheme_name_hi,
+              }, lang);
 
               return (
                 <label

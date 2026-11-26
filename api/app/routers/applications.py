@@ -441,7 +441,10 @@ def list_applications(
                 "submitted_at": a.submitted_at.isoformat(),
                 "scheme_code": a.scheme.code if a.scheme else "",
                 "scheme_name_en": a.scheme.name_en if a.scheme else "",
+                "scheme_name_gu": a.scheme.name_gu if a.scheme else "",
+                "scheme_name_hi": a.scheme.name_hi if a.scheme else "",
                 "student_name": a.student.name_en if a.student else "",
+                "student_name_gu": a.student.name_gu if a.student else "",
                 "student_cts_id": a.student.cts_id if a.student else "",
             }
         )
@@ -474,10 +477,19 @@ def get_application(
         "risk_level": app.risk_level,
         "amount": app.amount,
         "submitted_at": app.submitted_at.isoformat(),
-        "scheme": {"code": app.scheme.code, "name_en": app.scheme.name_en}
+        "scheme": {
+            "code": app.scheme.code,
+            "name_en": app.scheme.name_en,
+            "name_gu": app.scheme.name_gu,
+            "name_hi": app.scheme.name_hi,
+        }
         if app.scheme
         else {},
-        "student": {"name_en": app.student.name_en, "cts_id": app.student.cts_id}
+        "student": {
+            "name_en": app.student.name_en,
+            "name_gu": app.student.name_gu,
+            "cts_id": app.student.cts_id,
+        }
         if app.student
         else {},
         "timeline": [

@@ -5,6 +5,7 @@ import { ROLE_LABELS } from "@/lib/nav.config";
 import { Icon } from "@/components/Icon";
 import { useState } from "react";
 import { loginDemoRole } from "@/lib/api/resources";
+import { t } from "@/lib/i18n";
 
 const ROLE_ICONS: Record<Role, string> = {
   student: "school",
@@ -16,13 +17,13 @@ const ROLE_ICONS: Record<Role, string> = {
   demo: "tune",
 };
 
-const QUICK_LINKS: { label: string; href: string; role: Role }[] = [
-  { label: "Student", href: "/student", role: "student" },
-  { label: "School", href: "/school", role: "school" },
-  { label: "DEO", href: "/deo", role: "deo" },
-  { label: "Admin", href: "/admin", role: "admin" },
-  { label: "Vendor", href: "/vendor", role: "vendor" },
-  { label: "Simulate", href: "/demo/simulate", role: "demo" },
+const QUICK_LINKS: { href: string; role: Role }[] = [
+  { href: "/student", role: "student" },
+  { href: "/school", role: "school" },
+  { href: "/deo", role: "deo" },
+  { href: "/admin", role: "admin" },
+  { href: "/vendor", role: "vendor" },
+  { href: "/demo/simulate", role: "demo" },
 ];
 
 export function DemoBar() {
@@ -34,7 +35,7 @@ export function DemoBar() {
     try {
       await loginDemoRole(newRole);
       router.push(href);
-      showSuccess(`Switched to ${ROLE_LABELS[newRole].en}`);
+      showSuccess(t("demo.switchedTo", lang, { role: ROLE_LABELS[newRole][lang] }));
       setOpen(false);
     } catch (error) {
       showError(error instanceof Error ? error.message : "Could not switch demo role");
@@ -48,7 +49,7 @@ export function DemoBar() {
         <button
           onClick={() => setOpen((p) => !p)}
           className="flex items-center gap-1.5 bg-on-surface text-surface px-3 py-1 rounded-b-lg font-label-md text-label-md shadow-level-2 hover:bg-primary transition-colors"
-          title="Demo Control Bar"
+          title={t("demo.control", lang)}
         >
           <Icon name="tune" size={14} />
           <span className="hidden sm:inline">DEMO</span>
@@ -62,7 +63,7 @@ export function DemoBar() {
           <div className="bg-on-surface/95 backdrop-blur-xl rounded-2xl shadow-level-3 p-3 flex flex-col gap-2">
             {/* Role switcher */}
             <div>
-              <p className="font-caption text-caption text-surface/50 uppercase tracking-widest px-1 mb-1">Switch Role</p>
+              <p className="font-caption text-caption text-surface/50 uppercase tracking-widest px-1 mb-1">{t("demo.switchRole", lang)}</p>
               <div className="grid grid-cols-3 gap-1.5">
                 {QUICK_LINKS.map((q) => (
                   <button
@@ -75,7 +76,7 @@ export function DemoBar() {
                     }`}
                   >
                     <Icon name={ROLE_ICONS[q.role]} size={15} />
-                    {q.label}
+                    {ROLE_LABELS[q.role][lang]}
                   </button>
                 ))}
               </div>
@@ -83,7 +84,7 @@ export function DemoBar() {
 
             {/* Language + demo actions */}
             <div className="flex items-center gap-2 pt-1 border-t border-surface/10">
-              <span className="font-caption text-caption text-surface/50 mr-1">Lang:</span>
+              <span className="font-caption text-caption text-surface/50 mr-1">{t("demo.language", lang)}:</span>
               {(["gu", "en", "hi"] as const).map((l) => (
                 <button
                   key={l}
@@ -102,14 +103,14 @@ export function DemoBar() {
                   className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface/10 text-surface hover:bg-surface/20 font-label-md text-label-md"
                 >
                   <Icon name="login" size={13} />
-                  Login
+                  {t("common.login", lang)}
                 </button>
                 <button
                   onClick={() => { router.push("/"); setOpen(false); }}
                   className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface/10 text-surface hover:bg-surface/20 font-label-md text-label-md"
                 >
                   <Icon name="home" size={13} />
-                  Home
+                  {t("common.home", lang)}
                 </button>
                 <button
                   onClick={() => setOpen(false)}
@@ -122,7 +123,7 @@ export function DemoBar() {
 
             {/* Current state indicator */}
             <div className="text-[11px] text-surface/40 font-mono px-1">
-              Role: <span className="text-surface/70">{role}</span> · Lang: <span className="text-surface/70">{lang}</span> · OTP: <span className="text-secondary">123456</span> · CTS: <span className="text-surface/70">GJ-AND-2026-004512</span>
+              {t("demo.role", lang)}: <span className="text-surface/70">{ROLE_LABELS[role][lang]}</span> · {t("demo.language", lang)}: <span className="text-surface/70">{lang}</span> · {t("demo.otp", lang)}: <span className="text-secondary">123456</span> · {t("demo.cts", lang)}: <span className="text-surface/70">GJ-AND-2026-004512</span>
             </div>
           </div>
         </div>

@@ -428,8 +428,8 @@ export default function DeoDashboardPage() {
                   onChange={(e) => setSelectedYear(e.target.value)}
                   className="bg-transparent font-label-lg text-label-lg text-on-surface font-bold focus:outline-none cursor-pointer"
                 >
-                  <option value="2025-26">૨૦૨૫-૨૬ (ચાલુ / Active)</option>
-                  <option value="2024-25">૨૦૨૪-૨૫ (સંપન્ન / Archived)</option>
+                  <option value="2025-26"><T gu="૨૦૨૫-૨૬ (ચાલુ)" en="2025-26 (Current)" hi="2025-26 (चालू)" /></option>
+                  <option value="2024-25"><T gu="૨૦૨૪-૨૫ (સંગ્રહિત)" en="2024-25 (Archived)" hi="2024-25 (संग्रहीत)" /></option>
                 </select>
               </div>
 
@@ -444,12 +444,12 @@ export default function DeoDashboardPage() {
                   onChange={(e) => setSelectedScheme(e.target.value)}
                   className="bg-transparent font-label-lg text-label-lg text-on-surface font-bold focus:outline-none cursor-pointer"
                 >
-                  <option value="all">તમામ ૮ સરકારી યોજનાઓ (All 8 Schemes)</option>
-                  <option value="namo-lakshmi">નમો લક્ષ્મી યોજના (Namo Lakshmi)</option>
-                  <option value="saraswati-sadhana">સરસ્વતી સાધના સાયકલ યોજના (Cycle Scheme)</option>
-                  <option value="gyan-sadhana">જ્ઞાન સાધના સ્કોલરશીપ (Gyan Sadhana)</option>
-                  <option value="obc-prematric">OBC / SEBC પૂર્વ-મેટ્રિક (Pre-Matric)</option>
-                  <option value="nmms">NMMS મેરિટ સ્કોલરશીપ (NMMS Merit)</option>
+                  <option value="all"><T gu="તમામ ૮ સરકારી યોજનાઓ" en="All 8 Schemes" /></option>
+                  <option value="namo-lakshmi"><T gu="નમો લક્ષ્મી યોજના" en="Namo Lakshmi" /></option>
+                  <option value="saraswati-sadhana"><T gu="સરસ્વતી સાધના સાયકલ યોજના" en="Cycle Scheme" /></option>
+                  <option value="gyan-sadhana"><T gu="જ્ઞાન સાધના સ્કોલરશીપ" en="Gyan Sadhana" /></option>
+                  <option value="obc-prematric"><T gu="OBC / SEBC પૂર્વ-મેટ્રિક" en="Pre-Matric" /></option>
+                  <option value="nmms"><T gu="NMMS મેરિટ સ્કોલરશીપ" en="NMMS Merit" /></option>
                 </select>
               </div>
 
@@ -466,13 +466,13 @@ export default function DeoDashboardPage() {
                 >
                   <option value="all">સમગ્ર આણંદ જિલ્લો (તમામ ૮ તાલુકા)</option>
                   <option value="anand">આણંદ (મુખ્ય મથક / HQ)</option>
-                  <option value="borsad">બોરસદ (Borsad)</option>
-                  <option value="khambhat">ખંભાત (Khambhat)</option>
-                  <option value="petlad">પેટલાદ (Petlad)</option>
-                  <option value="umreth">ઉમરેઠ (Umreth)</option>
-                  <option value="anklav">આંકલાવ (Anklav)</option>
-                  <option value="sojitra">સોજિત્રા (Sojitra)</option>
-                  <option value="tarapur">તારાપુર (Tarapur)</option>
+                  <option value="borsad"><T gu="બોરસદ" en="Borsad" /></option>
+                  <option value="khambhat"><T gu="ખંભાત" en="Khambhat" /></option>
+                  <option value="petlad"><T gu="પેટલાદ" en="Petlad" /></option>
+                  <option value="umreth"><T gu="ઉમરેઠ" en="Umreth" /></option>
+                  <option value="anklav"><T gu="આંકલાવ" en="Anklav" /></option>
+                  <option value="sojitra"><T gu="સોજિત્રા" en="Sojitra" /></option>
+                  <option value="tarapur"><T gu="તારાપુર" en="Tarapur" /></option>
                 </select>
               </div>
             </div>
@@ -678,7 +678,7 @@ export default function DeoDashboardPage() {
                 </h3>
                 <p className="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-2">
                   <T
-                    gu="૨૩૪ વેરિફાઈડ અરજીઓને એક ક્લિકમાં DSC e-Sign દ્વારા મંજૂર કરો."
+                    gu="૨૩૪ ચકાસેલી અરજીઓને એક ક્લિકમાં DSC ડિજિટલ સહીથી મંજૂર કરો."
                     en="Batch-approve 234 verified applications via DSC e-Sign in 1-click."
                     hi="एक क्लिक में डीएससी ई-हस्ताक्षर द्वारा 234 आवेदनों को स्वीकृत करें।"
                   />
@@ -1596,7 +1596,7 @@ export default function DeoDashboardPage() {
                 <div className="flex items-center gap-2 text-primary font-label-lg text-label-lg font-bold">
                   <Icon name="draw" size={20} />
                   <span>
-                    <T gu="Digital e-Sign સજ્જતા" en="Digital e-Sign Readiness" hi="डिजिटल ई-हस्ताक्षर तत्परता" />
+                    <T gu="ડિજિટલ ઈ-સહી માટેની તૈયારી" en="Digital e-Sign Readiness" hi="डिजिटल ई-हस्ताक्षर तत्परता" />
                   </span>
                 </div>
                 <p className="font-body-sm text-body-sm text-on-surface leading-normal">
@@ -1610,7 +1610,7 @@ export default function DeoDashboardPage() {
                   <Icon name="check_circle" size={16} fill className="text-emerald-700" />
                   <span>
                     <T
-                      gu="DSC Token: માન્ય (શ્રી હસમુખ જે. ત્રિવેદી)"
+                      gu="DSC ટોકન: માન્ય (શ્રી હસમુખ જે. ત્રિવેદી)"
                       en="DSC Token: Valid (Shri Hasmukh J. Trivedi)"
                       hi="डीएससी टोकन: मान्य (श्री हसमुख जे. त्रिवेदी)"
                     />
@@ -1713,7 +1713,7 @@ export default function DeoDashboardPage() {
                   <div key={i} className="flex items-center justify-between py-1 text-on-surface font-caption text-caption border-b border-outline-variant/40 last:border-0">
                     <span className="font-medium">• {sch}</span>
                     <span className="px-2 py-0.5 rounded bg-danger-container text-on-danger-container font-semibold text-[10px]">
-                      બાકી / Pending
+                      <T gu="બાકી" en="Pending" hi="लंबित" />
                     </span>
                   </div>
                 ))}

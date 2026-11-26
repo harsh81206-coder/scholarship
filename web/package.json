@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "api:types": "openapi-typescript ../api/openapi.json -o lib/api/types.ts",
+    "i18n:audit": "node ../scripts/i18n_audit.mjs",
     "qa:screens": "node ../qa/screenshot-routes.mjs",
     "qa:login": "node ../qa/playwright-login.mjs",
     "qa:golden": "node ../qa/playwright-golden-path.mjs"

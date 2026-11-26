@@ -1281,14 +1281,11 @@ export default function StudentGrievancesPage() {
                     className="w-full h-11 px-3 pr-9 rounded-xl bg-surface-container text-on-surface font-body-sm text-body-sm appearance-none outline-none focus:bg-surface-container-high border border-outline-variant/60"
                   >
                     <option value="APP-2026-00344">
-                      APP-2026-00344 (નમો લક્ષ્મી યોજના - Namo Lakshmi)
-                    </option>
+                      <T gu="નમો લક્ષ્મી યોજના" en="APP-2026-00344" /></option>
                     <option value="APP-2026-00871">
-                      APP-2026-00871 (સરસ્વતી સાધના યોજના - Saraswati Bicycle)
-                    </option>
+                      <T gu="સરસ્વતી સાધના યોજના" en="APP-2026-00871" /></option>
                     <option value="APP-GEN">
-                      સામાન્ય શિષ્યવૃત્તિ પૂછપરછ (General Educational Grant)
-                    </option>
+                      <T gu="સામાન્ય શિષ્યવૃત્તિ પૂછપરછ" en="General Educational Grant" /></option>
                   </select>
                   <span className="absolute right-2.5 top-2.5 pointer-events-none text-on-surface-variant">
                     <Icon name="arrow_drop_down" size={20} />
@@ -1314,24 +1311,18 @@ export default function StudentGrievancesPage() {
                     className="w-full h-11 px-3 pr-9 rounded-xl bg-surface-container text-on-surface font-body-sm text-body-sm appearance-none outline-none focus:bg-surface-container-high border border-outline-variant/60"
                   >
                     <option value="dbt">
-                      શિષ્યવૃત્તિ જમા થઈ નથી / વિલંબ (Payment Delay / DBT Issue)
-                    </option>
+                      <T gu="શિષ્યવૃત્તિ જમા થઈ નથી / વિલંબ" en="Payment Delay / DBT Issue" /></option>
                     <option value="docs">
-                      દસ્તાવેજ વેરિફિકેશન વિલંબ / અસ્વીકાર (Document Verification Delay)
-                    </option>
+                      <T gu="દસ્તાવેજ વેરિફિકેશન વિલંબ / અસ્વીકાર" en="Document Verification Delay" /></option>
                     <option value="wrong_amount">
-                      ખોટી રકમ જમા થઈ (Wrong Amount Credited)
-                    </option>
+                      <T gu="ખોટી રકમ જમા થઈ" en="Wrong Amount Credited" /></option>
                     <option value="bicycle">
-                      સાયકલ વિતરણ / ક્ષતિગ્રસ્ત સાયકલ (Bicycle Handover / Defect)
-                    </option>
+                      <T gu="સાયકલ વિતરણ / ક્ષતિગ્રસ્ત સાયકલ" en="Bicycle Handover / Defect" /></option>
                     <option value="eligibility">
-                      પાત્રતા ખોટી દર્શાવે છે (Eligibility Criteria Dispute)
-                    </option>
+                      <T gu="પાત્રતા ખોટી દર્શાવે છે" en="Eligibility Criteria Dispute" /></option>
                     <option value="school">
-                      શાળા કક્ષાએથી મંજૂરી અટકેલ (School Level Pending)
-                    </option>
-                    <option value="other">અન્ય સમસ્યા (Other Grievance)</option>
+                      <T gu="શાળા કક્ષાએથી મંજૂરી અટકેલ" en="School Level Pending" /></option>
+                    <option value="other"><T gu="અન્ય સમસ્યા" en="Other Grievance" /></option>
                   </select>
                   <span className="absolute right-2.5 top-2.5 pointer-events-none text-on-surface-variant">
                     <Icon name="arrow_drop_down" size={20} />
@@ -1578,14 +1569,11 @@ export default function StudentGrievancesPage() {
                   className="w-full h-11 px-3 rounded-xl bg-surface-container text-on-surface font-body-sm text-body-sm outline-none border border-outline-variant/60"
                 >
                   <option value="APP-2026-00344">
-                    APP-2026-00344 (નમો લક્ષ્મી યોજના - Namo Lakshmi)
-                  </option>
+                    <T gu="નમો લક્ષ્મી યોજના" en="APP-2026-00344" /></option>
                   <option value="APP-2026-00871">
-                    APP-2026-00871 (સરસ્વતી સાધના યોજના - Saraswati Bicycle)
-                  </option>
+                    <T gu="સરસ્વતી સાધના યોજના" en="APP-2026-00871" /></option>
                   <option value="APP-GEN">
-                    સામાન્ય શિષ્યવૃત્તિ પૂછપરછ (General Educational Grant)
-                  </option>
+                    <T gu="સામાન્ય શિષ્યવૃત્તિ પૂછપરછ" en="General Educational Grant" /></option>
                 </select>
               </div>
 
@@ -1601,13 +1589,13 @@ export default function StudentGrievancesPage() {
                   required
                   className="w-full h-11 px-3 rounded-xl bg-surface-container text-on-surface font-body-sm text-body-sm outline-none border border-outline-variant/60"
                 >
-                  <option value="dbt">શિષ્યવૃત્તિ જમા વિલંબ (Payment Delay)</option>
-                  <option value="docs">દસ્તાવેજ વેરિફિકેશન વિલંબ (Document Rejection / Delay)</option>
-                  <option value="wrong_amount">ખોટી રકમ જમા થયેલ (Wrong Amount Credited)</option>
-                  <option value="bicycle">સાયકલ વિતરણ સંબંધિત (Bicycle Handover / Defect)</option>
-                  <option value="eligibility">પાત્રતા ખોટી દર્શાવે છે (Eligibility Dispute)</option>
-                  <option value="school">શાળા કક્ષાએથી મંજૂરી અટકેલ (School Level Pending)</option>
-                  <option value="other">અન્ય સમસ્યા (Other Grievance)</option>
+                  <option value="dbt"><T gu="શિષ્યવૃત્તિ જમા વિલંબ" en="Payment Delay" /></option>
+                  <option value="docs"><T gu="દસ્તાવેજ વેરિફિકેશન વિલંબ" en="Document Rejection / Delay" /></option>
+                  <option value="wrong_amount"><T gu="ખોટી રકમ જમા થયેલ" en="Wrong Amount Credited" /></option>
+                  <option value="bicycle"><T gu="સાયકલ વિતરણ સંબંધિત" en="Bicycle Handover / Defect" /></option>
+                  <option value="eligibility"><T gu="પાત્રતા ખોટી દર્શાવે છે" en="Eligibility Dispute" /></option>
+                  <option value="school"><T gu="શાળા કક્ષાએથી મંજૂરી અટકેલ" en="School Level Pending" /></option>
+                  <option value="other"><T gu="અન્ય સમસ્યા" en="Other Grievance" /></option>
                 </select>
               </div>
 

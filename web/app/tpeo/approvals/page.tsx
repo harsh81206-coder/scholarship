@@ -113,7 +113,7 @@ export default function TpeoApprovalsPage() {
             <T gu="TPEO મ. ક." en="TPEO Approval Queue" hi="TPEO अनुमोदन कतार" />
           </h1>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-            <T gu="₹10,000+ — TPEO pre-approval" en="Applications above ₹10,000 requiring TPEO pre-approval before DEO" hi="₹10,000+ TPEO pre-approval आवश्यक" />
+            <T gu="₹10,000+ — TPEO pre-approval" en="Applications above ₹10,000 requiring TPEO pre-approval before DEO" hi="₹10,000 से अधिक छात्रवृत्ति के लिए TPEO की पूर्व स्वीकृति आवश्यक" />
           </p>
         </div>
 

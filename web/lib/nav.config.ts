@@ -70,12 +70,12 @@ export const ROLE_DASHBOARD: Record<Role, string> = {
   demo: "/demo/simulate",
 };
 
-export const ROLE_LABELS: Record<Role, { gu: string; en: string }> = {
-  student: { gu: "વિદ્યાર્થી", en: "Student" },
-  school: { gu: "શાળા", en: "School / Principal" },
-  deo: { gu: "DEO", en: "District Education Officer" },
-  admin: { gu: "રાજ્ય સંચાલક", en: "State Admin" },
-  vendor: { gu: "વિક્રેતા", en: "Vendor" },
-  tpeo: { gu: "TPEO", en: "Taluka Officer" },
-  demo: { gu: "ડેમો", en: "Demo Control" },
+export const ROLE_LABELS: Record<Role, { gu: string; en: string; hi: string }> = {
+  student: { gu: "વિદ્યાર્થી", en: "Student", hi: "छात्र" },
+  school: { gu: "શાળા", en: "School / Principal", hi: "स्कूल / प्रधानाचार्य" },
+  deo: { gu: "DEO", en: "District Education Officer", hi: "जिला शिक्षा अधिकारी" },
+  admin: { gu: "રાજ્ય સંચાલક", en: "State Admin", hi: "राज्य प्रशासक" },
+  vendor: { gu: "વિક્રેતા", en: "Vendor", hi: "विक्रेता" },
+  tpeo: { gu: "TPEO", en: "Taluka Officer", hi: "तालुका अधिकारी" },
+  demo: { gu: "ડેમો", en: "Demo Control", hi: "डेमो नियंत्रण" },
 };

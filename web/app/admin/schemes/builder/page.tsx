@@ -786,7 +786,7 @@ export default function SchemeBuilderPage() {
                 <T gu="વર્ઝન ઇતિહાસ (Version Revision)" en="Version Revision" hi="संस्करण इतिहास" />
               </span>
               <div className="flex items-center gap-2">
-                <span className="font-label-lg text-label-lg text-on-surface font-semibold">v2026-27 ડ્રાફ્ટ (Draft)</span>
+                <span className="font-label-lg text-label-lg text-on-surface font-semibold"><T gu="v2026-27 ડ્રાફ્ટ" en="Draft" /></span>
                 <span className="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse" />
               </div>
             </div>
@@ -1010,7 +1010,9 @@ export default function SchemeBuilderPage() {
                         <span>
                           <T gu="યોજના નામ (Scheme Name):" en="Scheme Name:" hi="योजना का नाम:" />
                         </span>
-                        <span className="font-caption text-caption text-primary">ગુજરાતી / English</span>
+                        <span className="font-caption text-caption text-primary">
+                          <T gu="ગુજરાતી" en="English" hi="गुजराती" />
+                        </span>
                       </label>
                       <input
                         type="text"
@@ -1069,12 +1071,12 @@ export default function SchemeBuilderPage() {
                           onChange={(e) => setClassRange(e.target.value)}
                           className="h-11 px-3 rounded-lg border border-outline bg-surface-container-lowest text-body-md text-on-surface focus:outline-none focus:border-primary"
                         >
-                          <option value="9-12">ધોરણ ૯ થી ૧૨ (Classes 9 to 12 - Secondary & Higher)</option>
-                          <option value="1-8">ધોરણ ૧ થી ૮ (Classes 1 to 8 - Primary & Upper)</option>
-                          <option value="9">ધોરણ ૯ (Class 9 Only - Cycle/Uniform)</option>
-                          <option value="11-12">ધોરણ ૧૧ થી ૧૨ (Classes 11 to 12 - Higher Secondary)</option>
-                          <option value="college">કોલેજ / ઉચ્ચ શિક્ષણ (College / Higher Ed)</option>
-                          <option value="all">તમામ ધોરણ ૧ થી ૧૨ (All Classes 1 to 12)</option>
+                          <option value="9-12"><T gu="ધોરણ ૯ થી ૧૨" en="Classes 9 to 12 - Secondary & Higher" /></option>
+                          <option value="1-8"><T gu="ધોરણ ૧ થી ૮" en="Classes 1 to 8 - Primary & Upper" /></option>
+                          <option value="9"><T gu="ધોરણ ૯" en="Class 9 Only - Cycle/Uniform" /></option>
+                          <option value="11-12"><T gu="ધોરણ ૧૧ થી ૧૨" en="Classes 11 to 12 - Higher Secondary" /></option>
+                          <option value="college"><T gu="કોલેજ / ઉચ્ચ શિક્ષણ" en="College / Higher Ed" /></option>
+                          <option value="all"><T gu="તમામ ધોરણ ૧ થી ૧૨" en="All Classes 1 to 12" /></option>
                         </select>
                       </div>
 
@@ -1189,25 +1191,25 @@ export default function SchemeBuilderPage() {
                       </label>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                         <div className="bg-surface-container-low p-2.5 rounded-lg border border-outline-variant flex flex-col">
-                          <span className="font-caption text-caption text-on-surface-variant">ધોરણ ૯ (Class 9)</span>
+                          <span className="font-caption text-caption text-on-surface-variant"><T gu="ધોરણ ૯" en="Class 9" /></span>
                           <span className="font-title-md text-title-md text-primary font-bold">
                             ₹ {benefitAmounts.class9?.toLocaleString("en-IN") || "10,000"}
                           </span>
                         </div>
                         <div className="bg-surface-container-low p-2.5 rounded-lg border border-outline-variant flex flex-col">
-                          <span className="font-caption text-caption text-on-surface-variant">ધોરણ ૧૦ (Class 10)</span>
+                          <span className="font-caption text-caption text-on-surface-variant"><T gu="ધોરણ ૧૦" en="Class 10" /></span>
                           <span className="font-title-md text-title-md text-primary font-bold">
                             ₹ {benefitAmounts.class10?.toLocaleString("en-IN") || "10,000"}
                           </span>
                         </div>
                         <div className="bg-surface-container-low p-2.5 rounded-lg border border-outline-variant flex flex-col">
-                          <span className="font-caption text-caption text-on-surface-variant">ધોરણ ૧૧ (Class 11)</span>
+                          <span className="font-caption text-caption text-on-surface-variant"><T gu="ધોરણ ૧૧" en="Class 11" /></span>
                           <span className="font-title-md text-title-md text-primary font-bold">
                             ₹ {benefitAmounts.class11?.toLocaleString("en-IN") || "15,000"}
                           </span>
                         </div>
                         <div className="bg-surface-container-low p-2.5 rounded-lg border border-outline-variant flex flex-col">
-                          <span className="font-caption text-caption text-on-surface-variant">ધોરણ ૧૨ (Class 12)</span>
+                          <span className="font-caption text-caption text-on-surface-variant"><T gu="ધોરણ ૧૨" en="Class 12" /></span>
                           <span className="font-title-md text-title-md text-primary font-bold">
                             ₹ {benefitAmounts.class12?.toLocaleString("en-IN") || "15,000"}
                           </span>
@@ -1464,7 +1466,7 @@ export default function SchemeBuilderPage() {
                         >
                           <option value="">+ બાકાત યોજના પસંદ કરો...</option>
                           <option value="ડૉ. આંબેડકર મેટ્રિકોત્તર શિષ્યવૃત્તિ">ડૉ. આંબેડકર મેટ્રિકોત્તર શિષ્યવૃત્તિ</option>
-                          <option value="મુખ્યમંત્રી યુવા સ્વાવલંબન યોજના (MYSY)">મુખ્યમંત્રી યુવા સ્વાવલંબન યોજના (MYSY)</option>
+                          <option value="મુખ્યમંત્રી યુવા સ્વાવલંબન યોજના (MYSY)"><T gu="મુખ્યમંત્રી યુવા સ્વાવલંબન યોજના" en="MYSY" /></option>
                           <option value="વિદેશ અભ્યાસ લોન સહાય">વિદેશ અભ્યાસ લોન સહાય</option>
                           <option value="કેટેગરી છાત્રાલય નિર્વાહ ભથ્થું">કેટેગરી છાત્રાલય નિર્વાહ ભથ્થું</option>
                         </select>

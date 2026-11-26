@@ -88,7 +88,7 @@ try {
   assert.equal(studentResponse.status, 200);
   assert.equal(studentResponse.data.cts_id, "GJ-AND-2026-004512");
 
-  await page.locator('button[title="Demo role switcher"]').click();
+  await page.locator('button[aria-label="Switch Role"]').click();
   await page.locator(".fixed.bottom-24.right-4").locator("button").nth(1).click();
   await page.waitForURL("**/school", { timeout: 10000 });
   cookies = await context.cookies(webUrl);

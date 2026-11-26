@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAppStore, type Role } from "@/lib/store";
 import { ROLE_DASHBOARD, ROLE_LABELS } from "@/lib/nav.config";
 import { loginDemoRole } from "@/lib/api/resources";
+import { t } from "@/lib/i18n";
 
 const ROLES: Role[] = ["student", "school", "deo", "admin", "vendor", "tpeo", "demo"];
 
@@ -22,15 +23,14 @@ export function RoleSwitcher() {
     }
   }
 
-  const currentLabel =
-    lang === "en" ? ROLE_LABELS[role].en : ROLE_LABELS[role].gu;
+  const currentLabel = ROLE_LABELS[role][lang];
 
   return (
     <div className="fixed bottom-24 right-4 z-50">
       {open && (
         <div className="mb-2 card shadow-level-3 p-2 min-w-[180px] animate-slide-up">
           <p className="font-label-sm text-label-sm text-on-surface-variant px-2 pb-1 border-b border-outline-variant mb-1">
-            Demo Role Switch
+            {t("demo.switchRole", lang)}
           </p>
           {ROLES.map((r) => (
             <button
@@ -45,7 +45,7 @@ export function RoleSwitcher() {
               <span className="material-symbols-outlined text-[16px]">
                 {r === "student" ? "school" : r === "admin" ? "admin_panel_settings" : r === "vendor" ? "local_shipping" : r === "tpeo" ? "account_tree" : r === "demo" ? "science" : "business"}
               </span>
-              {lang === "en" ? ROLE_LABELS[r].en : ROLE_LABELS[r].gu}
+              {ROLE_LABELS[r][lang]}
             </button>
           ))}
         </div>
@@ -54,7 +54,8 @@ export function RoleSwitcher() {
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-level-2 hover:bg-primary-container transition-colors"
         aria-expanded={open}
-        title="Demo role switcher"
+        aria-label={t("demo.switchRole", lang)}
+        title={t("demo.switchRole", lang)}
       >
         <span className="material-symbols-outlined text-[20px]">manage_accounts</span>
         <span className="hidden sm:inline">{currentLabel}</span>

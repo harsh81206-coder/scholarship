@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { Icon } from "@/components/Icon";
+import { T } from "@/components/T";
 
 type Status = "approved" | "pending" | "rejected" | "inprogress";
 
@@ -119,7 +120,7 @@ export function ErrorState({
       {onRetry && (
         <button onClick={onRetry} className="btn-outline mt-4 flex items-center gap-2 px-4 py-2 rounded h-10 text-sm">
           <Icon name="refresh" size={18} />
-          Retry
+          <T gu="ફરી પ્રયાસ કરો" en="Retry" hi="फिर कोशिश करें" />
         </button>
       )}
     </div>

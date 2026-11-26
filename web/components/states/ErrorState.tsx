@@ -9,7 +9,7 @@ export function ErrorState({ error, onRetry }: { error?: unknown; onRetry: () =>
       <p className="font-title-sm text-on-surface"><T gu="માહિતી લોડ થઈ શકી નથી" en="Could not load this information" hi="जानकारी लोड नहीं हो सकी" /></p>
       <p className="mt-1 font-body-sm text-on-surface-variant">{message}</p>
       <button type="button" onClick={onRetry} className="mt-4 rounded-lg bg-primary px-4 py-2 font-label-md text-on-primary">
-        <T gu="ફરી પ્રયાસ કરો" en="Retry" hi="फिर कोशिश करें" />
+        <T k="common.retry" />
       </button>
     </div>
   );

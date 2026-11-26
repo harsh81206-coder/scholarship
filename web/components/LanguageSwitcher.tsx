@@ -1,10 +1,11 @@
 "use client";
 import { useAppStore, type Lang } from "@/lib/store";
+import { t } from "@/lib/i18n";
 
-const LANGS: { code: Lang; label: string }[] = [
-  { code: "gu", label: "ગુ" },
-  { code: "hi", label: "हि" },
-  { code: "en", label: "EN" },
+const LANGS: { code: Lang; label: string; name: string }[] = [
+  { code: "gu", label: "ગુ", name: "gu" },
+  { code: "hi", label: "हि", name: "hi" },
+  { code: "en", label: "EN", name: "en" },
 ];
 
 export function LanguageSwitcher() {
@@ -12,7 +13,7 @@ export function LanguageSwitcher() {
 
   return (
     <div className="flex items-center gap-0.5 rounded-full bg-surface-container-high p-0.5">
-      {LANGS.map(({ code, label }) => (
+      {LANGS.map(({ code, label, name }) => (
         <button
           key={code}
           onClick={() => setLang(code)}
@@ -22,7 +23,8 @@ export function LanguageSwitcher() {
               : "text-on-surface-variant hover:text-on-surface"
           }`}
           aria-pressed={lang === code}
-          aria-label={`Switch to ${code}`}
+          aria-label={t("language.switchTo", lang, { language: t(`language.${name}`, lang) })}
+          title={t(`language.${name}`, lang)}
         >
           {label}
         </button>

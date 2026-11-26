@@ -11,6 +11,7 @@ import { ErrorState } from "@/components/states/ErrorState";
 import { EmptyState } from "@/components/states/EmptyState";
 import { ApiModeBadge } from "@/app/student/components/ApiModeBadge";
 import { useAppStore } from "@/lib/store";
+import { localizedName } from "@/lib/i18n";
 import {
   useMe,
   useMySchemes,
@@ -62,8 +63,7 @@ export default function StudentDashboardPage() {
   }
 
   const ctsId = profile?.cts_id ?? "";
-  const studentName =
-    lang === "gu" ? profile?.name_gu || profile?.name_en || "Student" : profile?.name_en || "Student";
+  const studentName = profile ? localizedName(profile, lang) : "Student";
   const schoolName = profile?.school_name ?? "";
   const grade = profile?.grade;
   const completionPct = profile?.completion_pct ?? 0;
@@ -270,9 +270,9 @@ export default function StudentDashboardPage() {
               <Icon name="lock" size={12} className="text-emerald-300" />
               <span>
                 <T
-                  gu="DPDP Act ૨૦૨૩ હેઠળ ૧૦૦% સુરક્ષિત ડેટા"
+                  gu="DPDP અધિનિયમ ૨૦૨૩ હેઠળ ૧૦૦% સુરક્ષિત માહિતી"
                   en="100% data secure under DPDP Act 2023"
-                  hi="DPDP Act 2023 के तहत 100% सुरक्षित डेटा"
+                  hi="DPDP अधिनियम 2023 के अंतर्गत 100% सुरक्षित जानकारी"
                 />
               </span>
             </div>
@@ -458,10 +458,11 @@ export default function StudentDashboardPage() {
               {schemeList.map((scheme) => {
                 const isEligible = scheme.status === "eligible";
                 const isApplied = appsList.some((a) => a.scheme_code === scheme.scheme_code);
-                const title =
-                  lang === "gu"
-                    ? scheme.scheme_name_gu || scheme.scheme_name_en
-                    : scheme.scheme_name_en;
+                const title = localizedName({
+                  name_en: scheme.scheme_name_en ?? scheme.scheme_code,
+                  name_gu: scheme.scheme_name_gu,
+                  name_hi: scheme.scheme_name_hi,
+                }, lang);
                 return (
                   <div
                     key={scheme.scheme_code}

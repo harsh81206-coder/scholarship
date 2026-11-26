@@ -10,6 +10,7 @@ import { Skeleton } from "@/components/states/Skeleton";
 import { ErrorState } from "@/components/states/ErrorState";
 import { EmptyState } from "@/components/states/EmptyState";
 import { useAppStore } from "@/lib/store";
+import { localizedName } from "@/lib/i18n";
 import { useApplications, useApprove, useBulkApprove } from "@/lib/api/hooks";
 import type { ApplicationSummary } from "@/lib/api/resources";
 
@@ -25,6 +26,7 @@ function mapStatusChip(status: string): "approved" | "pending" | "rejected" | "i
 }
 
 export default function SchoolQueuePage() {
+  const lang = useAppStore((s) => s.lang);
   const showSuccess = useAppStore((s) => s.showSuccess);
   const showError = useAppStore((s) => s.showError);
 
@@ -182,7 +184,11 @@ export default function SchoolQueuePage() {
               </thead>
               <tbody className="divide-y divide-outline-variant text-sm">
                 {filtered.map((app) => {
-                  const studentName = String(app.student_name ?? "Student");
+                  const studentName = localizedName({
+                    name_en: app.student_name ?? "Student",
+                    name_gu: app.student_name_gu,
+                    name_hi: app.student_name_hi,
+                  }, lang);
                   const canSchoolReview = app.route === "school" && app.status === "applied";
                   return (
                     <tr key={app.app_code} className="hover:bg-surface-container-low/50">
@@ -205,7 +211,11 @@ export default function SchoolQueuePage() {
                         </div>
                       </td>
                       <td className="p-3 font-mono text-xs text-primary font-semibold">{app.app_code}</td>
-                      <td className="p-3 text-on-surface">{String(app.scheme_name_en ?? app.scheme_code)}</td>
+                      <td className="p-3 text-on-surface">{localizedName({
+                        name_en: app.scheme_name_en ?? app.scheme_code,
+                        name_gu: app.scheme_name_gu,
+                        name_hi: app.scheme_name_hi,
+                      }, lang)}</td>
                       <td className="p-3 font-semibold">
                         {app.amount > 0 ? `₹${Number(app.amount).toLocaleString("en-IN")}` : "Bicycle"}
                       </td>

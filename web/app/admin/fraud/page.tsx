@@ -72,12 +72,12 @@ export default function FraudDetectionPage() {
               <T gu="છેતરપિંડી & અસંગતતા" en="Fraud & Anomaly Detection" hi="धोखाधड़ी और अनियमितता" />
             </h1>
             <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
-              <T gu="AI-powered realtime fraud detection • Gujarat DBT Shield" en="AI-powered real-time fraud detection • Gujarat DBT Shield" hi="AI-powered रियल-टाइम धोखाधड़ी पहचान" />
+              <T gu="AI-powered realtime fraud detection • Gujarat DBT Shield" en="AI-powered real-time fraud detection • Gujarat DBT Shield" hi="कृत्रिम बुद्धिमत्ता आधारित रियल-टाइम धोखाधड़ी पहचान" />
             </p>
           </div>
           <div className="flex items-center gap-2 text-success font-label-md text-label-md">
             <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-            <T gu="AI Shield Active" en="AI Shield Active" hi="AI Shield सक्रिय" />
+            <T gu="AI Shield Active" en="AI Shield Active" hi="AI सुरक्षा सक्रिय" />
           </div>
         </div>
 

@@ -74,7 +74,7 @@ const HOW_STEPS = [
   {
     num: "3",
     icon: "done_all",
-    gu: "One-Click અરજી",
+    gu: "એક ક્લિકમાં અરજી",
     en: "One-Click Apply",
     hi: "एक-क्लिक आवेदन",
     desc: { gu: "પાત્ર તમામ યોજનાઓ માટે એક ક્લિકમાં, NMMS exclusive જળવાય.", en: "Apply to all eligible schemes in one click. NMMS exclusivity respected.", hi: "सभी पात्र योजनाओं के लिए एक क्लिक।" },
@@ -438,7 +438,7 @@ export default function HomePage() {
             <T gu="CTS ID / OTP થી લૉગિન" en="Login with CTS ID & OTP" hi="CTS ID/OTP से लॉगिन" />
           </Link>
           <p className="font-caption text-caption text-on-primary/60 mt-4">
-            <T gu="કોઈ પાસવર્ડ નહીં • DPDP 2023 Compliant" en="No password • DPDP 2023 Compliant" hi="कोई पासवर्ड नहीं • DPDP 2023" />
+            <T gu="પાસવર્ડ વિનાનું • DPDP 2023 નિયમોનું પાલન" en="No password • DPDP 2023 Compliant" hi="कोई पासवर्ड नहीं • DPDP 2023" />
           </p>
         </div>
       </section>

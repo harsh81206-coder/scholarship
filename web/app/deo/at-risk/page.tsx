@@ -1315,12 +1315,12 @@ export default function AtRiskStudentsPage() {
                     onChange={(e) => setSchoolFilter(e.target.value)}
                     className="w-full h-10 px-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
                   >
-                    <option value="all">તમામ તાલુકા (All Anand)</option>
-                    <option value="vinay_mandir">ખંભાત (Khambhat)</option>
-                    <option value="janata_vidyalaya">તારાપુર (Tarapur)</option>
-                    <option value="sarvajanik_high">આંકલાવ (Anklav)</option>
-                    <option value="model_school">ઉમરેઠ (Umreth)</option>
-                    <option value="vallabh_vidyalaya">બોરસદ (Borsad)</option>
+                    <option value="all"><T gu="તમામ તાલુકા" en="All Anand" /></option>
+                    <option value="vinay_mandir"><T gu="ખંભાત" en="Khambhat" /></option>
+                    <option value="janata_vidyalaya"><T gu="તારાપુર" en="Tarapur" /></option>
+                    <option value="sarvajanik_high"><T gu="આંકલાવ" en="Anklav" /></option>
+                    <option value="model_school"><T gu="ઉમરેઠ" en="Umreth" /></option>
+                    <option value="vallabh_vidyalaya"><T gu="બોરસદ" en="Borsad" /></option>
                   </select>
                   <span className="absolute right-2.5 top-2.5 text-outline pointer-events-none">
                     <Icon name="expand_more" size={18} />
@@ -1339,7 +1339,7 @@ export default function AtRiskStudentsPage() {
                     onChange={(e) => setSchoolFilter(e.target.value)}
                     className="w-full h-10 px-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
                   >
-                    <option value="all">તમામ શાળાઓ (All Schools)</option>
+                    <option value="all"><T gu="તમામ શાળાઓ" en="All Schools" /></option>
                     <option value="vinay_mandir">વિનય મંદિર હાઈસ્કૂલ</option>
                     <option value="janata_vidyalaya">જનતા વિદ્યાલય</option>
                     <option value="sarvajanik_high">સાર્વજનિક હાઈસ્કૂલ</option>
@@ -1363,11 +1363,11 @@ export default function AtRiskStudentsPage() {
                     onChange={(e) => setClassFilter(e.target.value)}
                     className="w-full h-10 px-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
                   >
-                    <option value="all">તમામ ધોરણ (All Classes)</option>
-                    <option value="class_9">ધોરણ ૯ (Class IX)</option>
-                    <option value="class_10">ધોરણ ૧૦ (Class X)</option>
-                    <option value="class_11">ધોરણ ૧૧ (Class XI)</option>
-                    <option value="class_12">ધોરણ ૧૨ (Class XII)</option>
+                    <option value="all"><T gu="તમામ ધોરણ" en="All Classes" /></option>
+                    <option value="class_9"><T gu="ધોરણ ૯" en="Class IX" /></option>
+                    <option value="class_10"><T gu="ધોરણ ૧૦" en="Class X" /></option>
+                    <option value="class_11"><T gu="ધોરણ ૧૧" en="Class XI" /></option>
+                    <option value="class_12"><T gu="ધોરણ ૧૨" en="Class XII" /></option>
                   </select>
                   <span className="absolute right-2.5 top-2.5 text-outline pointer-events-none">
                     <Icon name="expand_more" size={18} />
@@ -1386,9 +1386,9 @@ export default function AtRiskStudentsPage() {
                     onChange={(e) => setGenderFilter(e.target.value)}
                     className="w-full h-10 px-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
                   >
-                    <option value="all">તમામ (All)</option>
-                    <option value="female">કન્યા વિદ્યાર્થીઓ (Female Only)</option>
-                    <option value="male">કુમાર વિદ્યાર્થીઓ (Male Only)</option>
+                    <option value="all"><T gu="તમામ" en="All" /></option>
+                    <option value="female"><T gu="કન્યા વિદ્યાર્થીઓ" en="Female Only" /></option>
+                    <option value="male"><T gu="કુમાર વિદ્યાર્થીઓ" en="Male Only" /></option>
                   </select>
                   <span className="absolute right-2.5 top-2.5 text-outline pointer-events-none">
                     <Icon name="expand_more" size={18} />
@@ -1407,10 +1407,10 @@ export default function AtRiskStudentsPage() {
                     onChange={(e) => setRiskFilter(e.target.value)}
                     className="w-full h-10 px-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer font-bold"
                   >
-                    <option value="all">તમામ સ્કોર (All Scores)</option>
-                    <option value="high" className="text-error font-bold">High Risk (&gt;૭૦%)</option>
-                    <option value="medium" className="text-secondary font-bold">Medium Risk (૪૦-૭૦%)</option>
-                    <option value="low" className="text-success font-bold">Low Risk (&lt;૪૦%)</option>
+                    <option value="all"><T gu="તમામ સ્કોર" en="All Scores" /></option>
+                    <option value="high" className="text-error font-bold"><T gu="&gt;૭૦%" en="High Risk" /></option>
+                    <option value="medium" className="text-secondary font-bold"><T gu="૪૦-૭૦%" en="Medium Risk" /></option>
+                    <option value="low" className="text-success font-bold"><T gu="&lt;૪૦%" en="Low Risk" /></option>
                   </select>
                   <span className="absolute right-2.5 top-2.5 text-outline pointer-events-none">
                     <Icon name="expand_more" size={18} />

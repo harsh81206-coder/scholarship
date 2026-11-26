@@ -385,7 +385,7 @@ export default function SchoolDashboardPage() {
               </h3>
               <p className="font-caption text-caption text-on-surface-variant truncate">
                 <T
-                  gu="હાજરી Excel અને CTS ડેટા સિંક"
+                  gu="હાજરી પત્રક અને CTS ડેટાનું સમન્વય"
                   en="Attendance Excel & CTS Portal Sync"
                   hi="उपस्थिति एक्सेल और सीटीएस डेटा सिंक"
                 />
@@ -1065,7 +1065,7 @@ export default function SchoolDashboardPage() {
                     </div>
                     <div className="flex flex-col">
                       <span className="font-label-lg text-label-lg text-on-surface font-semibold">
-                        <T gu="હાજરી Excel અપલોડ કરો" en="Upload Attendance Master" hi="उपस्थिति एक्सेल अपलोड करें" />
+                        <T gu="હાજરી પત્રક અપલોડ કરો" en="Upload Attendance Master" hi="उपस्थिति एक्सेल अपलोड करें" />
                       </span>
                       <span className="font-caption text-caption text-on-surface-variant">
                         <T gu="સરલ પોર્ટલ સુસંગત ફોર્મેટ" en="Saral Portal Compliant Format" hi="सरल पोर्टल अनुपालक प्रारूप" />

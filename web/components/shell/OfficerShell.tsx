@@ -33,7 +33,7 @@ export function OfficerShell({ children, role }: OfficerShellProps) {
               <T gu="વિદ્યા પ્રગતિ સેતુ" en="Vidya Pragati Setu" hi="विद्या प्रगति सेतु" />
             </p>
             <p className="font-caption text-caption text-on-surface-variant">
-              {lang === "en" ? roleLabel.en : roleLabel.gu}
+              {roleLabel[lang]}
             </p>
           </div>
         </div>
@@ -42,7 +42,7 @@ export function OfficerShell({ children, role }: OfficerShellProps) {
         <nav className="flex-1 overflow-y-auto py-3 px-2">
           {navItems.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-            const label = lang === "en" ? item.en : lang === "hi" ? item.hi : item.gu;
+            const label = item[lang];
             return (
               <Link
                 key={item.href}
@@ -101,7 +101,7 @@ export function OfficerShell({ children, role }: OfficerShellProps) {
                   {role === "school" ? "Dr. Kalpesh Shah" : role === "admin" ? "State Admin" : role === "deo" ? "Anand DEO" : role === "vendor" ? "Cycle Vendor" : role === "demo" ? "Demo Controller" : "TPEO Borsad"}
                 </p>
                 <p className="font-caption text-caption text-on-surface-variant">
-                  {lang === "en" ? roleLabel.en : roleLabel.gu}
+                  {roleLabel[lang]}
                 </p>
               </div>
             </div>
