@@ -4,6 +4,9 @@ import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { StatusChip } from "@/components/ui";
+import { useTalukaSchools } from "@/lib/api/hooks";
+import { ErrorState } from "@/components/states/ErrorState";
+import { Skeleton } from "@/components/states/Skeleton";
 
 const SCHOOLS = [
   { name: "Vinay Mandir High School", gu: "વ. મ. HS", udise: "24150302101", taluka: "Khambhat", students: 320, pending: 2, compliance: 94 },
@@ -15,6 +18,7 @@ const SCHOOLS = [
 ];
 
 export default function TpeoSchoolsPage() {
+  const liveSchools = useTalukaSchools();
   const [search, setSearch] = useState("");
   const filtered = SCHOOLS.filter((s) =>
     s.name.toLowerCase().includes(search.toLowerCase()) || s.taluka.toLowerCase().includes(search.toLowerCase())
@@ -23,6 +27,11 @@ export default function TpeoSchoolsPage() {
   return (
     <OfficerShell role="tpeo">
       <div className="p-6 flex flex-col gap-5 max-w-5xl">
+        <section className="card p-4">
+          <h2 className="font-title-sm text-on-surface">Live API school data</h2>
+          {liveSchools.isLoading ? <Skeleton rows={2} /> : liveSchools.isError ? <ErrorState error={liveSchools.error} onRetry={() => void liveSchools.refetch()} /> : <p className="mt-2 text-sm text-on-surface-variant">{liveSchools.data?.total ?? 0} schools in your taluka scope.</p>}
+          {(liveSchools.data?.items ?? []).slice(0, 8).map((school) => <p className="mt-2 border-t border-outline-variant pt-2 text-sm" key={String(school.school_id)}>{String(school.name_en)} · {String(school.student_count ?? 0)} students · {String(school.pending_count ?? 0)} pending</p>)}
+        </section>
         <div>
           <h1 className="font-headline-lg text-headline-lg text-on-surface font-bold">
             <T gu="શ. ન." en="School Oversight" hi="स्कूल निगरानी" />

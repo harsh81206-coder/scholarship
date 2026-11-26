@@ -56,11 +56,10 @@ try {
   page.on("requestfailed", (request) => console.error("Browser request failed:", request.url(), request.failure()?.errorText));
   await page.goto(`${webUrl}/login`, { waitUntil: "domcontentloaded" });
   await page.locator("#ctsId").waitFor();
-  await page.waitForTimeout(300);
-  await page.locator("#ctsId").fill("GJ-AND-2026-004512");
-  await page.locator("#dob").fill("2009-08-15");
-  await page.locator("#mobile").fill("9876543210");
-  const sendResponsePromise = page.waitForResponse((response) => response.url().endsWith("/auth/otp/send"), { timeout: 10000 });
+  await page.waitForLoadState("networkidle", { timeout: 20000 }).catch(() => undefined);
+  await page.getByRole("button", { name: /Auto-Fill/ }).click();
+  await page.waitForFunction(() => document.querySelector("#ctsId")?.value === "GJ-AND-2026-004512", null, { timeout: 10000 });
+  const sendResponsePromise = page.waitForResponse((response) => new URL(response.url()).pathname === "/auth/otp/send", { timeout: 20000 });
   await page.locator('form button[type="submit"]').first().click();
   const sendResponse = await sendResponsePromise;
   if (!sendResponse.ok()) throw new Error(`OTP send failed (${sendResponse.status()}): ${await sendResponse.text()}`);
@@ -106,11 +105,12 @@ try {
     await fs.mkdir(path.dirname(tokenFile), { recursive: true });
     await fs.writeFile(tokenFile, `${JSON.stringify({ student: studentAuth, school: schoolAuth }, null, 2)}\n`, { mode: 0o600 });
   }
-  const currentOrigin = new URL(page.url()).origin;
-  await page.goto(`${currentOrigin}/admin`, { waitUntil: "domcontentloaded" });
-  await page.waitForTimeout(1000);
-  console.log("Wrong-role redirect URL:", page.url());
-  assert.match(page.url(), /\/school$/);
+  const guardResponse = await context.request.get(`${webUrl}/admin`, {
+    headers: { cookie: `vps_access_token=${encodeURIComponent(schoolAuth.accessToken)}; vps_role=school` },
+    maxRedirects: 0,
+  });
+  assert.equal(guardResponse.status(), 307);
+  assert.match(guardResponse.headers().location ?? "", /\/school$/);
   console.log("Playwright login: student OTP, /students/me, school role switch, scoped applications, and wrong-role redirect passed.");
 } finally {
   await browser.close();

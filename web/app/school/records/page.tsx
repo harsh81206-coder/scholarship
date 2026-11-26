@@ -6,6 +6,7 @@ import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { Avatar } from "@/components/ui";
+import { useConfirmRecords, useUploadRecords } from "@/lib/api/hooks";
 
 interface StudentRecord {
   id: string;
@@ -233,6 +234,8 @@ const INITIAL_STUDENTS: StudentRecord[] = [
 ];
 
 export default function SchoolRecordsPage() {
+  const uploadRecords = useUploadRecords();
+  const confirmRecords = useConfirmRecords();
   const [activeTab, setActiveTab] = useState<"attendance" | "marks" | "audit">("attendance");
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -248,6 +251,14 @@ export default function SchoolRecordsPage() {
   // Bulk import state
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [importNotice, setImportNotice] = useState<string | null>(null);
+  const [validationReport, setValidationReport] = useState<{
+    type: "attendance" | "marks";
+    total: number;
+    valid: number;
+    errors: Array<{ row: number; issue: string }>;
+    rows: Array<Record<string, unknown>>;
+  } | null>(null);
+  const [confirmedCount, setConfirmedCount] = useState<number | null>(null);
 
   // Confirmation modal state
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
@@ -412,22 +423,34 @@ export default function SchoolRecordsPage() {
   };
 
   // CSV Bulk Import simulation
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImportNotice(`ફાઇલ '${file.name}' સફળતાપૂર્વક અપલોડ થઈ: ૮૪૨ વિદ્યાર્થીઓ સિંક થયા!`);
-      setTimeout(() => setImportNotice(null), 5000);
+      const type = activeTab === "marks" ? "marks" : "attendance";
+      try {
+        const report = await uploadRecords.mutateAsync({ type, file });
+        setValidationReport({
+          type,
+          total: Number(report.total ?? 0),
+          valid: Number(report.valid ?? 0),
+          errors: Array.isArray(report.errors) ? report.errors as Array<{ row: number; issue: string }> : [],
+          rows: Array.isArray(report.rows) ? report.rows as Array<Record<string, unknown>> : [],
+        });
+        setImportNotice(`${file.name}: ${Number(report.valid ?? 0)} valid / ${Number(report.total ?? 0)} total. Review the validation report before confirming.`);
+      } catch (error) {
+        setImportNotice(error instanceof Error ? error.message : "CSV upload failed. Please check the file and try again.");
+      }
     }
+    e.target.value = "";
   };
 
   const handleDownloadTemplate = () => {
     const csvContent =
-      "data:text/csv;charset=utf-8," +
-      "Roll_No,Student_Name,CTS_ID,Class,Jun_Pct,Jul_Pct,Aug_Pct,Sep_Pct,Oct_Days_Present,Oct_Total_Days,Gujarati,Mathematics,Science,Social_Science,English\n" +
-      "01,Riya Hasmukhbhai Patel,GJ-AND-2026-004512,9-B,96,94,95,98,23,24,88,92,85,90,84\n" +
-      "02,Aarav Bharatbhai Solanki,GJ-AND-2026-004515,9-B,90,88,86,92,22,24,78,82,79,84,75\n" +
-      "03,Hetvi Jagdishkumar Shah,GJ-AND-2026-004520,9-B,74,72,70,68,17,24,65,58,62,70,60\n";
-    const encodedUri = encodeURI(csvContent);
+      "cts_id,value\n" +
+      "GJ-AND-2026-004512,95.8\n" +
+      "GJ-AND-2026-004515,89.4\n" +
+      "GJ-AND-2026-004520,71.2\n";
+    const encodedUri = `data:text/csv;charset=utf-8,${encodeURIComponent(csvContent)}`;
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
     link.setAttribute("download", "student_attendance_marks_template.csv");
@@ -451,6 +474,27 @@ export default function SchoolRecordsPage() {
     );
   };
 
+  const handleConfirmRecords = async () => {
+    const type = validationReport?.type ?? (activeTab === "marks" ? "marks" : "attendance");
+    const sourceRows = validationReport?.rows ?? students.map((student) => ({
+      cts_id: student.ctsId,
+      value: type === "attendance"
+        ? student.totalAttendancePct
+        : Object.values(student.marks).reduce((sum, mark) => sum + mark, 0) / Object.values(student.marks).length,
+    }));
+    const invalidRows = new Set(validationReport?.errors.map((error) => error.row) ?? []);
+    const validRows = sourceRows.filter((_, index) => !invalidRows.has(index + 2));
+    try {
+      const result = await confirmRecords.mutateAsync({ type, rows: validRows });
+      setConfirmedCount(Number(result.updated ?? 0));
+      setIsConfirmModalOpen(false);
+      setSubmissionSuccess(true);
+    } catch (error) {
+      setImportNotice(error instanceof Error ? error.message : "Could not sync records. Please try again.");
+      setIsConfirmModalOpen(false);
+    }
+  };
+
   return (
     <OfficerShell role="school">
       <div className="p-4 sm:p-6 lg:p-8 flex flex-col gap-6 max-w-7xl mx-auto">
@@ -459,7 +503,7 @@ export default function SchoolRecordsPage() {
           type="file"
           ref={fileInputRef}
           onChange={handleFileChange}
-          accept=".csv,.xlsx,.xls"
+          accept=".csv,text/csv"
           className="hidden"
         />
 
@@ -480,6 +524,17 @@ export default function SchoolRecordsPage() {
               <Icon name="close" size={18} />
             </button>
           </div>
+        )}
+        {validationReport && (
+          <section className="rounded-xl border border-outline-variant bg-surface-container-lowest p-4" aria-live="polite">
+            <h2 className="font-title-sm font-bold text-on-surface">CSV validation: {validationReport.valid}/{validationReport.total} valid</h2>
+            <p className="mt-1 text-sm text-on-surface-variant">{validationReport.errors.length} row errors. Invalid rows will be held back when you confirm.</p>
+            {validationReport.errors.length > 0 && (
+              <ul className="mt-2 list-inside list-disc text-sm text-danger">
+                {validationReport.errors.slice(0, 5).map((error) => <li key={`${error.row}-${error.issue}`}>Row {error.row}: {error.issue}</li>)}
+              </ul>
+            )}
+          </section>
         )}
 
         {/* Top Breadcrumb & Page Header Section */}
@@ -1853,7 +1908,7 @@ export default function SchoolRecordsPage() {
                     <T gu="કુલ માન્ય વિદ્યાર્થીઓ:" en="Total Valid Students:" hi="कुल मान्य छात्र:" />
                   </span>
                   <span className="font-bold text-success font-mono text-[15px]">
-                    ૮૩૨ (98.8%)
+                    {validationReport ? `${validationReport.valid} / ${validationReport.total}` : `${students.length} demo records`}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -1897,19 +1952,13 @@ export default function SchoolRecordsPage() {
 
                 <button
                   type="button"
-                  onClick={() => {
-                    setIsConfirmModalOpen(false);
-                    setSubmissionSuccess(true);
-                  }}
+                  onClick={handleConfirmRecords}
+                  disabled={confirmRecords.isPending}
                   className="h-10 px-5 rounded-xl bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-all flex items-center gap-2 shadow-md font-bold"
                 >
                   <Icon name="check_circle" size={18} />
                   <span>
-                    <T
-                      gu="પુષ્ટિ કરો અને સિંક કરો"
-                      en="Confirm & Sync"
-                      hi="पुष्टि करें और सिंक करें"
-                    />
+                    {confirmRecords.isPending ? "Syncing…" : <T gu="પુષ્ટિ કરો અને સિંક કરો" en="Confirm & Sync" hi="पुष्टि करें और सिंक करें" />}
                   </span>
                 </button>
               </div>
@@ -1934,9 +1983,9 @@ export default function SchoolRecordsPage() {
                 </h3>
                 <p className="font-body-sm text-body-sm text-on-surface-variant mt-2">
                   <T
-                    gu="૮૩૨ વિદ્યાર્થીઓ નમો લક્ષ્મી અને જ્ઞાન સાધના શિષ્યવૃત્તિ સ્કીમ સાથે સફળતાપૂર્વક લિંક કરવામાં આવ્યા છે. DBT માટે પાત્રતા પ્રમાણિત થઈ ગઈ છે."
-                    en="832 students have been successfully verified and linked to Namo Lakshmi & Gyan Sadhna Scholarship schemes for DBT disbursal."
-                    hi="832 छात्रों को नमो लक्ष्मी और ज्ञान साधना छात्रवृत्ति योजना से सफलतापूर्वक लिंक कर दिया गया है।"
+                    gu={`${confirmedCount ?? 0} વિદ્યાર્થીઓના રેકોર્ડ અપડેટ થયા.`}
+                    en={`${confirmedCount ?? 0} student records were updated by the API.`}
+                    hi={`${confirmedCount ?? 0} छात्रों के रिकॉर्ड API द्वारा अपडेट किए गए।`}
                   />
                 </p>
               </div>

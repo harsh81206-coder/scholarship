@@ -5,6 +5,8 @@ import Link from "next/link";
 import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
+import { LiveMetrics } from "@/components/LiveMetrics";
+import { useAuditLogs, useVerifyAuditChain } from "@/lib/api/hooks";
 
 
 type ActionType = "APPROVE" | "REJECT" | "CREATE" | "UPDATE" | "DELETE";
@@ -700,6 +702,8 @@ const MOCK_AUDIT_LOGS: AuditLogEntry[] = [
 ];
 
 export default function AdminAuditPage() {
+  const auditQuery = useAuditLogs();
+  const chainQuery = useVerifyAuditChain();
   // Filter States
   const [searchQuery, setSearchQuery] = useState("");
   const [actorFilter, setActorFilter] = useState<string>("all");
@@ -811,16 +815,20 @@ export default function AdminAuditPage() {
   };
 
   // Verify chain simulation
-  const handleVerifyChain = () => {
+  const handleVerifyChain = async () => {
     setIsVerifying(true);
     setVerifyMessage(null);
-    setTimeout(() => {
+    try {
+      const result = await chainQuery.refetch();
       setIsVerifying(false);
-      setVerifyMessage("verified");
+      setVerifyMessage(result.data?.valid ? "verified" : "failed");
       setTimeout(() => {
         setVerifyMessage(null);
       }, 3500);
-    }, 850);
+    } catch {
+      setIsVerifying(false);
+      setVerifyMessage("failed");
+    }
   };
 
   // Export to CSV function
@@ -914,6 +922,7 @@ export default function AdminAuditPage() {
   return (
     <OfficerShell role="admin">
       <div className="w-full bg-surface px-4 sm:px-6 py-6 flex flex-col gap-6">
+        <LiveMetrics title="Live audit chain status" data={chainQuery.data} loading={chainQuery.isLoading || auditQuery.isLoading} error={chainQuery.error ?? auditQuery.error} onRetry={() => { void Promise.all([chainQuery.refetch(), auditQuery.refetch()]); }} />
         {/* 1. Header & Command Action Bar */}
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/60">
           <div className="flex flex-col gap-1.5">

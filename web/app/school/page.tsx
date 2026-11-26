@@ -6,6 +6,8 @@ import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { StatusChip, KpiCard, Avatar } from "@/components/ui";
+import { LiveMetrics } from "@/components/LiveMetrics";
+import { useAnalytics } from "@/lib/api/hooks";
 
 interface StudentIssue {
   id: string;
@@ -120,6 +122,7 @@ const PRIORITY_STUDENTS: StudentIssue[] = [
 ];
 
 export default function SchoolDashboardPage() {
+  const liveData = useAnalytics("school");
   const [syncing, setSyncing] = useState(false);
   const [syncStatus, setSyncStatus] = useState<string | null>(null);
   const [smsSent, setSmsSent] = useState(false);
@@ -150,6 +153,7 @@ export default function SchoolDashboardPage() {
   return (
     <OfficerShell role="school">
       <div className="p-6 space-y-6 max-w-7xl mx-auto">
+        <LiveMetrics title="Live school data" data={liveData.data} loading={liveData.isLoading} error={liveData.error} onRetry={() => void liveData.refetch()} />
         {/* Top Breadcrumb & School Context Header */}
         <section className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center justify-between gap-4">

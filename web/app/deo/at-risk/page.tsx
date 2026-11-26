@@ -6,6 +6,7 @@ import { T } from "@/components/T";
 import { OfficerShell } from "@/components/shell/OfficerShell";
 import { Icon } from "@/components/Icon";
 import { Avatar } from "@/components/ui";
+import { useDropout } from "@/lib/api/hooks";
 
 interface RiskFactor {
   label: { gu: string; en: string; hi: string };
@@ -556,6 +557,7 @@ const MOCK_STUDENTS: Student[] = [
 ];
 
 export default function AtRiskStudentsPage() {
+  const liveDropout = useDropout();
   const [selectedStudentId, setSelectedStudentId] = useState<string>("riya");
   const [riskFilter, setRiskFilter] = useState<string>("all"); // 'all' | 'high' | 'medium' | 'low'
   const [schoolFilter, setSchoolFilter] = useState<string>("all");
@@ -718,6 +720,21 @@ export default function AtRiskStudentsPage() {
   return (
     <OfficerShell role="deo">
       <div className="flex flex-col w-full min-h-screen bg-surface">
+        <section className="mx-6 mt-5 rounded-xl border border-outline-variant bg-surface-container-lowest p-4" aria-live="polite">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="font-title-sm font-bold text-on-surface">Live dropout model · {liveDropout.data?.total ?? 0} scoped students</h2>
+            {liveDropout.isError && <button type="button" onClick={() => void liveDropout.refetch()} className="text-sm text-primary underline">Retry</button>}
+          </div>
+          {liveDropout.isLoading ? <p className="mt-2 text-sm text-on-surface-variant">Loading model scores…</p> : liveDropout.isError ? <p role="alert" className="mt-2 text-sm text-danger">Could not load dropout model data.</p> : (
+            <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {(liveDropout.data?.items ?? []).slice(0, 6).map((item) => <article key={String(item.cts_id)} className="rounded-lg bg-surface-container-low p-3 text-sm">
+                <p className="font-semibold text-on-surface">{String(item.name_en ?? item.cts_id)}</p>
+                <p className="text-on-surface-variant">{String(item.risk_level ?? "unknown")} risk · {String(item.score ?? 0)}%</p>
+                <p className="mt-1 text-xs text-on-surface-variant">{Array.isArray(item.top_reasons) ? item.top_reasons.map((reason) => typeof reason === "string" ? reason : String((reason as Record<string, unknown>).label_en ?? "risk factor")).join(" · ") : "Model explanation unavailable"}</p>
+              </article>)}
+            </div>
+          )}
+        </section>
         {/* Top Breadcrumb & Executive Action Header */}
         <div className="w-full px-6 py-6 bg-surface-container-low/70 border-b border-outline-variant/60">
           <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">

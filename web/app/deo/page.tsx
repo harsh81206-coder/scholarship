@@ -6,6 +6,8 @@ import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { KpiCard, StatusChip, Avatar } from "@/components/ui";
+import { LiveMetrics } from "@/components/LiveMetrics";
+import { useAnalytics } from "@/lib/api/hooks";
 
 interface TalukaRow {
   nameGu: string;
@@ -251,6 +253,7 @@ const INITIAL_PENDING_QUEUE: PendingItem[] = [
 ];
 
 export default function DeoDashboardPage() {
+  const liveData = useAnalytics("deo");
   const [selectedYear, setSelectedYear] = useState("2025-26");
   const [selectedScheme, setSelectedScheme] = useState("all");
   const [selectedTaluka, setSelectedTaluka] = useState("all");
@@ -285,6 +288,7 @@ export default function DeoDashboardPage() {
   return (
     <OfficerShell role="deo">
       <div className="p-4 md:p-6 space-y-6 max-w-[1440px] mx-auto pb-16">
+        <LiveMetrics title="Live district data" data={liveData.data} loading={liveData.isLoading} error={liveData.error} onRetry={() => void liveData.refetch()} />
         {/* Toast Alerts */}
         {downloadToast && (
           <div className="fixed top-20 right-6 z-50 bg-primary text-on-primary px-4 py-3 rounded-xl shadow-level-2 flex items-center gap-2 animate-fade-in">

@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 from app.db import get_session
 from app.main import app
-from app.models.core import Cycle, CycleBatch, District, Handover, Notification, School, Student, Taluka, User
+from app.models.core import AcademicRecord, Cycle, CycleBatch, District, Grievance, Handover, Notification, School, Student, Taluka, User
 from app.routers.logistics import _signed_payload
 from app.security import create_access_token
 
@@ -73,15 +73,21 @@ def setup_client():
     session.close()
 
 
-def auth(role: str, sub: str, school_id: int | None = None) -> dict[str, str]:
+def auth(
+    role: str,
+    sub: str,
+    school_id: int | None = None,
+    taluka_id: int | None = None,
+    district_id: int | None = None,
+) -> dict[str, str]:
     token = create_access_token(
         {
             "sub": sub,
             "role": role,
             "name": sub,
             "school_id": school_id,
-            "taluka_id": None,
-            "district_id": None,
+            "taluka_id": taluka_id,
+            "district_id": district_id,
         }
     )
     return {"Authorization": f"Bearer {token}"}
@@ -162,6 +168,102 @@ def test_school_cannot_receive_other_school_batch(setup_client):
         headers=outsider,
     )
     assert response.status_code == 403
+
+
+def test_vendor_batch_qr_and_tracking_are_signed_and_scoped(setup_client):
+    client, _, school, _ = setup_client
+    vendor_headers = auth("vendor", "VND-001")
+    created = client.post(
+        "/vendor/batches",
+        json={"school_id": school.id, "qty": 2},
+        headers=vendor_headers,
+    )
+    assert created.status_code == 200
+    batch_id = created.json()["id"]
+
+    qr = client.get(f"/vendor/batches/{batch_id}/qr", headers=vendor_headers)
+    assert qr.status_code == 200
+    assert len(qr.json()["items"]) == 2
+    item = qr.json()["items"][0]
+    assert item["payload"].startswith(item["serial_no"] + f"|{batch_id}|")
+
+    dispatched = client.post(
+        f"/batches/{batch_id}/dispatch",
+        json={"lat": 22.56, "lng": 72.95},
+        headers=vendor_headers,
+    )
+    assert dispatched.status_code == 200
+    tracking = client.get(f"/vendor/batches/{batch_id}/track", headers=vendor_headers)
+    assert tracking.status_code == 200
+    assert tracking.json()["status"] == "dispatched"
+    assert tracking.json()["gps_points"] == [{"lat": 22.56, "lng": 72.95, "at": tracking.json()["gps_points"][0]["at"]}]
+
+    outsider = auth("vendor", "VND-OTHER")
+    assert client.get(f"/vendor/batches/{batch_id}/qr", headers=outsider).status_code == 403
+
+
+def test_district_school_list_and_state_ranking_are_role_scoped(setup_client):
+    client, _, school, _ = setup_client
+    deo_headers = auth("deo", "DEO-AND-001", district_id=1)
+    response = client.get("/analytics/district/schools", headers=deo_headers)
+    assert response.status_code == 200
+    assert response.json()["items"][0]["school_id"] == school.id
+
+    admin_response = client.get("/analytics/state/ranking", headers=auth("admin", "ADMIN-STATE-001"))
+    assert admin_response.status_code == 200
+    assert admin_response.json()["items"][0]["rank"] == 1
+    assert client.get("/analytics/state/ranking", headers=deo_headers).status_code == 403
+
+
+def test_school_report_types_use_scoped_records(setup_client):
+    client, student, school, session = setup_client
+    session.add(
+        AcademicRecord(
+            student_id=student.id,
+            year=2026,
+            grade=9,
+            attendance_pct=68,
+            marks_pct=74,
+            record_month="2026-10",
+        )
+    )
+    session.commit()
+    response = client.get(
+        "/analytics/school/reports?type=attendance-defaulters",
+        headers=auth("school", "SCH-AND-001", school.id),
+    )
+    assert response.status_code == 200, response.text
+    assert response.json()["total"] == 1
+    assert response.json()["items"][0]["cts_id"] == student.cts_id
+
+
+def test_grievance_list_and_detail_are_scoped_to_school(setup_client):
+    client, student, school, session = setup_client
+    other_school = School(
+        udise_code="24150104503",
+        name_en="Other School",
+        taluka_id=school.taluka_id,
+    )
+    session.add(other_school)
+    session.flush()
+    other_student = Student(
+        cts_id="GJ-AND-2026-999999",
+        mobile="9876500000",
+        name_en="Outside Student",
+        school_id=other_school.id,
+    )
+    session.add(other_student)
+    session.flush()
+    own_grievance = Grievance(grv_code="GRV-00000001", student_id=student.id, description="Own case")
+    other_grievance = Grievance(grv_code="GRV-00000002", student_id=other_student.id, description="Outside case")
+    session.add_all([own_grievance, other_grievance])
+    session.commit()
+
+    school_headers = auth("school", "SCH-AND-001", school.id)
+    response = client.get("/grievances", headers=school_headers)
+    assert response.status_code == 200
+    assert [item["grv_code"] for item in response.json()["items"]] == ["GRV-00000001"]
+    assert client.get("/grievances/GRV-00000002", headers=school_headers).status_code == 403
 
 
 def test_cycles_overview_scopes_batch_and_handover_roster_to_school(setup_client):
@@ -353,3 +455,29 @@ def test_handover_rejects_tampered_qr_signature(setup_client):
         "/handover/confirm", json={"cycle_serial": serial, "otp": started["demo_otp"]}, headers=school_headers
     )
     assert rejected.status_code == 400
+
+
+def test_school_student_detail_rejects_another_school(setup_client):
+    client, _, school, session = setup_client
+    other_school = School(
+        udise_code="24150104599",
+        name_en="Another Anand School",
+        taluka_id=school.taluka_id,
+    )
+    session.add(other_school)
+    session.flush()
+    other_student = Student(
+        cts_id="GJ-AND-2026-099999",
+        mobile="9876549999",
+        name_en="Other Student",
+        school_id=other_school.id,
+        grade=8,
+        guardian_consent=True,
+    )
+    session.add(other_student)
+    session.commit()
+    response = client.get(
+        f"/school/students/{other_student.cts_id}",
+        headers=auth("school", "SCH-AND-001", school.id),
+    )
+    assert response.status_code == 403

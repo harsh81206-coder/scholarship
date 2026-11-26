@@ -1,6 +1,6 @@
 # Full-flow implementation plan
 
-Updated: 2026-11-26. This is the route inventory and implementation map for the full-flow blueprint. The checkout currently has **45 `page.tsx` routes** (verified with `find web/app -name page.tsx`), while the blueprint says the source archive had 47. This plan reconciles the requested target of 64 by mapping the 45 checked-in routes, all 17 mandatory additions, and the 2 bonus routes (`/admin/ml`, `/vendor/returns`). The 2-route source-archive difference is not silently counted as existing work.
+Updated: 2026-11-26. This is the route inventory and implementation map for the full-flow blueprint. The repository now has **64 `page.tsx` routes**: the 33 original Stitch screen routes plus 31 expansion routes. The `Current`/`New` labels below record the inventory at the time this plan was first drafted; they do not certify completion. Check [`STATUS.md`](STATUS.md) for current API links and [`FINAL_STATUS.md`](FINAL_STATUS.md) for verified work and remaining gaps. The source archive was reported as 47 routes; this repository's inventory and the archive count are tracked separately.
 
 ## Route map (64)
 

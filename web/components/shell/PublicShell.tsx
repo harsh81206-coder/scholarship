@@ -43,6 +43,8 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
             <Link href="/#portals" className="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors">
               <T gu="પોર્ટલ" en="Portals" hi="पोर्टल" />
             </Link>
+            <Link href="/transparency" className="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors"><T gu="પારદર્શિતા" en="Transparency" hi="पारदर्शिता" /></Link>
+            <Link href="/help" className="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors"><T gu="સહાય" en="Help" hi="सहायता" /></Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -82,6 +84,11 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
               en="© 2025 Government of Gujarat. All rights reserved."
               hi="© 2025 गुजरात सरकार। सर्वाधिकार सुरक्षित।"
             />
+          </div>
+          <div className="flex flex-wrap gap-4 text-xs text-on-primary/80 md:col-span-3">
+            <Link href="/transparency"><T gu="પારદર્શિતા" en="Transparency" hi="पारदर्शिता" /></Link>
+            <Link href="/help"><T gu="સહાય કેન્દ્ર" en="Help centre" hi="सहायता केंद्र" /></Link>
+            <Link href="/privacy"><T gu="ગોપનીયતા" en="Privacy" hi="गोपनीयता" /></Link>
           </div>
         </div>
       </footer>

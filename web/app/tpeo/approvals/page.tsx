@@ -5,6 +5,9 @@ import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { StatusChip, Avatar } from "@/components/ui";
 import { useAppStore } from "@/lib/store";
+import { useApplications, useApprove, useReject } from "@/lib/api/hooks";
+import { ErrorState } from "@/components/states/ErrorState";
+import { Skeleton } from "@/components/states/Skeleton";
 
 type AppStatus = "pending" | "approved" | "rejected" | "returned" | "inprogress";
 type RiskLevel = "low" | "medium" | "high";
@@ -73,6 +76,9 @@ function chipStatus(s: AppStatus): "approved" | "rejected" | "pending" | "inprog
 
 export default function TpeoApprovalsPage() {
   const { showSuccess, showError } = useAppStore();
+  const liveApplications = useApplications();
+  const liveApprove = useApprove();
+  const liveReject = useReject();
   const [apps, setApps] = useState<TpeoApp[]>(INITIAL);
   const [selected, setSelected] = useState<string | null>(null);
   const [remark, setRemark] = useState("");
@@ -103,10 +109,26 @@ export default function TpeoApprovalsPage() {
   const filtered = filter === "all" ? apps : apps.filter((a) => a.status === filter);
   const pendingCount = apps.filter((a) => a.status === "pending" || a.status === "inprogress").length;
   const totalAmt = apps.filter((a) => a.status === "pending").reduce((s, a) => s + a.amount, 0);
+  const liveRows = (liveApplications.data?.items ?? []) as Array<Record<string, unknown>>;
+
+  async function approveLive(code: string) {
+    try { await liveApprove.mutateAsync({ code, remark: "TPEO clearance granted" }); showSuccess(`Application ${code} forwarded to DEO`); }
+    catch (error) { showError(error instanceof Error ? error.message : "Approval failed"); }
+  }
+  async function rejectLive(code: string) {
+    const reason = window.prompt("Return reason for the school?");
+    if (!reason?.trim()) return;
+    try { await liveReject.mutateAsync({ code, reason }); showSuccess(`Application ${code} returned`); }
+    catch (error) { showError(error instanceof Error ? error.message : "Return failed"); }
+  }
 
   return (
     <OfficerShell role="tpeo">
       <div className="p-6 flex flex-col gap-5 max-w-5xl">
+        <section className="card space-y-3 p-4">
+          <h2 className="font-title-sm text-on-surface">Live API approval queue</h2>
+          {liveApplications.isLoading ? <Skeleton rows={2} /> : liveApplications.isError ? <ErrorState error={liveApplications.error} onRetry={() => void liveApplications.refetch()} /> : liveRows.length === 0 ? <p className="text-sm text-on-surface-variant">No applications are currently assigned to this taluka.</p> : liveRows.slice(0, 8).map((row) => <article key={String(row.app_code)} className="flex flex-wrap items-center justify-between gap-3 border-t border-outline-variant pt-3"><div><p className="font-mono text-xs text-primary">{String(row.app_code)}</p><p className="mt-1 text-sm font-medium">{String(row.student_name ?? row.student_cts_id ?? "Student")} · ₹{Number(row.amount ?? 0).toLocaleString("en-IN")}</p><p className="text-xs capitalize text-on-surface-variant">{String(row.status).replaceAll("_", " ")}</p></div>{["applied", "school_verified"].includes(String(row.status)) && <div className="flex gap-2"><button disabled={liveApprove.isPending} onClick={() => void approveLive(String(row.app_code))} className="rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-on-primary">Approve</button><button disabled={liveReject.isPending} onClick={() => void rejectLive(String(row.app_code))} className="rounded-lg border border-outline-variant px-3 py-2 text-xs">Return</button></div>}</article>)}
+        </section>
         {/* Header */}
         <div>
           <h1 className="font-headline-lg text-headline-lg text-on-surface font-bold">

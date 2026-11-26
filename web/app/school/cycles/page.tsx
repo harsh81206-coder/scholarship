@@ -8,6 +8,7 @@ import { StatusChip } from "@/components/ui";
 import { Skeleton } from "@/components/states/Skeleton";
 import { ErrorState } from "@/components/states/ErrorState";
 import { EmptyState } from "@/components/states/EmptyState";
+import { QRScanner } from "@/components/QRScanner";
 import { useAppStore } from "@/lib/store";
 import { useCycleOverview, useReceiveBatch, useHandover } from "@/lib/api/hooks";
 
@@ -31,6 +32,15 @@ export default function SchoolCycleReceiveHandoverPage() {
   const [otpInput, setOtpInput] = useState("");
   const [handoverStarted, setHandoverStarted] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  function useScannedValue(raw: string) {
+    const serial = raw.split("|")[0]?.trim() ?? raw.trim();
+    if (!serial) return;
+    if (tab === "receive") {
+      setScannedSerials((current) => Array.from(new Set([...current.split(/[\n,\s]+/).filter(Boolean), serial])).join("\n"));
+    } else {
+      setSerialNo(serial);
+    }
+  }
 
   if (isLoading) {
     return (
@@ -173,6 +183,7 @@ export default function SchoolCycleReceiveHandoverPage() {
                   className="w-full px-3 py-2 rounded-xl border border-outline-variant bg-surface text-sm"
                 />
               </div>
+              <QRScanner label="Scan a cycle serial to add it to the receipt" onScan={useScannedValue} />
               <div>
                 <label className="block text-xs text-on-surface-variant mb-1">Received Quantity</label>
                 <input
@@ -235,6 +246,7 @@ export default function SchoolCycleReceiveHandoverPage() {
                 className="w-full px-3 py-2 rounded-xl border border-outline-variant bg-surface text-sm font-mono"
               />
             </div>
+            <QRScanner label="Scan the student's cycle QR" onScan={useScannedValue} />
             <div>
               <label className="block text-xs text-on-surface-variant mb-1">
                 <T gu="વિદ્યાર્થી રેકોર્ડ ID" en="Student record ID" hi="छात्र रिकॉर्ड ID" />

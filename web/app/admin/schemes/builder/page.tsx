@@ -5,6 +5,7 @@ import Link from "next/link";
 import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
+import { useAdminSchemes, useCreateAdminScheme, useUpdateSchemeRules } from "@/lib/api/hooks";
 
 interface ConditionRule {
   id: string;
@@ -332,6 +333,10 @@ const SAMPLE_STUDENTS: SampleStudent[] = [
 ];
 
 export default function SchemeBuilderPage() {
+  const apiSchemes = useAdminSchemes();
+  const createApiScheme = useCreateAdminScheme();
+  const updateApiSchemeRules = useUpdateSchemeRules();
+  const [apiSchemeId, setApiSchemeId] = useState<number | null>(null);
   const [schemes, setSchemes] = useState<SchemeItem[]>(INITIAL_SCHEMES);
   const [selectedSchemeId, setSelectedSchemeId] = useState<string>("sch-1");
   const [activeStep, setActiveStep] = useState<number>(2);
@@ -635,7 +640,40 @@ export default function SchemeBuilderPage() {
     showToast("બાકાત શરત દૂર કરી (Removed)");
   };
 
-  const handleSaveDraft = () => {
+  const persistScheme = async (publish: boolean) => {
+    const apiCode = schemeCode.trim().toLowerCase().replace(/[^a-z0-9-]+/g, "-");
+    const [gradeStart, gradeEnd] = classRange.split("-").map((value) => Number.parseInt(value, 10));
+    const rules = {
+      all: [
+        ...(gender.length ? [{ field: "gender", op: gender.length === 1 ? "==" : "in", value: gender.length === 1 ? gender[0] : gender }] : []),
+        { field: "grade", op: "between", value: [gradeStart || 1, gradeEnd || gradeStart || 12] },
+        { field: "annual_income", op: "<=", value: incomeCeiling },
+        { field: "attendance_pct", op: ">=", value: 80 },
+      ],
+    };
+    const existing = apiSchemes.data?.find((item) => item.code === apiCode);
+    let id = apiSchemeId ?? (typeof existing?.id === "number" ? existing.id : null);
+    if (id === null) {
+      const created = await createApiScheme.mutateAsync({
+        code: apiCode,
+        name_en: schemeName,
+        name_gu: schemeName,
+        name_hi: schemeName,
+        scheme_type: "cash",
+        rules,
+        required_docs: [],
+        payout: { amount: Object.values(benefitAmounts).reduce((total, amount) => total + amount, 0) },
+        budget: 0,
+        mutually_exclusive_with: mutuallyExclusive,
+      });
+      id = Number(created.id);
+      if (!Number.isFinite(id) || id <= 0) throw new Error("The API did not return a scheme ID.");
+      setApiSchemeId(id);
+    }
+    return updateApiSchemeRules.mutateAsync({ id, rules, publish });
+  };
+
+  const handleSaveDraft = async () => {
     setSchemes((prev) =>
       prev.map((s) =>
         s.id === selectedSchemeId
@@ -653,10 +691,22 @@ export default function SchemeBuilderPage() {
           : s
       )
     );
-    showToast("✓ યોજના ડ્રાફ્ટ સફળતાપૂર્વક સાચવવામાં આવ્યો છે! (Draft saved successfully)");
+    try {
+      await persistScheme(false);
+      showToast("Draft saved to the API.");
+    } catch (error) {
+      showToast(error instanceof Error ? `API save failed: ${error.message}` : "API save failed.");
+    }
   };
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
+    try {
+      const result = await persistScheme(true);
+      showToast(`Published v${String(result.version)} to the API; ${String(result.re_evaluated)} students re-evaluated.`);
+    } catch (error) {
+      showToast(error instanceof Error ? `API publish failed: ${error.message}` : "API publish failed.");
+      return;
+    }
     setSchemes((prev) =>
       prev.map((s) =>
         s.id === selectedSchemeId
@@ -672,7 +722,6 @@ export default function SchemeBuilderPage() {
           : s
       )
     );
-    showToast("🚀 યોજના નિયમો સફળતાપૂર્વક રાજ્ય પોર્ટલ પર લાઈવ પ્રકાશિત થયા! (Published to Gujarat Scholarship Engine)");
   };
 
   const handleRunBacktest = () => {
@@ -696,6 +745,15 @@ export default function SchemeBuilderPage() {
 
   return (
     <OfficerShell role="admin">
+      <section className="mx-4 mt-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-4 sm:mx-6" aria-live="polite">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-title-sm font-bold text-on-surface">Live API schemes</h2>
+          <span className="text-sm text-on-surface-variant">{apiSchemes.data?.length ?? 0} loaded</span>
+        </div>
+        {apiSchemes.isLoading ? <p className="mt-2 text-sm text-on-surface-variant">Loading policy records…</p> : apiSchemes.isError ? <button type="button" onClick={() => void apiSchemes.refetch()} className="mt-2 text-sm text-primary underline">Could not load schemes · Retry</button> : (
+          <div className="mt-2 flex flex-wrap gap-2">{(apiSchemes.data ?? []).slice(0, 8).map((item) => <span key={String(item.id)} className="rounded-full bg-surface-container-low px-3 py-1 text-xs text-on-surface">{String(item.name_en ?? item.code)} · v{String(item.version ?? 1)}</span>)}</div>
+        )}
+      </section>
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-20 right-8 z-50 animate-fade-in bg-on-surface text-surface-container-lowest px-4 py-3 rounded-xl shadow-level-3 flex items-center gap-3 border border-outline/20">

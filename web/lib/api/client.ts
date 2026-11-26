@@ -58,6 +58,27 @@ export async function apiRequest<T>(path: ApiEndpoint, init: RequestInit = {}): 
   return payload as T;
 }
 
+export async function downloadApiFile(path: string, fallbackName: string): Promise<void> {
+  const headers = new Headers({ "Accept-Language": useAppStore.getState().lang });
+  const token = useAuthStore.getState().accessToken;
+  if (token) headers.set("Authorization", `Bearer ${token}`);
+  const response = await fetch(`${API_URL}${path}`, { headers });
+  if (response.status === 401) {
+    useAuthStore.getState().clearSession();
+    if (typeof window !== "undefined") window.location.assign("/login");
+  }
+  if (!response.ok) throw new Error(`Download failed (${response.status})`);
+  const disposition = response.headers.get("Content-Disposition") ?? "";
+  const match = disposition.match(/filename\*?=(?:UTF-8''|\")?([^\";]+)/i);
+  const filename = match?.[1] ? decodeURIComponent(match[1].replaceAll('"', "")) : fallbackName;
+  const objectUrl = URL.createObjectURL(await response.blob());
+  const anchor = document.createElement("a");
+  anchor.href = objectUrl;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(objectUrl);
+}
+
 export function apiJson(method: "POST" | "PUT" | "PATCH", body: unknown): RequestInit {
   return { method, body: JSON.stringify(body) };
 }

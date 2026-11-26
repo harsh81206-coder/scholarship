@@ -6,6 +6,8 @@ import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { KpiCard, StatusChip, Avatar } from "@/components/ui";
 import { useAppStore } from "@/lib/store";
+import { LiveMetrics } from "@/components/LiveMetrics";
+import { useAnalytics } from "@/lib/api/hooks";
 
 const PENDING_APPS = [
   { id: "APP-GJ-2026-003891", student: "Harshil M. Prajapati", school: "Vinay Mandir HS, Khambhat", scheme: "Gyan Sadhna", amount: 12500, days: 6, risk: "low" },
@@ -14,6 +16,7 @@ const PENDING_APPS = [
 ];
 
 export default function TpeoDashboardPage() {
+  const liveData = useAnalytics("tpeo");
   const { showSuccess } = useAppStore();
   const [approved, setApproved] = useState<string[]>([]);
 
@@ -25,6 +28,7 @@ export default function TpeoDashboardPage() {
   return (
     <OfficerShell role="tpeo">
       <div className="p-6 flex flex-col gap-6 max-w-5xl">
+        <LiveMetrics title="Live taluka data" data={liveData.data} loading={liveData.isLoading} error={liveData.error} onRetry={() => void liveData.refetch()} />
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>

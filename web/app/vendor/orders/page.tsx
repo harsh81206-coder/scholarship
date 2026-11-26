@@ -1,0 +1,17 @@
+"use client";
+
+import { useState } from "react";
+import { T } from "@/components/T";
+import { EmptyState } from "@/components/states/EmptyState";
+import { ErrorState } from "@/components/states/ErrorState";
+import { Skeleton } from "@/components/states/Skeleton";
+import { OfficerShell } from "@/components/shell/OfficerShell";
+import { useUpdateVendorOrder, useVendorOrders } from "@/lib/api/hooks";
+import { useAppStore } from "@/lib/store";
+
+type Order = { id: number; po_code: string; school_name: string; qty: number; rate: number; amount: number; status: string; due_date?: string };
+export default function Page() {
+  const query = useVendorOrders(); const update = useUpdateVendorOrder(); const [busy, setBusy] = useState<number | null>(null); const showSuccess = useAppStore((s) => s.showSuccess); const showError = useAppStore((s) => s.showError); const rows = (query.data?.items ?? []) as Order[];
+  async function act(id: number, action: "accept" | "reject") { setBusy(id); try { await update.mutateAsync({ id, action }); showSuccess(`Purchase order ${action}ed`); } catch (error) { showError(error instanceof Error ? error.message : "Purchase order update failed"); } finally { setBusy(null); } }
+  return <OfficerShell role="vendor"><main className="mx-auto max-w-6xl space-y-5 p-5"><header><p className="font-label-sm text-primary">PROCUREMENT</p><h1 className="mt-1 font-headline-md text-on-surface"><T gu="ખરીદી ઓર્ડર" en="Purchase orders" hi="खरीद आदेश" /></h1><p className="mt-1 text-sm text-on-surface-variant"><T gu="શાળા ચક્ર બેચ માટેના સરકારી ઓર્ડર સ્વીકારો." en="Review government orders for school cycle batches." hi="स्कूल साइकिल बैच के सरकारी आदेश देखें।" /></p></header>{query.isLoading ? <Skeleton rows={6} /> : query.isError ? <ErrorState error={query.error} onRetry={() => void query.refetch()} /> : rows.length === 0 ? <EmptyState title="No purchase orders yet" description="New orders assigned to this vendor will appear here." /> : <div className="overflow-x-auto rounded-xl border border-outline-variant bg-surface-container-lowest"><table className="min-w-full text-left text-sm"><thead className="bg-surface-container-low text-xs uppercase text-on-surface-variant"><tr><th className="px-4 py-3">PO number</th><th className="px-4 py-3">School</th><th className="px-4 py-3">Quantity</th><th className="px-4 py-3">Value</th><th className="px-4 py-3">Due</th><th className="px-4 py-3">Status</th><th className="px-4 py-3">Action</th></tr></thead><tbody>{rows.map((row) => <tr key={row.id} className="border-t border-outline-variant/60"><td className="px-4 py-3 font-mono text-xs">{row.po_code}</td><td className="px-4 py-3">{row.school_name}</td><td className="px-4 py-3">{row.qty} cycles</td><td className="px-4 py-3">₹{Number(row.amount || row.qty * row.rate).toLocaleString("en-IN")}</td><td className="px-4 py-3">{row.due_date || "—"}</td><td className="px-4 py-3 capitalize">{row.status}</td><td className="px-4 py-3">{row.status === "open" ? <div className="flex gap-2"><button disabled={busy === row.id} onClick={() => void act(row.id, "accept")} className="rounded-lg bg-primary px-3 py-1.5 text-xs text-on-primary">Accept</button><button disabled={busy === row.id} onClick={() => void act(row.id, "reject")} className="rounded-lg border border-outline-variant px-3 py-1.5 text-xs">Decline</button></div> : "—"}</td></tr>)}</tbody></table></div>}</main></OfficerShell>;
+}

@@ -385,3 +385,75 @@ class TimeSeriesPoint(SQLModel, table=True):
     scheme_code: str = Field(index=True)
     count: int = 0
     amount: int = 0
+
+
+class BudgetAllocation(SQLModel, table=True):
+    __tablename__ = "budget_allocation"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    scheme_id: int = Field(foreign_key="scheme.id", index=True)
+    level: str = Field(index=True)
+    entity_id: int = Field(index=True)
+    amount: int = 0
+    released: int = 0
+    fy: str = Field(index=True)
+
+
+class VendorOrder(SQLModel, table=True):
+    __tablename__ = "vendor_order"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    po_code: str = Field(unique=True, index=True)
+    vendor_id: int = Field(foreign_key="user.id", index=True)
+    school_id: int = Field(foreign_key="school.id", index=True)
+    qty: int = 0
+    rate: int = 0
+    status: str = Field(default="open", index=True)
+    due_date: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class Invoice(SQLModel, table=True):
+    __tablename__ = "invoice"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    invoice_no: str = Field(unique=True, index=True)
+    po_id: int = Field(foreign_key="vendor_order.id", index=True)
+    batch_id: Optional[int] = Field(default=None, foreign_key="cycle_batch.id", index=True)
+    amount: int = 0
+    status: str = Field(default="pending", index=True)
+    paid_at: Optional[datetime] = None
+    utr: Optional[str] = None
+
+
+class Certificate(SQLModel, table=True):
+    __tablename__ = "certificate"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    code: str = Field(unique=True, index=True)
+    kind: str = Field(index=True)
+    ref_id: str = Field(index=True)
+    hash: str = Field(index=True)
+    issued_at: datetime = Field(default_factory=datetime.utcnow)
+    file_path: str = ""
+
+
+class UploadFileRecord(SQLModel, table=True):
+    __tablename__ = "upload_file"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    owner_type: str = Field(index=True)
+    owner_id: str = Field(index=True)
+    kind: str = Field(index=True)
+    path: str
+    mime: str
+    size: int
+    sha256: str = Field(index=True)
+    uploaded_by: str = Field(index=True)
+    uploaded_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class Defect(SQLModel, table=True):
+    __tablename__ = "defect"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    cycle_id: int = Field(foreign_key="cycle.id", index=True)
+    reason: str
+    photo: str = ""
+    replacement_batch: Optional[int] = Field(default=None, foreign_key="cycle_batch.id")
+    status: str = Field(default="open", index=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)

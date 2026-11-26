@@ -88,6 +88,13 @@ export const useCreateGrievance = () => {
   const client = useQueryClient();
   return useMutation({ mutationFn: api.createGrievance, onSuccess: () => client.invalidateQueries({ queryKey: keys.grievances }) });
 };
+export const useUpdateGrievance = () => {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({ code, status }: { code: string; status: string }) => api.updateGrievance(code, { status }),
+    onSuccess: () => client.invalidateQueries({ queryKey: keys.grievances }),
+  });
+};
 export const useNotifications = () => useQuery({ queryKey: keys.notifications, queryFn: api.notifications });
 export const useReadAllNotifications = () => {
   const client = useQueryClient();
@@ -106,6 +113,8 @@ export const useUpdateConsents = () => {
 };
 export const useExportData = () => useMutation({ mutationFn: api.exportData });
 export const useAnalytics = (role: Role) => useQuery({ queryKey: keys.analytics(role), queryFn: () => api.analytics(role) });
+export const useTalukaSchools = () => useQuery({ queryKey: ["analytics", "taluka", "schools"], queryFn: api.talukaSchools });
+export const useTalukaReports = () => useQuery({ queryKey: ["analytics", "taluka", "reports"], queryFn: api.talukaReports });
 export const useDropout = () => useQuery({ queryKey: keys.dropout, queryFn: api.dropout });
 export const useFraudFlags = () => useQuery({ queryKey: keys.fraud, queryFn: api.fraudFlags });
 export const useAdminSchemes = () => useQuery({ queryKey: keys.adminSchemes, queryFn: api.adminSchemes });
@@ -170,6 +179,63 @@ export const useEligibilityTest = () => useMutation({ mutationFn: api.testEligib
 export const useUploadRecords = () => useMutation({ mutationFn: ({ type, file }: { type: "attendance" | "marks"; file: File }) => api.uploadRecords(type, file) });
 export const useConfirmRecords = () => useMutation({ mutationFn: ({ type, rows }: { type: "attendance" | "marks"; rows: Array<Record<string, unknown>> }) => api.confirmRecords(type, rows) });
 export const useVendorBatches = () => useQuery({ queryKey: ["vendor", "batches"], queryFn: api.vendorBatches });
+export const useBatchQr = (id: number) => useQuery({ queryKey: ["vendor", "batches", id, "qr"], queryFn: () => api.batchQr(id), enabled: id > 0 });
+export const useBatchTracking = (id: number) => useQuery({ queryKey: ["vendor", "batches", id, "tracking"], queryFn: () => api.batchTracking(id), enabled: id > 0 });
+export const useDistrictSchools = () => useQuery({ queryKey: ["analytics", "district", "schools"], queryFn: api.districtSchools });
+export const useStateRanking = () => useQuery({ queryKey: ["analytics", "state", "ranking"], queryFn: api.stateRanking });
+export const useMyBank = () => useQuery({ queryKey: ["student", "bank"], queryFn: api.myBank });
+export const useAddBank = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.addBank, onSuccess: () => client.invalidateQueries({ queryKey: ["student", "bank"] }) });
+};
+export const useVerifyBank = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.verifyBank, onSuccess: () => client.invalidateQueries({ queryKey: ["student", "bank"] }) });
+};
+export const useSchoolStudents = (input?: { q?: string; risk?: string }) => useQuery({ queryKey: ["school", "students", input], queryFn: () => api.schoolStudents(input) });
+export const useSchoolStudent = (ctsId: string) => useQuery({ queryKey: ["school", "students", ctsId], queryFn: () => api.schoolStudent(ctsId), enabled: Boolean(ctsId) });
+export const useHandovers = () => useQuery({ queryKey: ["handovers"], queryFn: api.handovers });
+export const useVendorOrders = () => useQuery({ queryKey: ["vendor", "orders"], queryFn: api.vendorOrders });
+export const useCreateVendorOrder = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.createVendorOrder, onSuccess: () => client.invalidateQueries({ queryKey: ["vendor", "orders"] }) });
+};
+export const useUpdateVendorOrder = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.updateVendorOrder, onSuccess: () => client.invalidateQueries({ queryKey: ["vendor", "orders"] }) });
+};
+export const useVendorInvoices = () => useQuery({ queryKey: ["vendor", "invoices"], queryFn: api.vendorInvoices });
+export const useCreateVendorInvoice = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.createVendorInvoice, onSuccess: () => client.invalidateQueries({ queryKey: ["vendor", "invoices"] }) });
+};
+export const usePayVendorInvoice = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.payVendorInvoice, onSuccess: () => client.invalidateQueries({ queryKey: ["vendor", "invoices"] }) });
+};
+export const useBudgetAllocations = () => useQuery({ queryKey: ["funds", "allocations"], queryFn: api.budgetAllocations });
+export const useAllocateBudget = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.allocateBudget, onSuccess: () => client.invalidateQueries({ queryKey: ["funds", "allocations"] }) });
+};
+export const useAdminUsers = () => useQuery({ queryKey: ["admin", "users"], queryFn: api.adminUsers });
+export const useSetAdminUserActive = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.setAdminUserActive, onSuccess: () => client.invalidateQueries({ queryKey: ["admin", "users"] }) });
+};
+export const useSetSchemeActive = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.setSchemeActive, onSuccess: () => client.invalidateQueries({ queryKey: keys.adminSchemes }) });
+};
+export const useVendorReturns = () => useQuery({ queryKey: ["vendor", "returns"], queryFn: api.vendorReturns });
+export const useCreateVendorReturn = () => {
+  const client = useQueryClient();
+  return useMutation({ mutationFn: api.createVendorReturn, onSuccess: () => client.invalidateQueries({ queryKey: ["vendor", "returns"] }) });
+};
+export const usePublicTransparency = () => useQuery({ queryKey: ["public", "transparency"], queryFn: api.publicTransparency });
+export const usePublicStatus = (code: string) => useQuery({ queryKey: ["public", "status", code], queryFn: () => api.publicStatus(code), enabled: Boolean(code) });
+export const usePublicVerify = (code: string) => useQuery({ queryKey: ["public", "verify", code], queryFn: () => api.publicVerify(code), enabled: Boolean(code) });
+export const useAdminMlMetrics = () => useQuery({ queryKey: ["admin", "ml", "metrics"], queryFn: api.adminMlMetrics });
 export const useCreateBatch = () => {
   const client = useQueryClient();
   return useMutation({ mutationFn: ({ schoolId, qty }: { schoolId: number; qty: number }) => api.createBatch(schoolId, qty),
@@ -180,7 +246,13 @@ export const useDispatchBatch = () => {
   return useMutation({ mutationFn: ({ id, gps }: { id: number; gps: { lat: number; lng: number } }) => api.dispatchBatch(id, gps),
     onSuccess: () => client.invalidateQueries({ queryKey: ["vendor", "batches"] }) });
 };
-export const useUpdateBatchGps = () => useMutation({ mutationFn: ({ id, gps }: { id: number; gps: { lat: number; lng: number } }) => api.updateBatchGps(id, gps) });
+export const useUpdateBatchGps = () => {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, gps }: { id: number; gps: { lat: number; lng: number } }) => api.updateBatchGps(id, gps),
+    onSuccess: (_result, variables) => client.invalidateQueries({ queryKey: ["vendor", "batches", variables.id, "tracking"] }),
+  });
+};
 export const useReceiveBatch = () => {
   const client = useQueryClient();
   return useMutation({ mutationFn: ({ id, input }: { id: number; input: Record<string, unknown> }) => api.receiveBatch(id, input),

@@ -5,9 +5,73 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select, func
 from app.db import get_session
 from app.deps import get_current_user, CurrentUser
-from app.models.core import Student, Application, DbtTxn, Scheme, FraudFlag
+from app.models.core import (
+    Application,
+    CycleBatch,
+    DbtTxn,
+    FraudFlag,
+    School,
+    Scheme,
+    Student,
+    Taluka,
+)
 
 router = APIRouter(prefix="/analytics", tags=["analytics"])
+
+
+@router.get("/taluka")
+def taluka_analytics(
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    if user.role != "taluka" or not user.taluka_id:
+        raise HTTPException(403, "Taluka officer role required")
+    schools = session.exec(select(School).where(School.taluka_id == user.taluka_id)).all()
+    school_ids = [school.id for school in schools]
+    students = session.exec(select(Student).where(Student.school_id.in_(school_ids))).all() if school_ids else []
+    student_ids = [student.id for student in students]
+    applications = session.exec(select(Application).where(Application.student_id.in_(student_ids))).all() if student_ids else []
+    batches = session.exec(select(CycleBatch).where(CycleBatch.school_id.in_(school_ids))).all() if school_ids else []
+    return {
+        "taluka_id": user.taluka_id,
+        "school_count": len(schools),
+        "student_count": len(students),
+        "application_count": len(applications),
+        "pending_approvals": sum(app.status in ("applied", "school_verified") for app in applications),
+        "high_risk_students": sum(student.risk_level == "high" for student in students),
+        "cycles_delivered": sum(batch.received_qty for batch in batches),
+    }
+
+
+@router.get("/taluka/schools")
+def taluka_schools(
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    if user.role != "taluka":
+        raise HTTPException(403, "Taluka officer role required")
+    return district_schools(user, session)
+
+
+@router.get("/taluka/reports")
+def taluka_reports(
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    if user.role != "taluka" or not user.taluka_id:
+        raise HTTPException(403, "Taluka officer role required")
+    school_ids = [school.id for school in session.exec(select(School).where(School.taluka_id == user.taluka_id)).all()]
+    students = session.exec(select(Student).where(Student.school_id.in_(school_ids))).all() if school_ids else []
+    student_ids = [student.id for student in students]
+    applications = session.exec(select(Application).where(Application.student_id.in_(student_ids))).all() if student_ids else []
+    return {
+        "taluka_id": user.taluka_id,
+        "total_applications": len(applications),
+        "pending": sum(app.status in ("applied", "school_verified") for app in applications),
+        "approved": sum(app.status in ("taluka_approved", "deo_approved", "sanctioned", "credited") for app in applications),
+        "rejected": sum(app.status == "rejected" for app in applications),
+        "students_at_risk": sum(student.risk_level == "high" for student in students),
+    }
 
 
 @router.get("/school")
@@ -130,3 +194,87 @@ def dropout_analytics(
         select(func.count(Student.id)).where(Student.risk_level == "low")
     ).one()
     return {"high_risk": high, "medium_risk": medium, "low_risk": low}
+
+
+@router.get("/district/schools")
+def district_schools(
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    if user.role not in ("taluka", "deo", "admin"):
+        raise HTTPException(403, "District school data requires an officer role")
+    query = select(School).join(Taluka)
+    if user.role == "taluka":
+        query = query.where(School.taluka_id == user.taluka_id)
+    elif user.role == "deo":
+        query = query.where(Taluka.district_id == user.district_id)
+    schools = session.exec(query.order_by(School.name_en)).all()
+    school_ids = [school.id for school in schools]
+    if not school_ids:
+        return {"items": [], "total": 0}
+    students = session.exec(select(Student).where(Student.school_id.in_(school_ids))).all()
+    student_ids = [student.id for student in students]
+    applications = (
+        session.exec(select(Application).where(Application.student_id.in_(student_ids))).all()
+        if student_ids
+        else []
+    )
+    batches = session.exec(select(CycleBatch).where(CycleBatch.school_id.in_(school_ids))).all()
+    talukas = {taluka.id: taluka for taluka in session.exec(select(Taluka)).all()}
+    students_by_school: dict[int, list[Student]] = {}
+    for student in students:
+        students_by_school.setdefault(student.school_id, []).append(student)
+    apps_by_school: dict[int, list[Application]] = {}
+    students_by_id = {student.id: student for student in students}
+    for application in applications:
+        student = students_by_id.get(application.student_id)
+        if student:
+            apps_by_school.setdefault(student.school_id, []).append(application)
+    batches_by_school: dict[int, list[CycleBatch]] = {}
+    for batch in batches:
+        batches_by_school.setdefault(batch.school_id, []).append(batch)
+    items = []
+    for school in schools:
+        school_students = students_by_school.get(school.id, [])
+        school_apps = apps_by_school.get(school.id, [])
+        school_batches = batches_by_school.get(school.id, [])
+        items.append(
+            {
+                "school_id": school.id,
+                "udise_code": school.udise_code,
+                "name_en": school.name_en,
+                "name_gu": school.name_gu,
+                "taluka_id": school.taluka_id,
+                "taluka_name": talukas.get(school.taluka_id).name if school.taluka_id in talukas else "",
+                "student_count": len(school_students),
+                "high_risk_count": sum(student.risk_level == "high" for student in school_students),
+                "application_count": len(school_apps),
+                "pending_count": sum(application.status in ("applied", "school_verified") for application in school_apps),
+                "credited_count": sum(application.status == "credited" for application in school_apps),
+                "cycle_batches": len(school_batches),
+                "cycles_delivered": sum(batch.received_qty for batch in school_batches),
+            }
+        )
+    return {"items": items, "total": len(items)}
+
+
+@router.get("/state/ranking")
+def state_ranking(
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    if user.role != "admin":
+        raise HTTPException(403, "State rankings require an admin role")
+    result = district_schools(
+        CurrentUser(user.sub, "admin", user.name, None, None, None), session
+    )
+    schools = result["items"]
+    for school in schools:
+        total = school["application_count"]
+        school["score"] = round(
+            100 * school["credited_count"] / max(total, 1), 1
+        )
+    schools.sort(key=lambda item: (item["score"], item["student_count"]), reverse=True)
+    for rank, school in enumerate(schools, start=1):
+        school["rank"] = rank
+    return {"items": schools, "total": len(schools), "metric": "credited_application_rate"}

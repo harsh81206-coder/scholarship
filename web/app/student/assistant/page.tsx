@@ -5,6 +5,8 @@ import Link from "next/link";
 import { StudentShell } from "@/components/shell/StudentShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
+import { useChat } from "@/lib/api/hooks";
+import { useAppStore } from "@/lib/store";
 
 interface RichCardItem {
   type: "status_card" | "recommendation" | "advisory" | "action_card";
@@ -38,6 +40,8 @@ interface ChatMessage {
 }
 
 export default function AssistantPage() {
+  const chat = useChat();
+  const lang = useAppStore((state) => state.lang);
   const [showStudentBanner, setShowStudentBanner] = useState(true);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -666,14 +670,23 @@ export default function AssistantPage() {
     setInputText("");
     setIsTyping(true);
 
-    // After 800ms show mock AI response
-    setTimeout(() => {
+    void chat.mutateAsync({ message: text, lang }).then((result) => {
       startTransition(() => {
         setIsTyping(false);
-        const botReply = generateBotReply(text, timeStr);
+        const botReply: ChatMessage = {
+          id: `bot-${Date.now()}`,
+          sender: "bot",
+          text: result.reply_text || String(generateBotReply(text, timeStr).text ?? ""),
+          time: timeStr,
+        };
         setMessages((prev) => [...prev, botReply]);
       });
-    }, 800);
+    }).catch(() => {
+      startTransition(() => {
+        setIsTyping(false);
+        setMessages((prev) => [...prev, generateBotReply(text, timeStr)]);
+      });
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { PublicShell } from "@/components/shell/PublicShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
+import { usePublicTransparency } from "@/lib/api/hooks";
 
 const SCHEMES = [
   {
@@ -133,6 +136,7 @@ const PORTAL_CARDS = [
 ];
 
 export default function HomePage() {
+  const publicStats = usePublicTransparency();
   return (
     <PublicShell>
       {/* ── HERO ───────────────────────────────────────────── */}
@@ -424,11 +428,13 @@ export default function HomePage() {
             <T gu="આજે જ શરૂ કરો" en="Start Today" hi="आज ही शुरू करें" />
           </h2>
           <p className="font-body-lg text-body-lg text-on-primary/80 max-w-2xl mx-auto mb-8">
-            <T
-              gu="₹847 કરોડ+ DBT ટ્રાન્સ ✓ | 12.4 લાખ+ વિદ્યાર્થી ✓ | 33,841 શાળા ✓"
-              en="₹847 Cr+ DBT transferred ✓ | 12.4 Lakh+ students ✓ | 33,841 schools ✓"
-              hi="₹847 करोड़+ DBT ✓ | 12.4 लाख+ छात्र ✓ | 33,841 स्कूल ✓"
-            />
+            {publicStats.isLoading ? <T gu="જાહેર આંકડા લોડ થઈ રહ્યા છે…" en="Loading public totals…" hi="सार्वजनिक आंकड़े लोड हो रहे हैं…" /> : publicStats.isError ? <T gu="જાહેર આંકડા અત્યારે ઉપલબ્ધ નથી" en="Public totals are temporarily unavailable" hi="सार्वजनिक आंकड़े अभी उपलब्ध नहीं हैं" /> : <>
+              <T gu={`${Number(publicStats.data?.total_disbursed ?? 0).toLocaleString("gu-IN")} DBT વિતરણ`} en={`₹${Number(publicStats.data?.total_disbursed ?? 0).toLocaleString("en-IN")} total DBT`} hi={`₹${Number(publicStats.data?.total_disbursed ?? 0).toLocaleString("hi-IN")} DBT कुल`} />
+              {" | "}
+              <T gu={`${Number(publicStats.data?.student_count ?? 0).toLocaleString("gu-IN")} વિદ્યાર્થી`} en={`${Number(publicStats.data?.student_count ?? 0).toLocaleString("en-IN")} students`} hi={`${Number(publicStats.data?.student_count ?? 0).toLocaleString("hi-IN")} छात्र`} />
+              {" | "}
+              <T gu={`${Number(publicStats.data?.school_count ?? 0).toLocaleString("gu-IN")} શાળાઓ`} en={`${Number(publicStats.data?.school_count ?? 0).toLocaleString("en-IN")} schools`} hi={`${Number(publicStats.data?.school_count ?? 0).toLocaleString("hi-IN")} स्कूल`} />
+            </>}
           </p>
           <Link
             href="/login"

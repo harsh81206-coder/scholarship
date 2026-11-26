@@ -20,7 +20,8 @@ from app.routers import (
     dbt,
     notifications,
 )
-from app.routers import logistics, operations
+from app.routers import logistics, operations, directory
+from app.routers import public
 from app.ml import fraud, dropout
 from app.ml import forecast
 from app.db import get_session
@@ -116,6 +117,8 @@ app.include_router(dbt.router)
 app.include_router(notifications.router)
 app.include_router(logistics.router)
 app.include_router(operations.router)
+app.include_router(public.router)
+app.include_router(directory.router)
 
 # Eligibility router (inline to avoid circular imports)
 elig_router = APIRouter(prefix="/eligibility", tags=["eligibility"])

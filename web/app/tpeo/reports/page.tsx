@@ -2,6 +2,8 @@
 import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
+import { useTalukaReports } from "@/lib/api/hooks";
+import { LiveMetrics } from "@/components/LiveMetrics";
 
 const DATA = [
   { month: "Jun", cleared: 8, returned: 1, rejected: 0 },
@@ -14,9 +16,11 @@ const DATA = [
 const maxVal = Math.max(...DATA.map((d) => d.cleared + d.returned + d.rejected));
 
 export default function TpeoReportsPage() {
+  const liveReports = useTalukaReports();
   return (
     <OfficerShell role="tpeo">
       <div className="p-6 flex flex-col gap-6 max-w-5xl">
+        <LiveMetrics title="Live taluka report totals" data={liveReports.data} loading={liveReports.isLoading} error={liveReports.error} onRetry={() => void liveReports.refetch()} />
         <div>
           <h1 className="font-headline-lg text-headline-lg text-on-surface font-bold">
             <T gu="TPEO Re." en="TPEO Reports & Analytics" hi="TPEO रिपोर्ट" />

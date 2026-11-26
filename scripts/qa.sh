@@ -30,7 +30,7 @@ rm -rf "${repo_root}/web/.next"
   export DATABASE_URL="${database_url}"
   export JWT_SECRET="vps-qa-local-secret-32-characters"
   export ADAPTER_MODE=mock DEMO_OTP=123456
-  export CORS_ORIGINS="http://127.0.0.1:${vps_web_port}"
+  export CORS_ORIGINS="http://127.0.0.1:${vps_web_port},http://localhost:${vps_web_port}"
   export PYTHONPATH="${repo_root}/api"
   exec uvicorn app.main:app --host 127.0.0.1 --port "${vps_api_port}"
 ) >"${api_log}" 2>&1 &
@@ -39,7 +39,7 @@ api_pid=$!
 (
   cd "${repo_root}/web"
   export NEXT_PUBLIC_USE_MOCK=false
-  export NEXT_PUBLIC_API_URL="http://localhost:${vps_api_port}"
+  export NEXT_PUBLIC_API_URL="http://127.0.0.1:${vps_api_port}"
   exec ./node_modules/.bin/next dev --hostname 127.0.0.1 --port "${vps_web_port}"
 ) >"${web_log}" 2>&1 &
 web_pid=$!

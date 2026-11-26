@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { StudentShell } from "@/components/shell/StudentShell";
@@ -8,10 +8,16 @@ import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { Avatar } from "@/components/ui";
 import { useAppStore } from "@/lib/store";
+import { useConsents, useExportData, useMe, useUpdateConsents } from "@/lib/api/hooks";
+import { downloadJson } from "@/lib/download";
 
 export default function StudentProfilePage() {
   const router = useRouter();
   const { lang, setLang } = useAppStore();
+  const profile = useMe();
+  const consentQuery = useConsents();
+  const updateConsents = useUpdateConsents();
+  const exportData = useExportData();
 
   // Interactive states
   const [copiedCts, setCopiedCts] = useState(false);
@@ -45,16 +51,35 @@ export default function StudentProfilePage() {
     dbtMandate: true,
   });
 
-  const handleToggleConsent = (key: keyof typeof consents) => {
-    setConsents((prev) => {
-      const updated = { ...prev, [key]: !prev[key] };
-      showToast(
-        updated[key]
-          ? "સંમતિ સક્ષમ કરવામાં આવી છે"
-          : "સંમતિ રદ કરવામાં આવી છે"
-      );
-      return updated;
+  useEffect(() => {
+    if (!consentQuery.data) return;
+    setConsents({
+      docs: Boolean(consentQuery.data.share_documents),
+      autoRenewal: Boolean(consentQuery.data.auto_apply),
+      notifications: Boolean(consentQuery.data.alerts),
+      digilocker: Boolean(consentQuery.data.digilocker_consent),
+      dbtMandate: Boolean(consentQuery.data.dbt_mandate),
     });
+  }, [consentQuery.data]);
+
+  const consentPayload = (next: typeof consents) => ({
+    share_documents: next.docs,
+    auto_apply: next.autoRenewal,
+    alerts: next.notifications,
+    digilocker_consent: next.digilocker,
+    dbt_mandate: next.dbtMandate,
+  });
+
+  const handleToggleConsent = async (key: keyof typeof consents) => {
+    const updated = { ...consents, [key]: !consents[key] };
+    setConsents(updated);
+    try {
+      await updateConsents.mutateAsync(consentPayload(updated));
+      showToast(updated[key] ? "સંમતિ સક્ષમ કરવામાં આવી છે" : "સંમતિ રદ કરવામાં આવી છે");
+    } catch (error) {
+      setConsents(consents);
+      showToast(error instanceof Error ? error.message : "Consent update failed");
+    }
   };
 
   const showToast = (msg: string) => {
@@ -73,63 +98,34 @@ export default function StudentProfilePage() {
     }
   };
 
-  const handleDownloadData = () => {
-    const studentData = {
-      ctsId: "GJ-AND-2026-004512",
-      name: "Riya Hasmukhbhai Patel",
-      dob: "2011-08-14",
-      gender: "Female",
-      category: "SEBC/OBC",
-      aadhaarMasked: "XXXX-XXXX-4512",
-      school: "Shree Sardar Patel High School, Anand",
-      udise: "24150100412",
-      class: "9-B",
-      rollNo: 18,
-      lastScore: "78%",
-      attendance: "82%",
-      bank: {
-        accountHolder: "Hetalben Patel (Mother)",
-        bankName: "State Bank of India",
-        maskedAccount: "SBI-****4521",
-        ifsc: "SBIN0001234",
-        npciSeeded: true,
-      },
-      consents: {
-        schemeDocumentSharing: consents.docs,
-        annualAutoRenewal: consents.autoRenewal,
-        whatsappSmsNotifications: consents.notifications,
-        digilockerAutoFetch: consents.digilocker,
-        dbtMandate: consents.dbtMandate,
-      },
-      exportedAt: new Date().toISOString(),
-      compliance: "DPDP Act 2023 Compliant Citizen Record",
-    };
-
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(studentData, null, 2));
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "riya_patel_profile_record.json");
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-
-    showToast("ડેટા આર્કાઇવ (.JSON) ડાઉનલોડ શરૂ થયું");
+  const handleDownloadData = async () => {
+    try {
+      const studentData = await exportData.mutateAsync();
+      downloadJson(`${profile.data?.cts_id ?? "student"}-profile-export.json`, studentData);
+      showToast("ડેટા આર્કાઇવ (.JSON) ડાઉનલોડ શરૂ થયું");
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : "Data export failed");
+    }
   };
 
-  const handleWithdrawAll = () => {
-    setConsents({
+  const handleWithdrawAll = async () => {
+    const withdrawn = {
       docs: false,
       autoRenewal: false,
       notifications: false,
       digilocker: false,
       dbtMandate: false,
-    });
+    };
+    setConsents(withdrawn);
+    try { await updateConsents.mutateAsync(consentPayload(withdrawn)); }
+    catch (error) { showToast(error instanceof Error ? error.message : "Consent update failed"); }
     setShowWithdrawModal(false);
     showToast("તમામ બિનજરૂરી ડેટા સંમતિ પાછી ખેંચવામાં આવી છે");
   };
 
-  const handleSavePreferences = () => {
-    showToast("તમારી સંમતિ પ્રાથમિકતાઓ સફળતાપૂર્વક સાચવવામાં આવી છે!");
+  const handleSavePreferences = async () => {
+    try { await updateConsents.mutateAsync(consentPayload(consents)); showToast("તમારી સંમતિ પ્રાથમિકતાઓ સફળતાપૂર્વક સાચવવામાં આવી છે!"); }
+    catch (error) { showToast(error instanceof Error ? error.message : "Consent update failed"); }
   };
 
   const handleConfirmSignOut = () => {

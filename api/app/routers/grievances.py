@@ -7,7 +7,7 @@ from sqlmodel import Session, select
 from pydantic import BaseModel
 from app.db import get_session
 from app.deps import get_current_user, CurrentUser
-from app.models.core import Grievance, GrievanceMessage, Student, Setting
+from app.models.core import Grievance, GrievanceMessage, School, Student, Taluka, Setting
 import random
 import string
 import json
@@ -20,6 +20,23 @@ def _get_sla_days(session: Session) -> int:
     if s:
         return json.loads(s.value_json)
     return 7
+
+
+def _assert_visible(grievance: Grievance, user: CurrentUser, session: Session) -> None:
+    if user.role == "admin":
+        return
+    student = session.get(Student, grievance.student_id)
+    if user.role == "student" and student and student.cts_id == user.sub:
+        return
+    if user.role == "school" and student and student.school_id == user.school_id:
+        return
+    school = session.get(School, student.school_id) if student else None
+    if user.role == "taluka" and school and school.taluka_id == user.taluka_id:
+        return
+    taluka = session.get(Taluka, school.taluka_id) if school else None
+    if user.role == "deo" and taluka and taluka.district_id == user.district_id:
+        return
+    raise HTTPException(403, "Grievance is outside the caller's scope")
 
 
 class GrievanceCreate(BaseModel):
@@ -95,6 +112,16 @@ def list_grievances(
     session: Session = Depends(get_session),
 ):
     q = select(Grievance)
+    if user.role == "student":
+        raise HTTPException(403, "Use the student grievance list")
+    if user.role == "school":
+        q = q.join(Student).where(Student.school_id == user.school_id)
+    elif user.role == "taluka":
+        q = q.join(Student).join(School).where(School.taluka_id == user.taluka_id)
+    elif user.role == "deo":
+        q = q.join(Student).join(School).join(Taluka).where(Taluka.district_id == user.district_id)
+    elif user.role != "admin":
+        raise HTTPException(403, "Role not permitted to list grievances")
     if status:
         q = q.where(Grievance.status == status)
     if category:
@@ -110,10 +137,15 @@ def list_grievances(
 
 
 @router.get("/{grv_code}")
-def get_grievance(grv_code: str, session: Session = Depends(get_session)):
+def get_grievance(
+    grv_code: str,
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
     g = session.exec(select(Grievance).where(Grievance.grv_code == grv_code)).first()
     if not g:
         raise HTTPException(404)
+    _assert_visible(g, user, session)
     msgs = session.exec(
         select(GrievanceMessage).where(GrievanceMessage.grievance_id == g.id)
     ).all()
@@ -135,6 +167,7 @@ def update_grievance(
     g = session.exec(select(Grievance).where(Grievance.grv_code == grv_code)).first()
     if not g:
         raise HTTPException(404)
+    _assert_visible(g, user, session)
     if body.status:
         g.status = body.status
     if body.assignee_id:
@@ -154,6 +187,7 @@ def add_message(
     g = session.exec(select(Grievance).where(Grievance.grv_code == grv_code)).first()
     if not g:
         raise HTTPException(404)
+    _assert_visible(g, user, session)
     msg = GrievanceMessage(grievance_id=g.id, author_id=user.sub, text=body.text)  # type: ignore
     session.add(msg)
     session.commit()

@@ -2,7 +2,7 @@
 
 import { T } from "@/components/T";
 
-export function EmptyState({ title, description }: { title: string; description?: string }) {
+export function EmptyState({ title, description }: { title: React.ReactNode; description?: React.ReactNode }) {
   return (
     <div className="rounded-xl border border-dashed border-outline-variant bg-surface-container-low p-8 text-center">
       <p className="font-title-md text-on-surface">{title}</p>

@@ -7,6 +7,8 @@ import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { StatusChip, EmptyState, Avatar } from "@/components/ui";
 import { useAppStore } from "@/lib/store";
+import { useDocuments, useFetchDigiLocker } from "@/lib/api/hooks";
+import { downloadApiFile } from "@/lib/api/client";
 
 interface VaultDoc {
   id: string;
@@ -276,6 +278,8 @@ type StatusFilter = "all" | "approved" | "pending";
 
 export default function DocumentVaultPage() {
   const lang = useAppStore((s) => s.lang);
+  const documentsQuery = useDocuments();
+  const fetchDigiLocker = useFetchDigiLocker();
 
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("all");
   const [activeStatus, setActiveStatus] = useState<StatusFilter>("all");
@@ -321,28 +325,43 @@ export default function DocumentVaultPage() {
     });
   }, [activeCategory, activeStatus, searchQuery]);
 
-  const handleSyncDigiLocker = () => {
+  const handleSyncDigiLocker = async () => {
     setIsSyncing(true);
-    setTimeout(() => {
+    try {
+      await fetchDigiLocker.mutateAsync();
+      await documentsQuery.refetch();
       setIsSyncing(false);
       setSyncToast(true);
       setTimeout(() => setSyncToast(false), 3000);
-    }, 1200);
+    } catch {
+      setIsSyncing(false);
+      setDownloadToast("DigiLocker demo adapter unavailable");
+    }
   };
 
-  const handleDownloadMock = (docTitle: string) => {
-    setDownloadToast(docTitle);
-    setTimeout(() => setDownloadToast(null), 2500);
+  const handleDownloadMock = async (docTitle: string) => {
+    const docs = Array.isArray(documentsQuery.data) ? documentsQuery.data as Array<Record<string, unknown>> : [];
+    const normalized = docTitle.toLowerCase();
+    const doc = docs.find((row) => String(row.doc_type ?? "").toLowerCase().includes(normalized.split(" ")[0]));
+    if (doc?.id) {
+      try { await downloadApiFile(`/documents/${doc.id}/download`, `${String(doc.doc_type)}.pdf`); }
+      catch { setDownloadToast("This certificate has no uploaded file yet"); }
+    } else {
+      setDownloadToast(docTitle);
+      setTimeout(() => setDownloadToast(null), 2500);
+    }
   };
 
   // Health metric counters
-  const totalCount = MOCK_DOCS.length;
-  const verifiedCount = MOCK_DOCS.filter((d) => d.status === "approved").length;
-  const pendingCount = MOCK_DOCS.filter((d) => d.status === "pending").length;
+  const liveDocs = Array.isArray(documentsQuery.data) ? documentsQuery.data as Array<Record<string, unknown>> : [];
+  const totalCount = liveDocs.length || MOCK_DOCS.length;
+  const verifiedCount = liveDocs.length ? liveDocs.filter((doc) => ["verified", "approved"].includes(String(doc.status))).length : MOCK_DOCS.filter((d) => d.status === "approved").length;
+  const pendingCount = liveDocs.length ? liveDocs.filter((doc) => String(doc.status) === "pending").length : MOCK_DOCS.filter((d) => d.status === "pending").length;
 
   return (
     <StudentShell>
       <div className="flex flex-col w-full pb-28 max-w-[430px] mx-auto min-h-screen bg-surface px-4 py-3 space-y-4">
+        {documentsQuery.isError && <p role="status" className="rounded-lg bg-error-container p-3 text-xs text-on-error-container">Document data unavailable. <button onClick={() => void documentsQuery.refetch()} className="font-bold underline">Retry</button></p>}
         {/* 1. Header with back link, document count chip, and Upload button */}
         <div className="flex flex-col gap-2 pt-1 pb-1">
           <div className="flex items-center justify-between gap-2">

@@ -57,6 +57,7 @@ export interface ResourceApi {
   receipt(txnId: number): Promise<Record<string, unknown>>;
   dbtTransactions(): Promise<Paged<Record<string, unknown>>>;
   grievances(): Promise<Paged<GrievanceSummary>>;
+  updateGrievance(code: string, input: { status?: string; assignee_id?: number }): Promise<Record<string, unknown>>;
   createGrievance(input: { category: string; description: string }): Promise<Record<string, unknown>>;
   notifications(): Promise<NotificationSummary[]>;
   readAllNotifications(): Promise<Record<string, unknown>>;
@@ -83,6 +84,33 @@ export interface ResourceApi {
   uploadRecords(type: "attendance" | "marks", file: File): Promise<Record<string, unknown>>;
   confirmRecords(type: "attendance" | "marks", rows: Array<Record<string, unknown>>): Promise<Record<string, unknown>>;
   vendorBatches(): Promise<Array<Record<string, unknown>>>;
+  batchQr(id: number): Promise<{ batch_id: number; batch_code: string; items: Array<{ serial_no: string; payload: string; status: string }> }>;
+  batchTracking(id: number): Promise<Record<string, unknown>>;
+  districtSchools(): Promise<{ items: Array<Record<string, unknown>>; total: number }>;
+  stateRanking(): Promise<{ items: Array<Record<string, unknown>>; total: number; metric: string }>;
+  myBank(): Promise<{ items: Array<Record<string, unknown>> }>;
+  addBank(input: Record<string, unknown>): Promise<Record<string, unknown>>;
+  verifyBank(): Promise<Record<string, unknown>>;
+  schoolStudents(input?: { q?: string; risk?: string }): Promise<Paged<Record<string, unknown>>>;
+  schoolStudent(ctsId: string): Promise<Record<string, unknown>>;
+  handovers(): Promise<Paged<Record<string, unknown>>>;
+  vendorOrders(): Promise<{ items: Array<Record<string, unknown>>; total: number }>;
+  createVendorOrder(input: Record<string, unknown>): Promise<Record<string, unknown>>;
+  updateVendorOrder(input: { id: number; action: "accept" | "reject" }): Promise<Record<string, unknown>>;
+  vendorInvoices(): Promise<{ items: Array<Record<string, unknown>>; total: number }>;
+  createVendorInvoice(input: Record<string, unknown>): Promise<Record<string, unknown>>;
+  payVendorInvoice(id: number): Promise<Record<string, unknown>>;
+  budgetAllocations(): Promise<{ items: Array<Record<string, unknown>>; total: number }>;
+  allocateBudget(input: Record<string, unknown>): Promise<Record<string, unknown>>;
+  adminUsers(): Promise<{ items: Array<Record<string, unknown>>; total: number }>;
+  setAdminUserActive(input: { id: number; is_active: boolean }): Promise<Record<string, unknown>>;
+  setSchemeActive(input: { id: number; active: boolean }): Promise<Record<string, unknown>>;
+  vendorReturns(): Promise<{ items: Array<Record<string, unknown>>; total: number }>;
+  createVendorReturn(input: Record<string, unknown>): Promise<Record<string, unknown>>;
+  publicTransparency(): Promise<Record<string, unknown>>;
+  publicStatus(code: string): Promise<Record<string, unknown>>;
+  publicVerify(code: string): Promise<Record<string, unknown>>;
+  adminMlMetrics(): Promise<Record<string, unknown>>;
   createBatch(schoolId: number, qty: number): Promise<Record<string, unknown>>;
   dispatchBatch(id: number, gps: { lat: number; lng: number }): Promise<Record<string, unknown>>;
   updateBatchGps(id: number, gps: { lat: number; lng: number }): Promise<Record<string, unknown>>;
@@ -91,6 +119,8 @@ export interface ResourceApi {
   updateFraudFlag(id: number, status: string): Promise<Record<string, unknown>>;
   rescanFraud(): Promise<Record<string, unknown>>;
   analytics(role: Role): Promise<Record<string, unknown>>;
+  talukaSchools(): Promise<{ items: Array<Record<string, unknown>>; total: number }>;
+  talukaReports(): Promise<Record<string, unknown>>;
   dropout(): Promise<Paged<Record<string, unknown>>>;
   fraudFlags(): Promise<Paged<Record<string, unknown>>>;
   adminSchemes(): Promise<Array<Record<string, unknown>>>;
@@ -140,10 +170,14 @@ const realApi: ResourceApi = {
   receipt: (txnId) => apiRequest(route(`/dbt/receipt/${txnId}`)),
   dbtTransactions: () => apiRequest("/dbt/transactions?page=1&size=50"),
   grievances: async () => {
-    const items = await apiRequest<GrievanceSummary[]>("/grievances/me");
-    return { items, total: items.length, page: 1, size: items.length || 1 };
+    if (useAuthStore.getState().role === "student") {
+      const items = await apiRequest<GrievanceSummary[]>("/grievances/me");
+      return { items, total: items.length, page: 1, size: items.length || 1 };
+    }
+    return apiRequest("/grievances?page=1&size=50");
   },
   createGrievance: (input) => apiRequest("/grievances", { ...apiJson("POST", input) }),
+  updateGrievance: (code, input) => apiRequest(route(`/grievances/${encodeURIComponent(code)}`), { ...apiJson("PATCH", input) }),
   notifications: async () => {
     const res = await apiRequest<{ items?: NotificationSummary[] } | NotificationSummary[]>("/notifications");
     return Array.isArray(res) ? res : (res.items ?? []);
@@ -175,6 +209,38 @@ const realApi: ResourceApi = {
   },
   confirmRecords: (type, rows) => apiRequest(route(`/records/${type}/confirm`), { ...apiJson("POST", { rows }) }),
   vendorBatches: () => apiRequest("/vendor/batches"),
+  batchQr: (id) => apiRequest(route(`/vendor/batches/${id}/qr`)),
+  batchTracking: (id) => apiRequest(route(`/vendor/batches/${id}/track`)),
+  districtSchools: () => apiRequest(route("/analytics/district/schools")),
+  stateRanking: () => apiRequest(route("/analytics/state/ranking")),
+  myBank: () => apiRequest(route("/students/me/bank")),
+  addBank: (input) => apiRequest(route("/students/me/bank"), { ...apiJson("POST", input) }),
+  verifyBank: () => apiRequest(route("/students/me/bank/verify"), { method: "POST" }),
+  schoolStudents: (input = {}) => {
+    const params = new URLSearchParams({ page: "1", size: "100" });
+    if (input.q) params.set("q", input.q);
+    if (input.risk) params.set("risk", input.risk);
+    return apiRequest(route(`/school/students?${params.toString()}`));
+  },
+  schoolStudent: (ctsId) => apiRequest(route(`/school/students/${encodeURIComponent(ctsId)}`)),
+  handovers: () => apiRequest(route("/handovers?page=1&size=100")),
+  vendorOrders: () => apiRequest(route("/vendor/orders")),
+  createVendorOrder: (input) => apiRequest(route("/vendor/orders"), { ...apiJson("POST", input) }),
+  updateVendorOrder: ({ id, action }) => apiRequest(route(`/vendor/orders/${id}/${action}`), { method: "POST" }),
+  vendorInvoices: () => apiRequest(route("/vendor/invoices")),
+  createVendorInvoice: (input) => apiRequest(route("/vendor/invoices"), { ...apiJson("POST", input) }),
+  payVendorInvoice: (id) => apiRequest(route(`/vendor/invoices/${id}/pay`), { method: "POST" }),
+  budgetAllocations: () => apiRequest(route("/funds/allocations")),
+  allocateBudget: (input) => apiRequest(route("/funds/allocate"), { ...apiJson("POST", input) }),
+  adminUsers: () => apiRequest(route("/admin/users")),
+  setAdminUserActive: ({ id, is_active }) => apiRequest(route(`/admin/users/${id}`), { ...apiJson("PATCH", { is_active }) }),
+  setSchemeActive: ({ id, active }) => apiRequest(route(`/admin/schemes/${id}/active`), { ...apiJson("PATCH", { active }) }),
+  vendorReturns: () => apiRequest(route("/vendor/returns")),
+  createVendorReturn: (input) => apiRequest(route("/vendor/returns"), { ...apiJson("POST", input) }),
+  publicTransparency: () => apiRequest(route("/public/transparency")),
+  publicStatus: (code) => apiRequest(route(`/public/status/${encodeURIComponent(code)}`)),
+  publicVerify: (code) => apiRequest(route(`/public/verify/${encodeURIComponent(code)}`)),
+  adminMlMetrics: () => apiRequest(route("/admin/ml/metrics")),
   createBatch: (school_id, qty) => apiRequest("/vendor/batches", { ...apiJson("POST", { school_id, qty }) }),
   dispatchBatch: (id, gps) => apiRequest(route(`/batches/${id}/dispatch`), { ...apiJson("POST", gps) }),
   updateBatchGps: (id, gps) => apiRequest(route(`/batches/${id}/gps`), { ...apiJson("POST", gps) }),
@@ -182,7 +248,9 @@ const realApi: ResourceApi = {
   fraudFlag: (id) => apiRequest(route(`/fraud/flags/${id}`)),
   updateFraudFlag: (id, status) => apiRequest(route(`/fraud/flags/${id}`), { ...apiJson("PATCH", { status }) }),
   rescanFraud: () => apiRequest("/fraud/rescan", { method: "POST" }),
-  analytics: (role) => apiRequest(role === "school" ? "/analytics/school" : role === "admin" ? "/analytics/state" : "/analytics/district"),
+  analytics: (role) => apiRequest(role === "school" ? "/analytics/school" : role === "admin" ? "/analytics/state" : role === "tpeo" ? route("/analytics/taluka") : "/analytics/district"),
+  talukaSchools: () => apiRequest(route("/analytics/taluka/schools")),
+  talukaReports: () => apiRequest(route("/analytics/taluka/reports")),
   dropout: () => apiRequest("/ml/dropout/students?page=1&size=50"),
   fraudFlags: () => apiRequest("/fraud/flags?page=1&size=50"),
   adminSchemes: () => apiRequest("/admin/schemes"),
@@ -344,6 +412,7 @@ const mockApi: ResourceApi = {
   dbtTransactions: async () => ({ items: [], total: 0, page: 1, size: 50 }),
   grievances: async () => ({ items: MOCK_GRIEVANCES as unknown as GrievanceSummary[], total: MOCK_GRIEVANCES.length, page: 1, size: 50 }),
   createGrievance: async () => ({ success: true, grv_code: "GRV-DEMO-001" }),
+  updateGrievance: async () => ({ success: true }),
   notifications: async () => mockNotifications.map((notification) => ({ ...notification })),
   readAllNotifications: async () => {
     mockNotifications.forEach((notification) => { notification.read = true; });
@@ -375,7 +444,52 @@ const mockApi: ResourceApi = {
   testEligibility: async (input) => ({ status: "eligible", ...input }),
   uploadRecords: async (_type, file) => ({ total: 0, valid: 0, errors: [], filename: file.name }),
   confirmRecords: async (_type, rows) => ({ updated: rows.length }),
-  vendorBatches: async () => [],
+  vendorBatches: async () => [
+    { id: 1, batch_code: "VPS-AN-2026-01", school_id: 1, qty: 12, received_qty: 0, status: "dispatched" },
+    { id: 2, batch_code: "VPS-AN-2026-02", school_id: 1, qty: 10, received_qty: 10, status: "received" },
+  ],
+  batchQr: async (id) => ({
+    batch_id: id,
+    batch_code: `VPS-DEMO-${id}`,
+    items: Array.from({ length: 12 }, (_, index) => {
+      const serial_no = `VPS-CYCLE-${id}-${String(index + 1).padStart(3, "0")}`;
+      return { serial_no, payload: `${serial_no}|${id}|mock-signature`, status: "in_stock" };
+    }),
+  }),
+  batchTracking: async (id) => ({
+    batch_id: id,
+    batch_code: `VPS-DEMO-${id}`,
+    status: "dispatched",
+    qty: 12,
+    received_qty: 0,
+    gps_points: [{ lat: 22.55, lng: 72.95, at: new Date().toISOString() }],
+    school: { school_id: 1, name_en: "Shree Sardar Patel High School", name_gu: "શ્રી સરદાર પટેલ હાઈસ્કૂલ", latitude: 22.56, longitude: 72.95 },
+  }),
+  districtSchools: async () => ({ items: [], total: 0 }),
+  stateRanking: async () => ({ items: [], total: 0, metric: "credited_application_rate" }),
+  myBank: async () => ({ items: MOCK_STUDENT.bank ? [{ holder_type: "mother", holder_name: "Hetalben Patel", last4: "4521", ifsc: "SBIN0001234", bank_name: "State Bank of India", verified: true, aadhaar_seeded: true }] : [] }),
+  addBank: async (input) => ({ id: Date.now(), verified: false, ...input, account_number: undefined }),
+  verifyBank: async () => ({ verified: true, simulated: true, last4: "4521" }),
+  schoolStudents: async () => ({ items: [], total: 0, page: 1, size: 100 }),
+  schoolStudent: async (ctsId) => ({ cts_id: ctsId, applications: [], attendance: [], cycles: [], grievances: [] }),
+  handovers: async () => ({ items: [], total: 0, page: 1, size: 100 }),
+  vendorOrders: async () => ({ items: [], total: 0 }),
+  createVendorOrder: async (input) => ({ id: Date.now(), status: "open", ...input }),
+  updateVendorOrder: async ({ id, action }) => ({ id, status: action === "accept" ? "accepted" : "rejected" }),
+  vendorInvoices: async () => ({ items: [], total: 0 }),
+  createVendorInvoice: async (input) => ({ id: Date.now(), status: "pending", ...input }),
+  payVendorInvoice: async (id) => ({ id, status: "paid", utr: "VPSDEMO123456" }),
+  budgetAllocations: async () => ({ items: [], total: 0 }),
+  allocateBudget: async (input) => ({ id: Date.now(), released: input.amount, ...input }),
+  adminUsers: async () => ({ items: [], total: 0 }),
+  setAdminUserActive: async ({ id, is_active }) => ({ id, is_active }),
+  setSchemeActive: async ({ id, active }) => ({ id, active, version: 2 }),
+  vendorReturns: async () => ({ items: [], total: 0 }),
+  createVendorReturn: async (input) => ({ id: Date.now(), status: "open", ...input }),
+  publicTransparency: async () => ({ district_count: 1, school_count: 40, student_count: 1500, application_count: 2200, credited_count: 660, total_disbursed: 0, grievance_count: 60, grievances_resolved: 0, items: [] }),
+  publicStatus: async (code) => ({ app_code: code, status: "submitted", student: "R***" }),
+  publicVerify: async (code) => ({ valid: false, code, reason: "not_found" }),
+  adminMlMetrics: async () => ({ available: false, models: {}, synthetic_demo_data: true }),
   createBatch: async (school_id, qty) => ({ id: Date.now(), school_id, qty, status: "ordered", serials: [] }),
   dispatchBatch: async (id) => ({ id, status: "dispatched" }),
   updateBatchGps: async (id) => ({ id, success: true }),
@@ -384,6 +498,8 @@ const mockApi: ResourceApi = {
   updateFraudFlag: async (id, status) => ({ id, status }),
   rescanFraud: async () => ({ status: "running" }),
   analytics: async () => ({ total_students: 600, pending: 12, approved: 420 }),
+  talukaSchools: async () => ({ items: [], total: 0 }),
+  talukaReports: async () => ({ total_applications: 0, pending: 0, approved: 0, rejected: 0, students_at_risk: 0 }),
   dropout: async () => ({ items: [], total: 0, page: 1, size: 50 }),
   fraudFlags: async () => ({ items: [], total: 0, page: 1, size: 50 }),
   adminSchemes: async () => mockSchemes,

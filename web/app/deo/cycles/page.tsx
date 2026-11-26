@@ -5,6 +5,7 @@ import Link from "next/link";
 import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
+import { useCycleForecast, useCycleOverview } from "@/lib/api/hooks";
 
 
 // Mock Data Types
@@ -282,6 +283,8 @@ const MOCK_BATCHES: BatchData[] = [
 ];
 
 export default function CycleSupplyChainPage() {
+  const liveCycles = useCycleOverview();
+  const liveForecast = useCycleForecast();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTaluka, setSelectedTaluka] = useState("all");
   const [selectedVendor, setSelectedVendor] = useState("all");
@@ -357,6 +360,17 @@ export default function CycleSupplyChainPage() {
             <span className="font-label-lg text-sm">{actionNotice}</span>
           </div>
         )}
+
+        <section className="mx-6 mt-5 grid gap-3 md:grid-cols-2" aria-live="polite">
+          <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-4">
+            <h2 className="font-title-sm font-bold text-on-surface">Live cycle operations</h2>
+            {liveCycles.isLoading ? <p className="mt-2 text-sm text-on-surface-variant">Loading cycle data…</p> : liveCycles.isError ? <button type="button" onClick={() => void liveCycles.refetch()} className="mt-2 text-sm text-primary underline">Cycle data failed · Retry</button> : <p className="mt-2 text-sm text-on-surface-variant">{String(liveCycles.data?.receivable_cycles ?? 0)} receivable cycles · {String(liveCycles.data?.handover_students ?? 0)} student handovers · {Array.isArray(liveCycles.data?.batches) ? liveCycles.data.batches.length : 0} batches</p>}
+          </div>
+          <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-4">
+            <h2 className="font-title-sm font-bold text-on-surface">Live supply forecast</h2>
+            {liveForecast.isLoading ? <p className="mt-2 text-sm text-on-surface-variant">Loading forecast…</p> : liveForecast.isError ? <button type="button" onClick={() => void liveForecast.refetch()} className="mt-2 text-sm text-primary underline">Forecast failed · Retry</button> : <p className="mt-2 text-sm text-on-surface-variant">{String(liveForecast.data?.total_forecast ?? 0)} forecast units · {Array.isArray(liveForecast.data?.items) ? liveForecast.data.items.length : 0} forecast rows</p>}
+          </div>
+        </section>
 
         <div className="w-full px-6 py-5 max-w-[1440px] mx-auto space-y-6">
           {/* Breadcrumb & Context Header Area */}

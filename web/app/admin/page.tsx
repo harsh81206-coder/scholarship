@@ -17,6 +17,8 @@ import {
 import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
+import { LiveMetrics } from "@/components/LiveMetrics";
+import { useAnalytics } from "@/lib/api/hooks";
 
 // ── Mock Data Definitions ───────────────────────────────────────────────────
 
@@ -355,6 +357,7 @@ const MONTHLY_TREND_DATA = [
 ];
 
 export default function AdminAnalyticsDashboard() {
+  const liveData = useAnalytics("admin");
   const [mounted, setMounted] = useState(false);
   const [selectedDistrictId, setSelectedDistrictId] = useState<string>("anand");
   const [activeMetricTab, setActiveMetricTab] = useState<"coverage" | "pending" | "cycles" | "dropout">("coverage");
@@ -410,6 +413,7 @@ export default function AdminAnalyticsDashboard() {
   return (
     <OfficerShell role="admin">
       <div className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-[1400px] mx-auto animate-fade-in">
+        <LiveMetrics title="Live state data" data={liveData.data} loading={liveData.isLoading} error={liveData.error} onRetry={() => void liveData.refetch()} />
         
         {/* ── Top Live Alert Notification Banner ── */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 py-3 rounded-xl bg-surface-container-high text-on-surface border border-outline-variant/60 gap-3">

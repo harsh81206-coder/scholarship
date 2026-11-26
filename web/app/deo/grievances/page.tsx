@@ -6,6 +6,7 @@ import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import {StatusChip} from "@/components/ui";
+import { useGrievances, useUpdateGrievance } from "@/lib/api/hooks";
 
 export type GrievanceType = "Payment" | "Document" | "Process";
 export type GrievanceStatus = "new" | "inprogress" | "escalated" | "resolved";
@@ -510,6 +511,8 @@ const INITIAL_GRIEVANCES: Grievance[] = [
 ];
 
 export default function DeoGrievancePage() {
+  const liveGrievances = useGrievances();
+  const updateLiveGrievance = useUpdateGrievance();
   const [grievances, setGrievances] = useState<Grievance[]>(INITIAL_GRIEVANCES);
   const [selectedId, setSelectedId] = useState<string>("GRV-2026-0412");
   const [searchQuery, setSearchQuery] = useState("");
@@ -725,6 +728,25 @@ export default function DeoGrievancePage() {
 
   return (
     <OfficerShell role="deo">
+      <section className="mx-4 mt-4 rounded-xl border border-outline-variant bg-surface-container-lowest p-4 sm:mx-6" aria-live="polite">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-title-sm font-bold text-on-surface">Live API grievance queue · {liveGrievances.data?.total ?? 0} cases</h2>
+          {liveGrievances.isError && <button type="button" onClick={() => void liveGrievances.refetch()} className="text-sm text-primary underline">Retry</button>}
+        </div>
+        {liveGrievances.isLoading ? <p className="mt-2 text-sm text-on-surface-variant">Loading scoped cases…</p> : liveGrievances.isError ? <p role="alert" className="mt-2 text-sm text-danger">Could not load the API grievance queue.</p> : (
+          <div className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+            {(liveGrievances.data?.items ?? []).slice(0, 6).map((item) => <article key={item.grv_code} className="rounded-lg bg-surface-container-low p-3">
+              <p className="font-semibold text-on-surface">{item.grv_code} · {item.status}</p>
+              <p className="mt-1 line-clamp-2 text-sm text-on-surface-variant">{String(item.description ?? item.category ?? "Grievance case")}</p>
+              <div className="mt-2 flex gap-2">
+                <button type="button" disabled={updateLiveGrievance.isPending} onClick={() => updateLiveGrievance.mutate({ code: item.grv_code, status: "inprogress" })} className="rounded-md border border-outline-variant px-2 py-1 text-xs text-primary disabled:opacity-50">Mark in review</button>
+                <button type="button" disabled={updateLiveGrievance.isPending} onClick={() => updateLiveGrievance.mutate({ code: item.grv_code, status: "resolved" })} className="rounded-md border border-outline-variant px-2 py-1 text-xs text-success disabled:opacity-50">Resolve</button>
+              </div>
+            </article>)}
+          </div>
+        )}
+        {updateLiveGrievance.isError && <p role="alert" className="mt-2 text-sm text-danger">Could not update the grievance status.</p>}
+      </section>
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-20 right-6 z-50 bg-on-surface text-surface px-4 py-3 rounded-xl shadow-level-3 flex items-center gap-3 animate-fade-in border border-outline-variant">

@@ -4,6 +4,8 @@ import { OfficerShell } from "@/components/shell/OfficerShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { StatusChip } from "@/components/ui";
+import { LiveMetrics } from "@/components/LiveMetrics";
+import { useFraudFlags, useRescanFraud } from "@/lib/api/hooks";
 
 type RiskLevel = "high" | "medium" | "low";
 
@@ -49,6 +51,8 @@ const MONTHLY_RISK = [
 const maxCount = Math.max(...MONTHLY_RISK.map((m) => m.count));
 
 export default function FraudDetectionPage() {
+  const liveFlags = useFraudFlags();
+  const rescan = useRescanFraud();
   const [anomalies, setAnomalies] = useState<Anomaly[]>(ANOMALIES);
   const [selected, setSelected] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | RiskLevel>("all");
@@ -65,6 +69,8 @@ export default function FraudDetectionPage() {
   return (
     <OfficerShell role="admin">
       <div className="p-6 flex flex-col gap-6">
+        <LiveMetrics title="Live fraud scan" data={{ total_flags: liveFlags.data?.total ?? 0, records_loaded: liveFlags.data?.items?.length ?? 0, rescan: rescan.isPending ? "running" : "ready" }} loading={liveFlags.isLoading} error={liveFlags.error} onRetry={() => void liveFlags.refetch()} />
+        <button disabled={rescan.isPending} onClick={() => void rescan.mutate()} className="self-start rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary">{rescan.isPending ? "Scanning…" : "Rescan current data"}</button>
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

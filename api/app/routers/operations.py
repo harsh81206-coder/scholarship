@@ -14,16 +14,19 @@ from sqlmodel import Session, select
 from app.db import get_session
 from app.deps import CurrentUser, get_current_user
 from app.models.core import (
+    AcademicRecord,
     Application,
     AuditLog,
     BankAccount,
     DbtTxn,
     Family,
     Scheme,
+    School,
     Setting,
     Delegation,
     User,
     Student,
+    CycleBatch,
 )
 from app.security import sha256_chain
 from app.services.eligibility import evaluate, store_result
@@ -353,30 +356,96 @@ def my_delegations(
 @router.get("/analytics/school/reports")
 def school_reports(
     type: str = "summary",
+    grade: int | None = None,
+    scheme_code: str | None = None,
     user: CurrentUser = Depends(get_current_user),
     session: Session = Depends(get_session),
 ):
     _require(user, "school", "admin")
-    apps = session.exec(select(Application)).all()
-    if user.role == "school":
-        apps = [a for a in apps if a.student and a.student.school_id == user.school_id]
-    return {
-        "type": type,
-        "total": len(apps),
-        "status_counts": {
-            status: sum(a.status == status for a in apps)
-            for status in sorted({a.status for a in apps})
-        },
-        "items": [
+    school_id = user.school_id if user.role == "school" else None
+    if type in ("summary", "scheme-wise-applications", "pending-verification"):
+        apps = session.exec(select(Application).order_by(Application.id.desc())).all()
+        rows = []
+        for application in apps:
+            student = session.get(Student, application.student_id)
+            if school_id is not None and (not student or student.school_id != school_id):
+                continue
+            if grade is not None and (not student or student.grade != grade):
+                continue
+            if scheme_code and application.scheme and application.scheme.code != scheme_code:
+                continue
+            if type == "pending-verification" and application.status not in ("applied", "school_verified"):
+                continue
+            rows.append(
+                {
+                    "app_code": application.app_code,
+                    "student_name": student.name_en if student else "",
+                    "grade": student.grade if student else None,
+                    "status": application.status,
+                    "amount": application.amount,
+                    "scheme": application.scheme.name_en if application.scheme else "",
+                    "scheme_code": application.scheme.code if application.scheme else "",
+                }
+            )
+        status_counts = {
+            status: sum(row["status"] == status for row in rows)
+            for status in sorted({row["status"] for row in rows})
+        }
+    elif type == "attendance-defaulters":
+        records = session.exec(select(AcademicRecord).order_by(AcademicRecord.attendance_pct)).all()
+        students = {student.id: student for student in session.exec(select(Student)).all()}
+        rows = [
             {
-                "app_code": a.app_code,
-                "status": a.status,
-                "amount": a.amount,
-                "scheme": a.scheme.name_en if a.scheme else "",
+                "student_name": students[record.student_id].name_en,
+                "cts_id": students[record.student_id].cts_id,
+                "grade": record.grade,
+                "attendance_pct": record.attendance_pct,
+                "marks_pct": record.marks_pct,
             }
-            for a in apps
-        ],
-    }
+            for record in records
+            if record.student_id in students
+            and (school_id is None or students[record.student_id].school_id == school_id)
+            and record.attendance_pct < 75
+            and (grade is None or record.grade == grade)
+        ]
+        status_counts = {"below_threshold": len(rows)}
+    elif type == "cycle-distribution":
+        batches = session.exec(select(CycleBatch).order_by(CycleBatch.id.desc())).all()
+        schools = {school.id: school for school in session.exec(select(School)).all()}
+        rows = [
+            {
+                "batch_code": batch.batch_code,
+                "school": schools[batch.school_id].name_en if batch.school_id in schools else "",
+                "qty": batch.qty,
+                "received_qty": batch.received_qty,
+                "status": batch.status,
+            }
+            for batch in batches
+            if batch.school_id in schools
+            and (school_id is None or batch.school_id == school_id)
+        ]
+        status_counts = {status: sum(row["status"] == status for row in rows) for status in sorted({row["status"] for row in rows})}
+    elif type == "funds-received":
+        transactions = session.exec(select(DbtTxn).order_by(DbtTxn.id.desc())).all()
+        rows = []
+        for transaction in transactions:
+            application = session.get(Application, transaction.application_id)
+            student = session.get(Student, application.student_id) if application else None
+            if school_id is not None and (not student or student.school_id != school_id):
+                continue
+            rows.append(
+                {
+                    "txn_id": transaction.id,
+                    "app_code": application.app_code if application else "",
+                    "amount": transaction.amount,
+                    "status": transaction.status,
+                    "utr": transaction.utr or "",
+                }
+            )
+        status_counts = {status: sum(row["status"] == status for row in rows) for status in sorted({row["status"] for row in rows})}
+    else:
+        raise HTTPException(422, "Unsupported school report type")
+    return {"type": type, "total": len(rows), "status_counts": status_counts, "items": rows}
 
 
 @router.get("/ai/explain/{scheme_code}")
@@ -482,6 +551,8 @@ def get_consents(
             "share_documents": True,
             "auto_apply": False,
             "alerts": True,
+            "digilocker_consent": True,
+            "dbt_mandate": student.guardian_consent,
         }
     )
 
@@ -500,7 +571,14 @@ def put_consents(
         raise HTTPException(400, "Consent values must be an object")
     value = {
         k: bool(values[k])
-        for k in ("guardian_consent", "share_documents", "auto_apply", "alerts")
+        for k in (
+            "guardian_consent",
+            "share_documents",
+            "auto_apply",
+            "alerts",
+            "digilocker_consent",
+            "dbt_mandate",
+        )
         if k in values
     }
     if row:
@@ -515,6 +593,20 @@ def put_consents(
         )
     if "guardian_consent" in value:
         student.guardian_consent = value["guardian_consent"]
+    previous = session.exec(select(AuditLog).order_by(AuditLog.id.desc())).first()
+    previous_hash = previous.hash if previous and previous.hash else "genesis"
+    serialized = json.dumps(value, sort_keys=True)
+    chain_payload = f"{user.sub}:{user.role}:student_consent_updated:Setting:{key}:{serialized}"
+    session.add(AuditLog(
+        actor_id=user.sub,
+        role=user.role,
+        action="student_consent_updated",
+        entity="Setting",
+        entity_id=key,
+        after_json=serialized,
+        prev_hash=previous_hash,
+        hash=sha256_chain(previous_hash, chain_payload),
+    ))
     session.commit()
     return value
 

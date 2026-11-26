@@ -6,6 +6,7 @@ import { StudentShell } from "@/components/shell/StudentShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { StatusChip, Avatar, EmptyState } from "@/components/ui";
+import { useCreateGrievance, useGrievances } from "@/lib/api/hooks";
 
 interface TimelineStep {
   titleGu: string;
@@ -316,6 +317,8 @@ const INITIAL_GRIEVANCES: GrievanceItem[] = [
 ];
 
 export default function StudentGrievancesPage() {
+  const grievanceQuery = useGrievances();
+  const createGrievance = useCreateGrievance();
     const [activeTab, setActiveTab] = useState<"track" | "raise">("track");
   const [grievances, setGrievances] = useState<GrievanceItem[]>(INITIAL_GRIEVANCES);
   const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({
@@ -404,7 +407,7 @@ export default function StudentGrievancesPage() {
     showToast("જોડાણ હટાવ્યું (Attachment Removed)", "દસ્તાવેજ રદ કરવામાં આવ્યો છે");
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!description.trim()) {
@@ -412,8 +415,15 @@ export default function StudentGrievancesPage() {
       return;
     }
 
-    const randomNum = Math.floor(100 + Math.random() * 900);
-    const newToken = `GRV-2026-00${randomNum}`;
+    let newToken: string;
+    try {
+      const created = await createGrievance.mutateAsync({ category: selectedCategory, description: description.trim() });
+      newToken = String(created.grv_code ?? "");
+      await grievanceQuery.refetch();
+    } catch (error) {
+      showToast("ફરિયાદ નોંધાઈ નથી", error instanceof Error ? error.message : "Please try again.");
+      return;
+    }
 
     let subjectGu = "શિષ્યવૃત્તિ સહાય પૂછપરછ";
     let subjectEn = "Scholarship Assistance Inquiry";
@@ -581,6 +591,9 @@ export default function StudentGrievancesPage() {
   return (
     <StudentShell>
       <div className="flex flex-col w-full px-4 space-y-4 pt-3 pb-24 max-w-[430px] mx-auto animate-fade-in">
+        <section className="rounded-xl border border-outline-variant bg-surface-container-lowest p-3 text-xs text-on-surface-variant" aria-live="polite">
+          {grievanceQuery.isLoading ? "Loading your live grievance count…" : grievanceQuery.isError ? <button className="font-semibold text-primary underline" onClick={() => void grievanceQuery.refetch()}>Retry live grievance data</button> : `${grievanceQuery.data?.total ?? 0} live grievance records in your account`}
+        </section>
         {/* Top Header & Back Link */}
         <div className="flex items-center justify-between gap-2 pt-1">
           <div className="flex items-center gap-2.5 min-w-0">

@@ -130,6 +130,82 @@ def list_batches(
     ]
 
 
+def _require_batch_access(batch: CycleBatch, user: CurrentUser, session: Session) -> None:
+    if user.role == "admin":
+        return
+    if user.role == "vendor":
+        vendor = session.exec(select(User).where(User.officer_id == user.sub)).first()
+        allowed = vendor is not None and batch.vendor_id == vendor.id
+    elif user.role == "school":
+        allowed = batch.school_id == user.school_id
+    elif user.role in ("taluka", "deo"):
+        school = session.get(School, batch.school_id)
+        taluka = session.get(Taluka, school.taluka_id) if school else None
+        allowed = bool(
+            school
+            and taluka
+            and (
+                (user.role == "taluka" and school.taluka_id == user.taluka_id)
+                or (user.role == "deo" and taluka.district_id == user.district_id)
+            )
+        )
+    else:
+        allowed = False
+    if not allowed:
+        raise HTTPException(403, "Batch is outside the caller's scope")
+
+
+@router.get("/vendor/batches/{batch_id}/qr")
+def batch_qr_codes(
+    batch_id: int,
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    batch = session.get(CycleBatch, batch_id)
+    if not batch:
+        raise HTTPException(404, "Batch not found")
+    _require_batch_access(batch, user, session)
+    cycles = session.exec(select(Cycle).where(Cycle.batch_id == batch_id).order_by(Cycle.serial_no)).all()
+    return {
+        "batch_id": batch.id,
+        "batch_code": batch.batch_code,
+        "items": [
+            {"serial_no": cycle.serial_no, "payload": _signed_payload(cycle.serial_no, batch.id), "status": cycle.status}
+            for cycle in cycles
+        ],
+    }
+
+
+@router.get("/vendor/batches/{batch_id}/track")
+def track_batch(
+    batch_id: int,
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    batch = session.get(CycleBatch, batch_id)
+    if not batch:
+        raise HTTPException(404, "Batch not found")
+    _require_batch_access(batch, user, session)
+    school = session.get(School, batch.school_id)
+    return {
+        "batch_id": batch.id,
+        "batch_code": batch.batch_code,
+        "status": batch.status,
+        "qty": batch.qty,
+        "received_qty": batch.received_qty,
+        "dispatched_at": batch.dispatched_at.isoformat() if batch.dispatched_at else None,
+        "received_at": batch.received_at.isoformat() if batch.received_at else None,
+        "gps_points": json.loads(batch.gps_json or "[]"),
+        "school": {
+            "school_id": school.id,
+            "name_en": school.name_en,
+            "name_gu": school.name_gu,
+            "latitude": school.latitude,
+            "longitude": school.longitude,
+        } if school else None,
+    }
+
+
 @router.post("/batches/{batch_id}/dispatch")
 def dispatch_batch(
     batch_id: int,

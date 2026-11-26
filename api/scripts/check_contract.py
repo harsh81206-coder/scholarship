@@ -14,7 +14,7 @@ from app.main import app
 
 ROOT = Path(__file__).resolve().parents[2]
 SCREENS: dict[str, tuple[str, tuple[str, ...]]] = {
-    "P1": ("web/app/page.tsx", ()),
+    "P1": ("web/app/page.tsx", ("/public/transparency",)),
     "P2": ("web/app/login/page.tsx", ("/auth/otp/send",)),
     "P3": ("web/app/login/verify/page.tsx", ("/auth/otp/verify",)),
     "S1": (
@@ -130,6 +130,42 @@ SCREENS: dict[str, tuple[str, tuple[str, ...]]] = {
     ),
 }
 
+# Routes beyond the original Stitch screen IDs. These are checked against the
+# files on disk and any API paths already used by those routes.
+EXTRA_ROUTES: dict[str, tuple[str, tuple[str, ...]]] = {
+    "/admin/ml": ("web/app/admin/ml/page.tsx", ("/admin/ml/metrics",)),
+    "/admin/ranking": ("web/app/admin/ranking/page.tsx", ("/analytics/state/ranking",)),
+    "/admin/schemes": ("web/app/admin/schemes/page.tsx", ("/admin/schemes", "/admin/schemes/{scheme_id}/active")),
+    "/admin/settings": ("web/app/admin/settings/page.tsx", ("/admin/settings",)),
+    "/admin/users": ("web/app/admin/users/page.tsx", ("/admin/users", "/admin/users/{user_id}")),
+    "/deo/applications": ("web/app/deo/applications/page.tsx", ("/applications",)),
+    "/deo/delegations": ("web/app/deo/delegations/page.tsx", ("/delegations", "/delegations/me")),
+    "/deo/schools": ("web/app/deo/schools/page.tsx", ("/analytics/district/schools",)),
+    "/design-system": ("web/app/design-system/page.tsx", ()),
+    "/help": ("web/app/help/page.tsx", ("/public/status/{application_code}",)),
+    "/privacy": ("web/app/privacy/page.tsx", ()),
+    "/school/grievances": ("web/app/school/grievances/page.tsx", ("/grievances",)),
+    "/school/handover-register": ("web/app/school/handover-register/page.tsx", ("/handovers",)),
+    "/school/students": ("web/app/school/students/page.tsx", ("/school/students",)),
+    "/school/students/{id}": ("web/app/school/students/[id]/page.tsx", ("/school/students/{cts_id}",)),
+    "/student/applications/{id}": ("web/app/student/applications/[id]/page.tsx", ("/applications/{app_code}", "/applications/{app_code}/timeline", "/applications/{app_code}/ack.pdf")),
+    "/student/bank": ("web/app/student/bank/page.tsx", ("/students/me/bank", "/students/me/bank/verify")),
+    "/student/id-card": ("web/app/student/id-card/page.tsx", ("/students/me/id-card.pdf",)),
+    "/student/schemes/list": ("web/app/student/schemes/list/page.tsx", ("/students/me/schemes",)),
+    "/tpeo": ("web/app/tpeo/page.tsx", ("/analytics/taluka",)),
+    "/tpeo/approvals": ("web/app/tpeo/approvals/page.tsx", ("/applications",)),
+    "/tpeo/reports": ("web/app/tpeo/reports/page.tsx", ("/analytics/taluka/reports",)),
+    "/tpeo/schools": ("web/app/tpeo/schools/page.tsx", ("/analytics/taluka/schools",)),
+    "/transparency": ("web/app/transparency/page.tsx", ("/public/transparency", "/public/transparency.csv")),
+    "/vendor/challan": ("web/app/vendor/challan/page.tsx", ("/vendor/batches",)),
+    "/vendor/orders": ("web/app/vendor/orders/page.tsx", ("/vendor/orders", "/vendor/orders/{order_id}/{action}")),
+    "/vendor/payments": ("web/app/vendor/payments/page.tsx", ("/vendor/invoices", "/vendor/invoices/{invoice_id}/pay")),
+    "/vendor/qr": ("web/app/vendor/qr/page.tsx", ("/vendor/batches", "/vendor/batches/{batch_id}/qr")),
+    "/vendor/returns": ("web/app/vendor/returns/page.tsx", ("/vendor/returns",)),
+    "/vendor/tracking": ("web/app/vendor/tracking/page.tsx", ("/vendor/batches/{batch_id}/track",)),
+    "/verify/{code}": ("web/app/verify/[code]/page.tsx", ("/public/verify/{code}",)),
+}
+
 
 def main() -> int:
     from sqlmodel import Session, create_engine, select
@@ -160,6 +196,15 @@ def main() -> int:
         for endpoint in endpoints:
             if endpoint not in api_paths:
                 missing.append((screen, f"OpenAPI route missing: {endpoint}"))
+    route_files = sorted((ROOT / "web" / "app").rglob("page.tsx"))
+    for route, (page, endpoints) in EXTRA_ROUTES.items():
+        if not (ROOT / page).is_file():
+            missing.append((route, f"frontend route missing: {page}"))
+        for endpoint in endpoints:
+            if endpoint not in api_paths:
+                missing.append((route, f"OpenAPI route missing: {endpoint}"))
+    if len(route_files) != 64:
+        missing.append(("ROUTES", f"expected 64 page files, found {len(route_files)}"))
     if missing:
         for screen, issue in missing:
             print(f"FAIL {screen}: {issue}")
@@ -296,6 +341,20 @@ def main() -> int:
         rows.append((screen, role, f"{method.upper()} {path}", str(response.status_code), validation if okay else "FAIL"))
         if not okay:
             missing.append((screen, f"{method.upper()} {path}: status={response.status_code}, body={response.text[:180]}"))
+        return response
+
+    def check_file(client: TestClient, tokens: dict[str, str], screen: str, role: str, path: str, media_type: str):
+        nonlocal calls
+        calls += 1
+        response = client.get(
+            path,
+            headers={"Authorization": f"Bearer {tokens[role]}"} if role in tokens else None,
+        )
+        content_type = response.headers.get("content-type", "")
+        okay = response.status_code == 200 and media_type in content_type
+        rows.append((screen, role, f"GET {path}", str(response.status_code), "media-type" if okay else "FAIL"))
+        if not okay:
+            missing.append((screen, f"GET {path}: status={response.status_code}, content-type={content_type}"))
         return response
 
     with tempfile.TemporaryDirectory(prefix="vps-contract-") as temp_name:
@@ -473,7 +532,9 @@ def main() -> int:
                             }
                             student_id = student.id
                             scheme_code = scheme.code
+                            contract_scheme_id = scheme.id
                             contract_school_id = school_id
+                            contract_district_id = taluka_user.district_id
                             contract_school_user_id = school_user.id
                             contract_student_id = student_id
                             contract_handover_student_id = handover_student.id if handover_student else student_id
@@ -498,11 +559,13 @@ def main() -> int:
                         check_call(client, tokens, "S6", "student", "GET", "/applications?page=1&size=50", ("items", "total", "page", "size"))
                         check_call(client, tokens, "S6", "student", "GET", f"/applications/{app_id_by_code['school']}", ("app_code", "status", "timeline"))
                         check_call(client, tokens, "S6", "student", "GET", f"/applications/{app_id_by_code['school']}/timeline", "list")
+                        check_file(client, tokens, "APP:DETAIL", "student", f"/applications/{app_id_by_code['school']}/ack.pdf", "application/pdf")
                         check_call(client, tokens, "S3", "student", "GET", "/documents", "list")
                         uploaded = check_call(client, tokens, "S4", "student", "POST", "/documents", ("id", "doc_type", "status", "ocr_fields", "authenticity"), data={"doc_type": "income"}, files={"file": ("income.png", b"demo", "image/png")})
                         doc_id = uploaded.json().get("id", 0) if uploaded.status_code == 200 else 0
                         if doc_id:
                             check_call(client, tokens, "S3", "student", "GET", f"/documents/{doc_id}", ("id", "doc_type", "status", "ocr_fields"))
+                            check_file(client, tokens, "S3", "student", f"/documents/{doc_id}/download", "image/png")
                         check_call(client, tokens, "S3", "student", "POST", "/documents/fetch-digilocker", ("fetched", "source"))
                         guardian_otp = check_call(client, tokens, "S5", "student", "POST", "/applications/guardian-otp/send", ("success", "masked_mobile", "resend_after_seconds", "expires_in_seconds", "demo_otp"))
                         check_call(client, tokens, "S5", "student", "POST", "/applications/bulk", ("created", "skipped"), data={"scheme_codes": [scheme_code], "consent": True, "guardian_otp": guardian_otp.json().get("demo_otp", "")})
@@ -519,9 +582,18 @@ def main() -> int:
                         check_call(client, tokens, "S11", "student", "GET", "/students/me/consents", "object")
                         check_call(client, tokens, "S11", "student", "PUT", "/students/me/consents", "object", data={"values": {"guardian_consent": True, "share_documents": True, "auto_apply": False, "alerts": True}})
                         check_call(client, tokens, "S11", "student", "POST", "/students/me/data-export", ("profile", "family", "bank_accounts"))
+                        check_call(client, tokens, "ST:BANK", "student", "GET", "/students/me/bank", ("items",))
+                        check_call(client, tokens, "ST:BANK", "student", "POST", "/students/me/bank", ("id", "last4", "ifsc", "verified"), data={"holder_type": "mother", "holder_name": "Hetal Patel", "account_number": "987654321098", "ifsc": "SBIN0001234", "bank_name": "State Bank of India"})
+                        check_call(client, tokens, "ST:BANK", "student", "POST", "/students/me/bank/verify", ("verified", "simulated", "last4"))
+                        check_file(client, tokens, "ST:ID", "student", "/students/me/id-card.pdf", "application/pdf")
                         check_call(client, tokens, "S12", "student", "POST", "/ai/chat", ("reply_text", "cards", "quick_replies"), data={"message": "What schemes can I apply for?", "lang": "en"})
                         if doc_id:
                             check_call(client, tokens, "S3", "student", "DELETE", f"/documents/{doc_id}", ("success", "deleted_id"))
+
+                    check_call(client, tokens, "P1", "", "GET", "/public/transparency", ("district_count", "school_count", "student_count", "items"))
+                    check_file(client, tokens, "PUBLIC", "", "/public/transparency.csv", "text/csv")
+                    check_call(client, tokens, "PUBLIC", "", "GET", f"/public/status/{app_id_by_code['school']}", ("app_code", "student", "status", "updated_at"))
+                    check_call(client, tokens, "PUBLIC", "", "GET", "/public/verify/NOT-A-REAL-CERTIFICATE", ("valid", "code", "reason"))
 
                     # Detail and bulk application actions exercise route checks,
                     # scope and response fields from the UI workflow.
@@ -530,21 +602,33 @@ def main() -> int:
                     check_call(client, tokens, "SC3", "school", "POST", f"/applications/{app_id_by_code['correction']}/request-correction", ("success", "app_code", "fields"), data={"fields": ["income"], "note": "Contract"})
                     check_call(client, tokens, "SC3", "school", "POST", f"/applications/{app_id_by_code['reject']}/reject", ("success", "app_code", "new_status", "route"), data={"reason": "Contract"})
                     check_call(client, tokens, "SC1", "school", "GET", "/analytics/school", ("total_students", "total_applications", "pending"))
+                    check_call(client, tokens, "SC:STUDENTS", "school", "GET", "/school/students?page=1&size=10", ("items", "total", "page", "size"))
+                    check_call(client, tokens, "SC:STUDENTS", "school", "GET", f"/school/students/{role_users['student'][0]}", ("cts_id", "applications", "attendance", "cycles"))
+                    check_call(client, tokens, "SC:HANDOVERS", "school", "GET", "/handovers?page=1&size=10", ("items", "total", "page", "size"))
                     check_call(client, tokens, "SC6", "school", "GET", "/analytics/school/reports?type=summary", ("type", "total", "status_counts", "items"))
                     check_call(client, tokens, "SC4", "school", "POST", "/records/attendance/upload", ("total", "valid", "errors", "confirm_required"), data={}, files={"file": ("attendance.csv", b"cts_id,value\nGJ-AND-2026-004512,88\n", "text/csv")})
                     check_call(client, tokens, "SC4", "school", "POST", "/records/attendance/confirm", ("updated",), data={"rows": [{"cts_id": role_users["student"][0], "value": "88"}]})
                     check_call(client, tokens, "SC5", "school", "GET", "/cycles/overview", ("batches", "receivable_cycles", "handover_students"))
                     check_call(client, tokens, "D2", "taluka", "POST", f"/applications/{app_id_by_code['taluka']}/approve", ("success", "new_status", "route"), data={})
+                    check_call(client, tokens, "TPEO", "taluka", "GET", "/analytics/taluka", ("taluka_id", "school_count", "student_count", "application_count"))
+                    check_call(client, tokens, "TPEO:SCHOOLS", "taluka", "GET", "/analytics/taluka/schools", ("items", "total"))
+                    check_call(client, tokens, "TPEO:REPORTS", "taluka", "GET", "/analytics/taluka/reports", ("taluka_id", "total_applications", "pending", "approved"))
                     check_call(client, tokens, "D2", "deo", "POST", f"/applications/{app_id_by_code['school']}/approve", ("success", "new_status", "route"), data={})
                     check_call(client, tokens, "D2", "deo", "GET", "/delegations/me", "list")
                     check_call(client, tokens, "D2", "taluka", "POST", "/delegations", ("id", "status", "application_ids"), data={"to_user_id": contract_school_user_id, "application_ids": [app_id_by_code["delegation"]]})
                     check_call(client, tokens, "D1", "deo", "GET", "/analytics/district", ("total_students", "pending_approvals"))
+                    check_call(client, tokens, "D:LIST", "deo", "GET", "/analytics/district/schools", ("items", "total"))
                     check_call(client, tokens, "D3", "deo", "GET", "/cycles/overview", ("batches", "receivable_cycles", "handover_students"))
                     check_call(client, tokens, "D3", "deo", "GET", "/ml/forecast/cycles", ("model", "items", "total_forecast"))
                     check_call(client, tokens, "D4", "deo", "GET", "/ml/dropout/students?page=1&size=50", ("items", "total", "page", "size"))
                     check_call(client, tokens, "D4", "deo", "GET", f"/ml/dropout/students/{role_users['student'][0]}", ("cts_id", "score", "top_reasons"))
                     check_call(client, tokens, "D5", "deo", "GET", "/grievances", ("items", "total", "page", "size"))
+                    if grievance_code:
+                        check_call(client, tokens, "D5", "deo", "PATCH", f"/grievances/{grievance_code}", ("success",), data={"status": "inprogress"})
                     check_call(client, tokens, "A1", "admin", "GET", "/analytics/state", ("total_students", "total_applications", "active_schemes"))
+                    check_call(client, tokens, "A:ML", "admin", "GET", "/admin/ml/metrics", ("available", "models", "synthetic_demo_data"))
+                    check_call(client, tokens, "A:USERS", "admin", "GET", "/admin/users", ("items", "total"))
+                    check_call(client, tokens, "A:RANK", "admin", "GET", "/analytics/state/ranking", ("items", "total", "metric"))
                     check_call(client, tokens, "A2", "admin", "GET", "/admin/schemes", "list")
                     created_scheme = check_call(client, tokens, "A2", "admin", "POST", "/admin/schemes", ("id", "code", "version"), data={"code": "contract-scheme", "name_en": "Contract Scheme", "rules": {"all": []}, "required_docs": [], "payout": {"amount": 100}, "budget": 1000})
                     scheme_id = created_scheme.json().get("id", 0)
@@ -563,6 +647,8 @@ def main() -> int:
                     check_call(client, tokens, "A3", "admin", "GET", "/ml/forecast/budget", ("items", "total_forecast_budget"))
                     check_call(client, tokens, "A3", "admin", "GET", "/admin/settings", "object")
                     check_call(client, tokens, "A3", "admin", "PUT", "/admin/settings", ("updated",), data={"values": {"CONTRACT_CHECK": True}})
+                    check_call(client, tokens, "A3", "admin", "GET", "/funds/allocations", ("items", "total"))
+                    check_call(client, tokens, "A3", "admin", "POST", "/funds/allocate", ("id", "scheme_id", "amount", "released"), data={"scheme_id": contract_scheme_id, "level": "district", "entity_id": contract_district_id, "amount": 1000, "fy": "2099-00"})
                     check_call(client, tokens, "A4", "admin", "GET", "/fraud/flags?page=1&size=50", ("items", "total", "page", "size"))
                     check_call(client, tokens, "A4", "admin", "GET", f"/fraud/flags/{flag_id}", ("id", "flag_type", "graph", "evidence"))
                     check_call(client, tokens, "A4", "admin", "PATCH", f"/fraud/flags/{flag_id}", ("id", "status"), data={"status": "investigating"})
@@ -580,7 +666,21 @@ def main() -> int:
                         started = check_call(client, tokens, "SC5", "school", "POST", "/handover/initiate", ("success", "cycle_serial", "expires_in_seconds", "demo_otp"), data={"student_id": contract_handover_student_id, "cycle_serial": serials[0]})
                         otp = started.json().get("demo_otp", "123456") if started.status_code == 200 else "123456"
                         check_call(client, tokens, "SC5", "school", "POST", "/handover/confirm", ("success", "serial_no", "status", "handed_at"), data={"cycle_serial": serials[0], "otp": otp, "photo_path": "", "lat": 22.56, "lng": 72.95})
+                        check_call(client, tokens, "V:RETURN", "vendor", "POST", "/vendor/returns", ("id", "cycle_serial", "status"), data={"cycle_serial": serials[0], "reason": "Contract test defect"})
+                    check_call(client, tokens, "V:ORDERS", "vendor", "GET", "/vendor/orders", ("items", "total"))
+                    purchase_order = check_call(client, tokens, "D:ORDERS", "deo", "POST", "/vendor/orders", ("id", "po_code", "status", "qty"), data={"school_id": contract_school_id, "qty": 2, "rate": 2500})
+                    purchase_order_id = purchase_order.json().get("id") if purchase_order.status_code == 200 else None
+                    if purchase_order_id:
+                        check_call(client, tokens, "V:ORDERS", "vendor", "POST", f"/vendor/orders/{purchase_order_id}/accept", ("id", "status", "po_code"))
+                        invoice = check_call(client, tokens, "V:PAYMENTS", "vendor", "POST", "/vendor/invoices", ("id", "invoice_no", "status", "amount"), data={"po_id": purchase_order_id, "amount": 5000})
+                        invoice_id = invoice.json().get("id") if invoice.status_code == 200 else None
+                        if invoice_id:
+                            check_call(client, tokens, "V:PAYMENTS", "vendor", "GET", "/vendor/invoices", ("items", "total"))
+                            check_call(client, tokens, "A:PAYMENTS", "admin", "POST", f"/vendor/invoices/{invoice_id}/pay", ("id", "status", "utr"))
+                    check_call(client, tokens, "V:RETURN", "vendor", "GET", "/vendor/returns", ("items", "total"))
                     check_call(client, tokens, "X1", "admin", "POST", f"/demo/promote/{role_users['student'][0]}", ("cts_id", "diff"))
+                    if scheme_id:
+                        check_call(client, tokens, "A:SCHEMES", "admin", "PATCH", f"/admin/schemes/{scheme_id}/active", ("id", "active", "version"), data={"active": False})
 
                 if health_status != 200 or spec_status != 200:
                     missing.append(("API", f"health={health_status}, openapi={spec_status}"))
@@ -600,12 +700,16 @@ def main() -> int:
     for screen, (page, endpoints) in SCREENS.items():
         okay = (ROOT / page).is_file() and all(path in api_paths for path in endpoints)
         print(f"ROUTE {screen} | {page} | {len(endpoints)} | {'ok' if okay else 'missing'}")
+    for route, (page, endpoints) in EXTRA_ROUTES.items():
+        okay = (ROOT / page).is_file() and all(path in api_paths for path in endpoints)
+        print(f"ROUTE {route} | {page} | {len(endpoints)} | {'ok' if okay else 'missing'}")
     if missing:
         for screen, issue in missing:
             print(f"FAIL {screen}: {issue}")
         print(f"Contract check: failed ({len(missing)} issue(s), {calls} endpoint calls).")
         return 1
-    print("Contract check: 33/33 screens have a frontend route and registered API path (P1 is static).")
+    print(f"Route inventory: {len(route_files)}/64 page routes exist; 33 original screen groups and {len(EXTRA_ROUTES)} expansion routes are mapped.")
+    print("Contract check: original 33-screen route and endpoint coverage plus registered-path checks for all expansion routes passed.")
     print(f"Endpoint contract check: {calls} calls passed across 6 seeded roles.")
     print("Response validation: OpenAPI schemas were checked where declared; handler responses without schemas used explicit shape assertions.")
     return 0

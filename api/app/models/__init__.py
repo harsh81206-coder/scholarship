@@ -25,6 +25,12 @@ from .core import (
     AuditLog,
     Delegation,
     Setting,
+    BudgetAllocation,
+    VendorOrder,
+    Invoice,
+    Certificate,
+    UploadFileRecord,
+    Defect,
 )
 
 __all__ = [
@@ -52,4 +58,10 @@ __all__ = [
     "AuditLog",
     "Delegation",
     "Setting",
+    "BudgetAllocation",
+    "VendorOrder",
+    "Invoice",
+    "Certificate",
+    "UploadFileRecord",
+    "Defect",
 ]

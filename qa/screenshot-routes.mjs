@@ -38,36 +38,62 @@ async function loginApiRole(role, identifier) {
 }
 
 const tokenBundle = tokenFile ? JSON.parse(await fs.readFile(tokenFile, "utf8")) : {};
+tokenBundle.student ??= await loginApiRole("student", "GJ-AND-2026-004512");
+tokenBundle.school ??= await loginApiRole("school", "SCH-AND-001");
+tokenBundle.taluka ??= await loginApiRole("taluka", "TPEO-BOR-001");
 tokenBundle.deo ??= await loginApiRole("deo", "DEO-AND-001");
 tokenBundle.admin ??= await loginApiRole("admin", "ADMIN-STATE-001");
 tokenBundle.vendor ??= await loginApiRole("vendor", "VND-001");
 tokenBundle.demo = { ...tokenBundle.admin, role: "demo" };
 
-const screens = [
-  ["P1", "/", null], ["P2", "/login", null], ["P3", "/login/verify", null],
-  ["S1", "/student", "student"], ["S2", "/student/schemes/namo-lakshmi", "student"],
-  ["S3", "/student/vault", "student"], ["S4", "/student/vault/upload", "student"],
-  ["S5", "/student/apply", "student"], ["S6", "/student/applications", "student"],
-  ["S7", "/student/cycle", "student"], ["S8", "/student/payments", "student"],
-  ["S9", "/student/grievances", "student"], ["S10", "/student/notifications", "student"],
-  ["S11", "/student/profile", "student"], ["S12", "/student/assistant", "student"],
-  ["SC1", "/school", "school"], ["SC2", "/school/queue", "school"],
-  ["SC3", "/school/queue/APP-2026-RIYA-NL", "school"], ["SC4", "/school/records", "school"],
-  ["SC5", "/school/cycles", "school"], ["SC6", "/school/reports", "school"],
-  ["D1", "/deo", "deo"], ["D2", "/deo/approvals", "deo"],
-  ["D3", "/deo/cycles", "deo"], ["D4", "/deo/at-risk", "deo"],
-  ["D5", "/deo/grievances", "deo"], ["A1", "/admin", "admin"],
-  ["A2", "/admin/schemes/builder", "admin"], ["A3", "/admin/funds", "admin"],
-  ["A4", "/admin/fraud", "admin"], ["A5", "/admin/audit", "admin"],
-  ["V1", "/vendor", "vendor"], ["X1", "/demo/simulate", "demo"],
-];
+async function findPageFiles(directory) {
+  const result = [];
+  for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
+    const fullPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) result.push(...await findPageFiles(fullPath));
+    else if (entry.isFile() && entry.name === "page.tsx") result.push(fullPath);
+  }
+  return result;
+}
+
+function routeForPage(file) {
+  const relative = path.relative(path.join(root, "web", "app"), file);
+  const segments = relative.split(path.sep).slice(0, -1);
+  if (!segments.length) return "/";
+  const raw = `/${segments.join("/")}`;
+  return raw
+    .replace("/student/schemes/[id]", "/student/schemes/namo-lakshmi")
+    .replace("/student/applications/[id]", "/student/applications/APP-2026-RIYA-NL")
+    .replace("/school/queue/[id]", "/school/queue/APP-2026-RIYA-NL")
+    .replace("/school/students/[id]", "/school/students/GJ-AND-2026-004512")
+    .replace("/verify/[code]", "/verify/DBT-1");
+}
+
+function roleForRoute(route) {
+  if (route === "/" || route === "/login" || route === "/login/verify" || route === "/transparency" || route === "/help" || route === "/privacy" || route.startsWith("/verify/") || route === "/design-system") return null;
+  if (route.startsWith("/student")) return "student";
+  if (route.startsWith("/school")) return "school";
+  if (route.startsWith("/tpeo")) return "taluka";
+  if (route.startsWith("/deo")) return "deo";
+  if (route.startsWith("/admin")) return "admin";
+  if (route.startsWith("/vendor")) return "vendor";
+  if (route.startsWith("/demo")) return "demo";
+  return null;
+}
+
+const pageFiles = await findPageFiles(path.join(root, "web", "app"));
+const screens = pageFiles.map((file) => {
+  const route = routeForPage(file);
+  const role = roleForRoute(route);
+  return [route, route, role];
+}).sort((left, right) => left[1].localeCompare(right[1]));
 
 await fs.mkdir(screensDir, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const results = [];
 try {
   for (const [code, route, role] of screens) {
-    const mobile = code === "P3" || /^S\d+/.test(code) || code === "SC5";
+    const mobile = route === "/login/verify" || route.startsWith("/student/") || route === "/student" || route === "/school/cycles";
     const viewport = mobile ? { width: 390, height: 844 } : { width: 1440, height: 900 };
     const context = await browser.newContext({ viewport, deviceScaleFactor: 1 });
     if (role) {
@@ -81,10 +107,11 @@ try {
         { name: "vps_access_token", value: auth.accessToken, url: `${base.protocol}//${hostname}:${base.port}`, sameSite: "Lax" },
         { name: "vps_role", value: role, url: `${base.protocol}//${hostname}:${base.port}`, sameSite: "Lax" },
       ]));
+      const appRole = route.startsWith("/tpeo") ? "tpeo" : role;
       await context.addInitScript(({ session, appRole }) => {
         localStorage.setItem("vps-auth-session", JSON.stringify({ state: session, version: 0 }));
         localStorage.setItem("vps-app-store", JSON.stringify({ state: { lang: "en", role: appRole, isAuthenticated: true }, version: 0 }));
-      }, { session: auth, appRole: role });
+      }, { session: auth, appRole });
     }
     const page = await context.newPage();
     const pageErrors = [];
@@ -112,7 +139,8 @@ try {
         fontFamily: getComputedStyle(document.body).fontFamily,
         notoGujaratiReady: document.fonts.check("16px 'Noto Sans Gujarati'", "ગુજરાતી"),
       }));
-      await page.screenshot({ path: path.join(screensDir, `${code}.png`), animations: "disabled" });
+      const screenshotName = route === "/" ? "P1" : route.replaceAll("/", "_").replace(/^_/, "") || "root";
+      await page.screenshot({ path: path.join(screensDir, `${screenshotName}.png`), animations: "disabled" });
       results.push({ code, route, role: role ?? "public", viewport, status, finalUrl: page.url(), pageErrors, apiErrors, ...layout,
         horizontalOverflow: layout.documentWidth > layout.viewportWidth + 1 });
     } catch (error) {

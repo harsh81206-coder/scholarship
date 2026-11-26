@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 import json
+import io
 import random
 import string
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import StreamingResponse
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
 from sqlmodel import Session, select
 from pydantic import BaseModel
 from app.db import get_session
@@ -502,6 +506,49 @@ def get_application(
             for e in events
         ],
     }
+
+
+@router.get("/applications/{app_code}/ack.pdf")
+def application_acknowledgement(
+    app_code: str,
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    app = session.exec(select(Application).where(Application.app_code == app_code)).first()
+    if not app:
+        raise HTTPException(404, "Application not found")
+    _assert_app_scope(app, user, session)
+    buffer = io.BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=A4)
+    pdf.setTitle(f"Acknowledgement {app.app_code}")
+    pdf.setFont("Helvetica-Bold", 17)
+    pdf.drawString(48, 790, "Vidya Pragati Setu — Application acknowledgement")
+    pdf.setFont("Helvetica", 11)
+    rows = [
+        ("Application code", app.app_code),
+        ("Student", app.student.name_en if app.student else "Student"),
+        ("CTS ID", app.student.cts_id if app.student else ""),
+        ("Scheme", app.scheme.name_en if app.scheme else "Scholarship"),
+        ("Status", app.status.replace("_", " ").title()),
+        ("Submitted", app.submitted_at.strftime("%d %b %Y, %H:%M UTC")),
+        ("Amount", f"INR {app.amount:,.0f}"),
+    ]
+    y = 744
+    for label, value in rows:
+        pdf.setFont("Helvetica-Bold", 10)
+        pdf.drawString(52, y, label)
+        pdf.setFont("Helvetica", 10)
+        pdf.drawString(190, y, str(value)[:90])
+        y -= 28
+    pdf.setFont("Helvetica-Oblique", 9)
+    pdf.drawString(52, 535, "This computer-generated acknowledgement is for demo use.")
+    pdf.save()
+    buffer.seek(0)
+    return StreamingResponse(
+        buffer,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f'attachment; filename="{app.app_code}-acknowledgement.pdf"'},
+    )
 
 
 @router.get("/applications/{app_code}/timeline")

@@ -222,6 +222,120 @@
         ]
       }
     },
+    "/students/me/bank": {
+      "get": {
+        "tags": [
+          "students"
+        ],
+        "summary": "Get My Bank",
+        "operationId": "get_my_bank_students_me_bank_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "students"
+        ],
+        "summary": "Add My Bank",
+        "operationId": "add_my_bank_students_me_bank_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankAccountInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/students/me/bank/verify": {
+      "post": {
+        "tags": [
+          "students"
+        ],
+        "summary": "Verify My Bank",
+        "operationId": "verify_my_bank_students_me_bank_verify_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/students/me/id-card.pdf": {
+      "get": {
+        "tags": [
+          "students"
+        ],
+        "summary": "Download Student Id Card",
+        "operationId": "download_student_id_card_students_me_id_card_pdf_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/applications/guardian-otp/send": {
       "post": {
         "tags": [
@@ -417,6 +531,51 @@
         ],
         "summary": "Get Application",
         "operationId": "get_application_applications__app_code__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "app_code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "App Code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/applications/{app_code}/ack.pdf": {
+      "get": {
+        "tags": [
+          "applications"
+        ],
+        "summary": "Application Acknowledgement",
+        "operationId": "application_acknowledgement_applications__app_code__ack_pdf_get",
         "security": [
           {
             "HTTPBearer": []
@@ -925,6 +1084,11 @@
         ],
         "summary": "Get Grievance",
         "operationId": "get_grievance_grievances__grv_code__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "grv_code",
@@ -1066,6 +1230,78 @@
         }
       }
     },
+    "/analytics/taluka": {
+      "get": {
+        "tags": [
+          "analytics"
+        ],
+        "summary": "Taluka Analytics",
+        "operationId": "taluka_analytics_analytics_taluka_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/analytics/taluka/schools": {
+      "get": {
+        "tags": [
+          "analytics"
+        ],
+        "summary": "Taluka Schools",
+        "operationId": "taluka_schools_analytics_taluka_schools_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/analytics/taluka/reports": {
+      "get": {
+        "tags": [
+          "analytics"
+        ],
+        "summary": "Taluka Reports",
+        "operationId": "taluka_reports_analytics_taluka_reports_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/analytics/school": {
       "get": {
         "tags": [
@@ -1169,6 +1405,54 @@
         ],
         "summary": "Dropout Analytics",
         "operationId": "dropout_analytics_analytics_dropout_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/analytics/district/schools": {
+      "get": {
+        "tags": [
+          "analytics"
+        ],
+        "summary": "District Schools",
+        "operationId": "district_schools_analytics_district_schools_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/analytics/state/ranking": {
+      "get": {
+        "tags": [
+          "analytics"
+        ],
+        "summary": "State Ranking",
+        "operationId": "state_ranking_analytics_state_ranking_get",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1795,6 +2079,51 @@
         }
       }
     },
+    "/documents/{doc_id}/download": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Download Document",
+        "operationId": "download_document_documents__doc_id__download_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Doc Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/documents/{doc_id}/verify": {
       "post": {
         "tags": [
@@ -2310,6 +2639,96 @@
             "HTTPBearer": []
           }
         ]
+      }
+    },
+    "/vendor/batches/{batch_id}/qr": {
+      "get": {
+        "tags": [
+          "logistics"
+        ],
+        "summary": "Batch Qr Codes",
+        "operationId": "batch_qr_codes_vendor_batches__batch_id__qr_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Batch Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vendor/batches/{batch_id}/track": {
+      "get": {
+        "tags": [
+          "logistics"
+        ],
+        "summary": "Track Batch",
+        "operationId": "track_batch_vendor_batches__batch_id__track_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "batch_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Batch Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/batches/{batch_id}/dispatch": {
@@ -2972,6 +3391,38 @@
               "default": "summary",
               "title": "Type"
             }
+          },
+          {
+            "name": "grade",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Grade"
+            }
+          },
+          {
+            "name": "scheme_code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scheme Code"
+            }
           }
         ],
         "responses": {
@@ -3297,6 +3748,832 @@
         }
       }
     },
+    "/public/transparency": {
+      "get": {
+        "tags": [
+          "public"
+        ],
+        "summary": "Transparency",
+        "operationId": "transparency_public_transparency_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/transparency.csv": {
+      "get": {
+        "tags": [
+          "public"
+        ],
+        "summary": "Transparency Csv",
+        "operationId": "transparency_csv_public_transparency_csv_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/status/{application_code}": {
+      "get": {
+        "tags": [
+          "public"
+        ],
+        "summary": "Public Application Status",
+        "operationId": "public_application_status_public_status__application_code__get",
+        "parameters": [
+          {
+            "name": "application_code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Application Code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/verify/{code}": {
+      "get": {
+        "tags": [
+          "public"
+        ],
+        "summary": "Verify Code",
+        "operationId": "verify_code_public_verify__code__get",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/ml/metrics": {
+      "get": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Admin Ml Metrics",
+        "operationId": "admin_ml_metrics_admin_ml_metrics_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/school/students": {
+      "get": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "School Students",
+        "operationId": "school_students_school_students_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "risk",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Risk"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "title": "Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/school/students/{cts_id}": {
+      "get": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "School Student Detail",
+        "operationId": "school_student_detail_school_students__cts_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "cts_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cts Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/handovers": {
+      "get": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "List Handovers",
+        "operationId": "list_handovers_handovers_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "title": "Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vendor/orders": {
+      "get": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Vendor Orders",
+        "operationId": "vendor_orders_vendor_orders_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Create Vendor Order",
+        "operationId": "create_vendor_order_vendor_orders_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VendorOrderCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/vendor/orders/{order_id}/{action}": {
+      "post": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Update Vendor Order",
+        "operationId": "update_vendor_order_vendor_orders__order_id___action__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "action",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Action"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vendor/invoices": {
+      "get": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Vendor Invoices",
+        "operationId": "vendor_invoices_vendor_invoices_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Create Vendor Invoice",
+        "operationId": "create_vendor_invoice_vendor_invoices_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/vendor/invoices/{invoice_id}/pay": {
+      "post": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Pay Vendor Invoice",
+        "operationId": "pay_vendor_invoice_vendor_invoices__invoice_id__pay_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "invoice_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Invoice Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vendor/returns": {
+      "get": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Vendor Returns",
+        "operationId": "vendor_returns_vendor_returns_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Create Vendor Return",
+        "operationId": "create_vendor_return_vendor_returns_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DefectCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/funds/allocations": {
+      "get": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "List Allocations",
+        "operationId": "list_allocations_funds_allocations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/funds/allocate": {
+      "post": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Allocate Funds",
+        "operationId": "allocate_funds_funds_allocate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetAllocationInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "List Admin Users",
+        "operationId": "list_admin_users_admin_users_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/admin/users/{user_id}": {
+      "patch": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Set Admin User Active",
+        "operationId": "set_admin_user_active_admin_users__user_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/schemes/{scheme_id}/active": {
+      "patch": {
+        "tags": [
+          "directories"
+        ],
+        "summary": "Set Scheme Active",
+        "operationId": "set_scheme_active_admin_schemes__scheme_id__active_patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "scheme_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Scheme Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/eligibility/explain/{scheme_code}": {
       "get": {
         "tags": [
@@ -3584,6 +4861,39 @@
         "type": "object",
         "title": "ActionRequest"
       },
+      "BankAccountInput": {
+        "properties": {
+          "holder_type": {
+            "type": "string",
+            "title": "Holder Type",
+            "default": "student"
+          },
+          "holder_name": {
+            "type": "string",
+            "title": "Holder Name"
+          },
+          "account_number": {
+            "type": "string",
+            "title": "Account Number"
+          },
+          "ifsc": {
+            "type": "string",
+            "title": "Ifsc"
+          },
+          "bank_name": {
+            "type": "string",
+            "title": "Bank Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "holder_name",
+          "account_number",
+          "ifsc",
+          "bank_name"
+        ],
+        "title": "BankAccountInput"
+      },
       "BatchCreate": {
         "properties": {
           "school_id": {
@@ -3636,6 +4946,41 @@
           "file"
         ],
         "title": "Body_upload_records_records__record_type__upload_post"
+      },
+      "BudgetAllocationInput": {
+        "properties": {
+          "scheme_id": {
+            "type": "integer",
+            "title": "Scheme Id"
+          },
+          "level": {
+            "type": "string",
+            "pattern": "^(state|district|taluka|school)$",
+            "title": "Level"
+          },
+          "entity_id": {
+            "type": "integer",
+            "title": "Entity Id"
+          },
+          "amount": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Amount"
+          },
+          "fy": {
+            "type": "string",
+            "title": "Fy"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scheme_id",
+          "level",
+          "entity_id",
+          "amount",
+          "fy"
+        ],
+        "title": "BudgetAllocationInput"
       },
       "BulkApplyRequest": {
         "properties": {
@@ -3734,6 +5079,29 @@
           "note"
         ],
         "title": "CorrectionRequest"
+      },
+      "DefectCreate": {
+        "properties": {
+          "cycle_serial": {
+            "type": "string",
+            "title": "Cycle Serial"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "photo": {
+            "type": "string",
+            "title": "Photo",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "cycle_serial",
+          "reason"
+        ],
+        "title": "DefectCreate"
       },
       "DelegationRequest": {
         "properties": {
@@ -3939,6 +5307,36 @@
           "application_ids"
         ],
         "title": "InitiateRequest"
+      },
+      "InvoiceCreate": {
+        "properties": {
+          "po_id": {
+            "type": "integer",
+            "title": "Po Id"
+          },
+          "batch_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Batch Id"
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Amount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "po_id",
+          "amount"
+        ],
+        "title": "InvoiceCreate"
       },
       "MessageCreate": {
         "properties": {
@@ -4183,6 +5581,54 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "VendorOrderCreate": {
+        "properties": {
+          "vendor_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vendor Id"
+          },
+          "school_id": {
+            "type": "integer",
+            "title": "School Id"
+          },
+          "qty": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "title": "Qty"
+          },
+          "rate": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Rate"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "school_id",
+          "qty",
+          "rate"
+        ],
+        "title": "VendorOrderCreate"
       }
     },
     "securitySchemes": {

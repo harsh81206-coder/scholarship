@@ -2,14 +2,16 @@
 
 from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
+from fastapi.responses import FileResponse
 from sqlmodel import Session, select
 from pathlib import Path
 import json
 import hashlib
 import secrets
+import mimetypes
 from app.db import get_session
 from app.deps import get_current_user, CurrentUser
-from app.models.core import Student, Document
+from app.models.core import Student, Document, UploadFileRecord, School, Taluka
 from app.config import get_settings
 
 router = APIRouter(prefix="/documents", tags=["documents"])
@@ -64,6 +66,24 @@ def _document_file_path(stored_path: str) -> Path:
     return path.resolve()
 
 
+def _assert_document_scope(user: CurrentUser, student: Student | None, session: Session) -> None:
+    if not student:
+        raise HTTPException(404, "Document owner not found")
+    if user.role == "student" and student.cts_id != user.sub:
+        raise HTTPException(403, "Document is outside your account")
+    school = session.get(School, student.school_id)
+    if user.role == "school" and (not school or school.id != user.school_id):
+        raise HTTPException(403, "Document is outside your school scope")
+    if user.role == "taluka" and (not school or school.taluka_id != user.taluka_id):
+        raise HTTPException(403, "Document is outside your taluka scope")
+    if user.role == "deo":
+        taluka = session.get(Taluka, school.taluka_id) if school else None
+        if not taluka or taluka.district_id != user.district_id:
+            raise HTTPException(403, "Document is outside your district scope")
+    if user.role not in ("student", "school", "taluka", "deo", "admin"):
+        raise HTTPException(403)
+
+
 @router.post("")
 async def upload_document(
     doc_type: str = Form(...),
@@ -79,8 +99,8 @@ async def upload_document(
     if file.content_type not in ("image/jpeg", "image/png", "application/pdf"):
         raise HTTPException(400, "Only JPEG/PNG/PDF accepted")
     content = await file.read()
-    if len(content) > 10 * 1024 * 1024:
-        raise HTTPException(400, "File too large (max 10MB)")
+    if len(content) > 5 * 1024 * 1024:
+        raise HTTPException(400, "File too large (max 5MB)")
 
     student = session.exec(select(Student).where(Student.cts_id == user.sub)).first()
     if not student:
@@ -89,7 +109,9 @@ async def upload_document(
     # Save file
     upload_dir = Path(settings.data_dir) / "uploads" / str(student.id)
     upload_dir.mkdir(parents=True, exist_ok=True)
-    suffix = Path(file.filename or "upload").suffix.lower()
+    suffix = Path(Path(file.filename or "upload").name).suffix.lower()
+    if suffix not in (".jpg", ".jpeg", ".png", ".pdf"):
+        raise HTTPException(400, "Unsupported filename extension")
     fname = f"{doc_type}_{secrets.token_hex(12)}{suffix}"
     fpath = upload_dir / fname
     fpath.write_bytes(content)
@@ -97,6 +119,7 @@ async def upload_document(
     # Mock OCR
     ocr_fields = MOCK_OCR.get(doc_type, {})
     authenticity = _mock_authenticity(doc_type)
+    authenticity["tamper_score"] = authenticity["ela_tamper_score"]
     confidence = 0.85 + 0.1 * (len(ocr_fields) > 2)
 
     # Upsert document
@@ -127,6 +150,19 @@ async def upload_document(
         session.add(doc)
     session.commit()
     session.refresh(doc)
+    session.add(
+        UploadFileRecord(
+            owner_type="student",
+            owner_id=student.cts_id,
+            kind=doc_type,
+            path=str(fpath),
+            mime=file.content_type or "application/octet-stream",
+            size=len(content),
+            sha256=hashlib.sha256(content).hexdigest(),
+            uploaded_by=user.sub,
+        )
+    )
+    session.commit()
     return {
         "id": doc.id,
         "doc_type": doc_type,
@@ -157,6 +193,7 @@ def list_documents(
             "source": d.source,
             "doc_number": d.doc_number,
             "uploaded_at": d.uploaded_at.isoformat(),
+            "expiry": d.expiry,
         }
         for d in docs
     ]
@@ -172,12 +209,7 @@ def get_document(
     if not doc:
         raise HTTPException(404)
     student = session.get(Student, doc.student_id)
-    if user.role == "student" and (not student or student.cts_id != user.sub):
-        raise HTTPException(403, "Document is outside your account")
-    if user.role == "school" and (not student or student.school_id != user.school_id):
-        raise HTTPException(403, "Document is outside your school scope")
-    if user.role not in ("student", "school", "taluka", "deo", "admin"):
-        raise HTTPException(403)
+    _assert_document_scope(user, student, session)
     return {
         "id": doc.id,
         "doc_type": doc.doc_type,
@@ -189,6 +221,25 @@ def get_document(
         "confidence": doc.confidence,
         "source": doc.source,
     }
+
+
+@router.get("/{doc_id}/download")
+def download_document(
+    doc_id: int,
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    doc = session.get(Document, doc_id)
+    if not doc:
+        raise HTTPException(404, "Document not found")
+    student = session.get(Student, doc.student_id)
+    _assert_document_scope(user, student, session)
+    path = _document_file_path(doc.file_path)
+    if not path.is_file():
+        raise HTTPException(404, "Document file is unavailable")
+    safe_cts = student.cts_id if student else "student"
+    filename = f"{doc.doc_type}_certificate_{safe_cts}{path.suffix.lower()}"
+    return FileResponse(path, media_type=mimetypes.guess_type(path.name)[0] or "application/octet-stream", filename=filename)
 
 
 @router.post("/{doc_id}/verify")
@@ -203,8 +254,7 @@ def verify_document(
     if not doc:
         raise HTTPException(404)
     student = session.get(Student, doc.student_id)
-    if user.role == "school" and (not student or student.school_id != user.school_id):
-        raise HTTPException(403, "Document is outside your school scope")
+    _assert_document_scope(user, student, session)
     doc.status = "verified"
     session.commit()
     return {"success": True, "doc_id": doc_id, "status": "verified"}

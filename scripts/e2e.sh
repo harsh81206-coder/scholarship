@@ -64,7 +64,7 @@ api_pid=$!
 (
   cd "${repo_root}/web"
   export NEXT_PUBLIC_USE_MOCK=false
-  export NEXT_PUBLIC_API_URL="http://localhost:${vps_api_port}"
+  export NEXT_PUBLIC_API_URL="http://127.0.0.1:${vps_api_port}"
   exec ./node_modules/.bin/next dev --hostname 127.0.0.1 --port "${vps_web_port}"
 ) >"${web_log}" 2>&1 &
 web_pid=$!
