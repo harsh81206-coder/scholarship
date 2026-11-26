@@ -1,13 +1,15 @@
 # Visual and route QA report
 
-Run: 2026-11-05 using `QA_BASE_URL=http://localhost:3100 npm run qa:screens`.
+Run: 2026-11-26 via `make qa`. The API and browser sweep used a fresh temporary SQLite database. The browser sweep used the Next development server with a clean `.next` directory; the separate optimized production build completed before it.
 
 ## Automated checks
 
-- Captured all 33 target routes: HTTP 200, zero page errors, zero broken images.
+- Captured all 33 target routes: HTTP 200, zero page errors, zero API errors, zero broken images.
 - Student routes, P3, and SC5 used 390×844; all other routes used 1440×900.
+- Protected routes used API-issued JWTs from seeded users. The separate login smoke exercised student OTP, school role switching, scoped applications, and wrong-role redirect.
 - All captures reported no document-level horizontal overflow and `document.fonts.check("16px 'Noto Sans Gujarati'", "ગુજરાતી")` returned true.
 - This checks route rendering and broad layout health. It does not measure pixel similarity or prove text is not clipped inside every nested table/panel.
+- `make e2e` separately passed the full browser Golden Path three consecutive times against clean, temporary databases. It uses E2E-only routing thresholds and the mock DBT simulator for deterministic credited state.
 
 ## Screen-by-screen captures and references
 
@@ -51,4 +53,6 @@ Each row links the app capture and the corresponding Stitch reference. The refer
 
 ## Visual review notes
 
-Focused manual review covered SC2, SC3, SC4, SC5, SC6, V1, and A3. Earlier page-level overflow on SC4/A3 was fixed with a minimum-width constraint in the shared officer content area; SC5 now uses the mobile shell. Those routes have no horizontal document overflow in this run. This review does not certify exact spacing, nested table clipping, or pixel-level fidelity across all screens; complete visual comparison remains outstanding.
+Focused manual contact-sheet review covered S1, S2, S4, S5, S6, S8, SC2, SC3, SC5, D2, A3, and V1. Layouts show no document-level overflow in the automated sweep. SC2, SC3, D2, A3, and V1 are visibly sparser than their Stitch references; density, spacing, and all nested table/panel clipping have not been fully compared or corrected. Pixel-level fidelity across all 33 screens remains outstanding.
+
+All authenticated screenshots were initialized in Gujarati, but this was not a language-switching test. Complete `gu`/`hi`/`en` switching and layout checks remain outstanding.

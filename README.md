@@ -1,38 +1,57 @@
 # Vidya Pragati Setu
 
-Offline-first Gujarat scholarship platform demo with a Next.js frontend and FastAPI/SQLite backend.
+**Offline-first Gujarat Scholarship & Bicycle Logistics Platform (PS000044)** — student eligibility discovery, multi-scheme applications, school/DEO verification, bicycle logistics, mock PFMS DBT tracking, and next-year renewal simulation across six demo roles in Gujarati, English, and Hindi.
 
-## Run the demo
+## Architecture
 
-```bash
-make demo
+```mermaid
+flowchart LR
+  Web["Next.js 14 (App Router + TanStack Query + Zustand)"] -->|REST + JWT| API["FastAPI + SQLModel + SQLite"]
+  API --> ML["ML Artifacts (Dropout / Fraud / Forecast)"]
+  API --> Mock["Deterministic Mock Adapters (PFMS, DigiLocker, CTS, SMS)"]
 ```
 
-This starts the API at `http://localhost:8000` and the web app at `http://localhost:3000`. Use OTP `123456` and student ID `GJ-AND-2026-004512`. To choose other ports:
+## Quick Start
 
+### 1. Full Stack (Production Next.js Build + FastAPI + Seeded SQLite)
 ```bash
-VPS_API_PORT=8101 VPS_WEB_PORT=3101 make demo
+make demo-reset   # Reset seeded SQLite snapshot (600 students)
+make demo         # Starts FastAPI (:8000) + Next.js production build (:3000)
 ```
 
-For an offline frontend build, run `make demo-offline`, then serve it with `cd web && npm run start -- --hostname 127.0.0.1 --port 3000`.
+### 2. Offline Mock Backup (No Backend Required)
+```bash
+make demo-offline
+```
+The command builds and starts the frontend with local mock data at `http://localhost:3000` (or `VPS_WEB_PORT`).
 
-## Project layout
+## Demo Logins (OTP: `123456`)
 
-- `web/` — Next.js 14 App Router frontend
-- `api/` — FastAPI backend, SQLite seed, trained demo artifacts, and tests
-- `design/` — Stitch source screens and design references
-- `docs/` — screen inventory, status, and demo instructions
-- `qa/` — route screenshots, test results, and QA report
+| Role | Identifier | Mobile |
+|---|---|---|
+| Student (Riya Patel) | `GJ-AND-2026-004512` | `9876543210` |
+| School Principal | `SCH-AND-001` | `9898000001` |
+| Taluka Officer (TPEO) | `TPEO-BOR-001` | `9898000002` |
+| District Education Officer (DEO) | `DEO-AND-001` | `9898000003` |
+| State Admin | `ADMIN-STATE-001` | `9898000004` |
+| Cycle Vendor | `VND-001` | `9898000005` |
 
-## Current demo scope
+## What's Real vs. Mock
 
-OTP login and role switching use the API in online mode. Most feature screens still use local demo fixtures; see [`docs/FINAL_STATUS.md`](docs/FINAL_STATUS.md) and [`docs/STATUS.md`](docs/STATUS.md) for the verified scope and remaining work. External government integrations are mocked, and ML artifacts use synthetic training data.
+- **Real (SQLite + FastAPI + JWT)**: Auth/OTP, role-scoped RBAC, eligibility evaluation, document upload + OCR storage, 1-click bulk apply, school/DEO approval workflow, vendor batch dispatch & school handover, PFMS DBT sanction/initiate, next-year student promotion diff, and audit logs.
+- **Mock Adapters (`ADAPTER_MODE=mock`)**: External government integrations (PFMS, Aadhaar/UIDAI, CTS, DigiLocker, SMS, LLM). ML models (`api/artifacts/*.joblib`) are trained on synthetic demo data.
+- **UI Wiring**: 17 Tier 1 routes are wired to FastAPI (`P2`, `P3`, `S1`, `S2`, `S4`, `S5`, `S6`, `S7`, `S8`, `S10`, `SC2`, `SC3`, `SC5`, `D2`, `A3`, `V1`, `X1`). X1 currently wires promotion and eligibility diff; its attendance simulation, DBT simulator, and reset controls are not implemented in the UI. Tier 2/3 screens remain fixtures or static; they are not real-data dashboards yet.
 
-## Checks
+## Verification & QA
 
 ```bash
-make test
-make qa
+make test            # Backend pytest + ruff + Web tsc + lint
+make check-contract  # 80 endpoint calls across six seeded roles
+make e2e             # Playwright Golden Path, 3 fresh-database runs
+make qa               # Contract, backend/frontend checks, production build, auth smoke, 33 screenshots
 ```
 
-See [`api/README.md`](api/README.md) for backend routes and commands.
+See [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) for the walkthrough, [`docs/STATUS.md`](docs/STATUS.md) for per-screen API wiring and browser coverage, and [`docs/FINAL_STATUS.md`](docs/FINAL_STATUS.md) for verified evidence and remaining limitations. No hosted demo URL is currently verified.
+
+## License
+[MIT](LICENSE)

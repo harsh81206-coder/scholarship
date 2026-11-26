@@ -22,6 +22,7 @@ from app.models.core import (
     Notification,
     School,
     Student,
+    Taluka,
     User,
 )
 
@@ -367,14 +368,67 @@ def cycles_overview(
     if user.role not in ("school", "taluka", "deo", "admin", "vendor"):
         raise HTTPException(403)
     batches = session.exec(select(CycleBatch)).all()
+    if user.role == "vendor":
+        vendor = session.exec(select(User).where(User.officer_id == user.sub)).first()
+        batches = [batch for batch in batches if vendor and batch.vendor_id == vendor.id]
+    elif user.role == "school":
+        batches = [batch for batch in batches if batch.school_id == user.school_id]
+    elif user.role == "taluka":
+        batches = [
+            batch
+            for batch in batches
+            if (school := session.get(School, batch.school_id))
+            and school.taluka_id == user.taluka_id
+        ]
+    elif user.role == "deo":
+        batches = [
+            batch
+            for batch in batches
+            if (school := session.get(School, batch.school_id))
+            and (taluka := session.get(Taluka, school.taluka_id))
+            and taluka.district_id == user.district_id
+        ]
+    batch_ids = {batch.id for batch in batches}
     cycles = session.exec(select(Cycle)).all()
+    scoped_cycles = [cycle for cycle in cycles if cycle.batch_id in batch_ids]
+    receivable_cycles = [
+        {
+            "serial_no": cycle.serial_no,
+            "batch_id": cycle.batch_id,
+            "status": cycle.status,
+        }
+        for cycle in scoped_cycles
+        if cycle.status in ("received", "in_stock") and cycle.student_id is None
+    ]
+    handover_students: list[dict] = []
+    if user.role in ("school", "admin"):
+        school_ids = (
+            {user.school_id}
+            if user.role == "school" and user.school_id is not None
+            else {batch.school_id for batch in batches}
+        )
+        assigned_student_ids = {
+            cycle.student_id
+            for cycle in scoped_cycles
+            if cycle.student_id is not None
+        }
+        for student in session.exec(select(Student)).all():
+            if student.school_id in school_ids and student.id not in assigned_student_ids:
+                handover_students.append(
+                    {
+                        "id": student.id,
+                        "cts_id": student.cts_id,
+                        "name_en": student.name_en,
+                        "grade": student.grade,
+                    }
+                )
     return {
         "ordered": sum(b.qty for b in batches),
         "dispatched": sum(
             b.qty for b in batches if b.status in ("dispatched", "received", "partial")
         ),
         "received": sum(b.received_qty for b in batches),
-        "delivered": sum(c.status == "handed_over" for c in cycles),
+        "delivered": sum(c.status == "handed_over" for c in scoped_cycles),
         "batches": [
             {
                 "id": b.id,
@@ -386,4 +440,6 @@ def cycles_overview(
             }
             for b in batches
         ],
+        "receivable_cycles": receivable_cycles,
+        "handover_students": handover_students,
     }

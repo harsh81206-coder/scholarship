@@ -9,8 +9,10 @@ from pydantic import BaseModel
 from app.db import engine, get_session
 from app.deps import get_current_user, CurrentUser
 from app.models.core import Application, DbtTxn, Notification, BankAccount, Student
+from app.config import get_settings
 
 router = APIRouter(prefix="/dbt", tags=["dbt"])
+settings = get_settings()
 
 
 def _gen_utr() -> str:
@@ -28,7 +30,8 @@ def _mock_pfms_process(txn_id: int) -> None:
             return
         app = session.get(Application, txn.application_id)
         student = session.get(Student, app.student_id) if app else None
-        if random.random() < 0.95:
+        success_rate = min(1.0, max(0.0, settings.pfms_mock_success_rate))
+        if random.random() < success_rate:
             txn.status = "credited"
             txn.utr = _gen_utr()
             txn.credited_at = datetime.utcnow()
@@ -172,10 +175,13 @@ def list_transactions(
         "items": [
             {
                 "id": t.id,
+                "application_id": t.application_id,
+                "app_code": (app.app_code if (app := session.get(Application, t.application_id)) else None),
                 "amount": t.amount,
                 "status": t.status,
                 "utr": t.utr,
                 "failure_reason": t.failure_reason,
+                "batch_ref": t.batch_ref,
                 "initiated_at": t.initiated_at.isoformat(),
             }
             for t in items

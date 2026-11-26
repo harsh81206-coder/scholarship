@@ -50,7 +50,7 @@ def district_analytics(
     user: CurrentUser = Depends(get_current_user),
     session: Session = Depends(get_session),
 ):
-    if user.role not in ("deo", "admin"):
+    if user.role not in ("taluka", "deo", "admin"):
         raise HTTPException(403)
     students_total = session.exec(select(func.count(Student.id))).one()
     apps = session.exec(select(Application)).all()
@@ -118,7 +118,7 @@ def dropout_analytics(
     user: CurrentUser = Depends(get_current_user),
     session: Session = Depends(get_session),
 ):
-    if user.role not in ("deo", "admin"):
+    if user.role not in ("taluka", "deo", "admin"):
         raise HTTPException(403)
     high = session.exec(
         select(func.count(Student.id)).where(Student.risk_level == "high")

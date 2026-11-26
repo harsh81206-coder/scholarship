@@ -24,6 +24,7 @@ from app.models.core import (
     School,
     Scheme,
     Notification,
+    Setting,
     Student,
     Taluka,
     User,
@@ -34,6 +35,12 @@ from app.services.eligibility import _eval_rule, evaluate, stacking_optimizer
 
 @pytest.fixture
 def demo_api():
+    from app.security import _otp_store, _resend_cooldown
+
+    # These stores intentionally model an in-memory SMS gateway; isolate each
+    # fixture so one test's cooldown cannot affect another test's OTP flow.
+    _otp_store.clear()
+    _resend_cooldown.clear()
     engine = create_engine(
         "sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool
     )
@@ -64,6 +71,7 @@ def demo_api():
         school_id=school.id,
         grade=9,
         guardian_name="Hetalben Patel",
+        guardian_mobile="9876543211",
         guardian_consent=True,
     )
     session.add(student)
@@ -152,6 +160,8 @@ def demo_api():
         yield client, session, student, school
     app.dependency_overrides.clear()
     session.close()
+    _otp_store.clear()
+    _resend_cooldown.clear()
 
 
 def headers(
@@ -174,23 +184,53 @@ def headers(
     return {"Authorization": f"Bearer {token}"}
 
 
+def apply_with_guardian_otp(
+    client: TestClient,
+    student_cts_id: str,
+    scheme_codes: list[str],
+    consent: bool = True,
+):
+    student_headers = headers("student", student_cts_id)
+    from app.security import _resend_cooldown
+
+    _resend_cooldown.pop(f"guardian:guardian:{student_cts_id}", None)
+    sent = client.post(
+        "/applications/guardian-otp/send", headers=student_headers
+    )
+    assert sent.status_code == 200, sent.text
+    return client.post(
+        "/applications/bulk",
+        json={
+            "scheme_codes": scheme_codes,
+            "consent": consent,
+            "guardian_otp": sent.json()["demo_otp"],
+        },
+        headers=student_headers,
+    )
+
+
 def test_full_demo_path(demo_api, monkeypatch, tmp_path):
     client, session, student, school = demo_api
     student_auth = headers("student", student.cts_id)
     school_auth = headers("school", "SCH-AND-001", school_id=school.id)
-    taluka_auth = headers("taluka", "TPEO-AND-001", taluka_id=school.taluka_id)
     deo_auth = headers("deo", "DEO-AND-001", district_id=1)
     admin_auth = headers("admin", "ADMIN-STATE-001")
     vendor_auth = headers("vendor", "VND-001")
 
-    applied = client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=student_auth,
+    # Force this synthetic application into the 5% school audit sample so the
+    # golden path exercises the school -> DEO handoff explicitly.
+    session.add_all(
+        [
+            Setting(key="RISK_AUTO_THRESHOLD", value_json="1.0"),
+            Setting(key="AUTO_AUDIT_SAMPLE_PCT", value_json="100"),
+        ]
     )
+    session.commit()
+
+    applied = apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     assert applied.status_code == 200, applied.text
     app_code = applied.json()["created"][0]
-    for role_auth in (school_auth, taluka_auth, deo_auth):
+    for role_auth in (school_auth, deo_auth):
         response = client.post(
             f"/applications/{app_code}/approve",
             json={"remark": "Verified"},
@@ -227,12 +267,10 @@ def test_full_demo_path(demo_api, monkeypatch, tmp_path):
     )
     assert initiated.status_code == 200, initiated.text
     txn_id = initiated.json()["initiated"][0]["txn_id"]
-    assert (
-        client.get("/students/me/payments", headers=student_auth).json()[
-            "total_credited"
-        ]
-        == 10000
-    )
+    payments = client.get("/students/me/payments", headers=student_auth).json()
+    assert payments["total_credited"] == 10000
+    assert payments["transactions"][0]["id"] == txn_id
+    assert payments["transactions"][0]["app_code"] == app_code
     assert (
         client.get(f"/dbt/receipt/{txn_id}", headers=student_auth).json()["utr"]
         == "SBIN2611020045"
@@ -377,18 +415,9 @@ def test_stacking_optimizer_explains_mutual_exclusion():
 
 def test_bulk_apply_reapply_is_idempotent_and_stores_scheme_version(demo_api):
     client, session, student, school = demo_api
-    student_auth = headers("student", student.cts_id)
-    first = client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=student_auth,
-    )
+    first = apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     assert first.status_code == 200, first.text
-    second = client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=student_auth,
-    )
+    second = apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     assert second.status_code == 200
     assert second.json()["skipped"][0]["reason"] == "already_applied"
     result = session.exec(select(EligibilityResult)).first()
@@ -418,11 +447,7 @@ def test_auto_approval_and_audit_sample_route(demo_api, monkeypatch):
     bank.aadhaar_seeded = True
     session.commit()
     monkeypatch.setattr("app.routers.applications.random.random", lambda: 0.5)
-    auto = client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=headers("student", student.cts_id),
-    )
+    auto = apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     app_code = auto.json()["created"][0]
     row = session.exec(select(Application).where(Application.app_code == app_code)).first()
     assert row.status == "auto_verified"
@@ -430,11 +455,7 @@ def test_auto_approval_and_audit_sample_route(demo_api, monkeypatch):
     # Another academic year allows a separate audit-sample case.
     row.academic_year = "2025-26"
     session.commit()
-    sampled = client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=headers("student", student.cts_id),
-    )
+    sampled = apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     sampled_row = session.exec(
         select(Application).where(Application.app_code == sampled.json()["created"][0])
     ).first()
@@ -549,11 +570,7 @@ def test_dbt_retry_requires_officer_role(demo_api, monkeypatch):
 
 def test_application_detail_rejects_out_of_school_scope(demo_api):
     client, _, student, school = demo_api
-    applied = client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=headers("student", student.cts_id),
-    )
+    applied = apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     app_code = applied.json()["created"][0]
     outside_scope = client.get(
         f"/applications/{app_code}",
@@ -584,11 +601,7 @@ def test_stacking_conflict_is_reported_by_bulk_apply(demo_api):
         ]
     )
     session.commit()
-    result = client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["scheme-a", "scheme-b"], "consent": True},
-        headers=headers("student", student.cts_id),
-    )
+    result = apply_with_guardian_otp(client, student.cts_id, ["scheme-a", "scheme-b"])
     assert result.status_code == 200, result.text
     assert result.json()["created"]
     assert result.json()["skipped"][0]["reason"] == "stacking_conflict"
@@ -597,11 +610,7 @@ def test_stacking_conflict_is_reported_by_bulk_apply(demo_api):
 
 def test_bulk_approval_route_filter_returns_totals(demo_api):
     client, _, student, school = demo_api
-    applied = client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=headers("student", student.cts_id),
-    )
+    applied = apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     app_code = applied.json()["created"][0]
     result = client.post(
         "/applications/bulk-approve",
@@ -615,13 +624,14 @@ def test_bulk_approval_route_filter_returns_totals(demo_api):
 
 
 def test_approve_invalid_state_is_rejected(demo_api):
-    client, _, student, school = demo_api
-    applied = client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=headers("student", student.cts_id),
-    )
+    client, session, student, school = demo_api
+    applied = apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     app_code = applied.json()["created"][0]
+    # This test targets the school review state; route mismatch has a separate
+    # regression check below.
+    row = session.exec(select(Application).where(Application.app_code == app_code)).first()
+    row.route = "school"
+    session.commit()
     approved = client.post(
         f"/applications/{app_code}/approve",
         json={},
@@ -636,14 +646,110 @@ def test_approve_invalid_state_is_rejected(demo_api):
     assert duplicate.status_code == 400
 
 
+def test_detail_approval_requires_current_route_and_advances_to_deo(demo_api):
+    client, session, student, school = demo_api
+    applied = apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
+    app_code = applied.json()["created"][0]
+    row = session.exec(select(Application).where(Application.app_code == app_code)).first()
+    row.route = "school"
+    session.commit()
+
+    wrong_route = client.post(
+        f"/applications/{app_code}/approve",
+        json={},
+        headers=headers("taluka", "TPEO-AND-001", taluka_id=school.taluka_id),
+    )
+    assert wrong_route.status_code == 403
+
+    school_approved = client.post(
+        f"/applications/{app_code}/approve",
+        json={},
+        headers=headers("school", "SCH-AND-001", school.id),
+    )
+    assert school_approved.status_code == 200, school_approved.text
+    assert school_approved.json()["route"] == "deo"
+
+    deo_approved = client.post(
+        f"/applications/{app_code}/approve",
+        json={},
+        headers=headers("deo", "DEO-AND-001", district_id=1),
+    )
+    assert deo_approved.status_code == 200, deo_approved.text
+    assert deo_approved.json()["new_status"] == "deo_approved"
+
+
+def test_student_consent_hook_payload_updates_values(demo_api):
+    client, _, student, _ = demo_api
+    response = client.put(
+        "/students/me/consents",
+        json={"values": {"guardian_consent": False, "alerts": False}},
+        headers=headers("student", student.cts_id),
+    )
+    assert response.status_code == 200, response.text
+    assert response.json() == {"guardian_consent": False, "alerts": False}
+    assert client.get(
+        "/students/me/consents", headers=headers("student", student.cts_id)
+    ).json() == {"guardian_consent": False, "alerts": False}
+
+
+def test_bulk_apply_requires_one_time_guardian_otp(demo_api):
+    client, _, student, _ = demo_api
+    from app.security import _otp_store, _resend_cooldown
+
+    _otp_store.clear()
+    _resend_cooldown.clear()
+    student_auth = headers("student", student.cts_id)
+    missing = client.post(
+        "/applications/bulk",
+        json={"scheme_codes": ["demo-cash"], "consent": True},
+        headers=student_auth,
+    )
+    assert missing.status_code == 400
+
+    sent = client.post("/applications/guardian-otp/send", headers=student_auth)
+    assert sent.status_code == 200, sent.text
+    payload = sent.json()
+    assert payload["masked_mobile"].endswith("11")
+    assert payload["demo_otp"] == "123456"
+    assert student.guardian_mobile not in str(payload)
+
+    invalid = client.post(
+        "/applications/bulk",
+        json={
+            "scheme_codes": ["demo-cash"],
+            "consent": True,
+            "guardian_otp": "000000",
+        },
+        headers=student_auth,
+    )
+    assert invalid.status_code == 400
+
+    applied = client.post(
+        "/applications/bulk",
+        json={
+            "scheme_codes": ["demo-cash"],
+            "consent": True,
+            "guardian_otp": payload["demo_otp"],
+        },
+        headers=student_auth,
+    )
+    assert applied.status_code == 200, applied.text
+    reused = client.post(
+        "/applications/bulk",
+        json={
+            "scheme_codes": ["demo-cash"],
+            "consent": True,
+            "guardian_otp": payload["demo_otp"],
+        },
+        headers=student_auth,
+    )
+    assert reused.status_code == 400
+
+
 def test_audit_chain_finds_first_tampered_row(demo_api):
     client, session, student, school = demo_api
     admin_auth = headers("admin", "ADMIN-STATE-001")
-    client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=headers("student", student.cts_id),
-    )
+    apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     first = session.exec(select(AuditLog).order_by(AuditLog.id)).first()
     first.after_json = '{"tampered":true}'
     session.commit()
@@ -655,12 +761,7 @@ def test_audit_chain_finds_first_tampered_row(demo_api):
 
 def test_published_scheme_rules_re_evaluate_and_version_results(demo_api):
     client, session, student, school = demo_api
-    student_auth = headers("student", student.cts_id)
-    client.post(
-        "/applications/bulk",
-        json={"scheme_codes": ["demo-cash"], "consent": True},
-        headers=student_auth,
-    )
+    apply_with_guardian_otp(client, student.cts_id, ["demo-cash"])
     scheme_id = session.exec(select(Scheme.id).where(Scheme.code == "demo-cash")).first()
     result = client.put(
         f"/admin/schemes/{scheme_id}/rules",
@@ -672,3 +773,61 @@ def test_published_scheme_rules_re_evaluate_and_version_results(demo_api):
     assert result.json()["re_evaluated"] == 1
     stored = session.exec(select(EligibilityResult)).first()
     assert stored.scheme_version == 2
+
+
+@pytest.mark.parametrize("role", ["school", "taluka", "deo", "admin", "vendor"])
+def test_student_profile_route_rejects_officer_roles(demo_api, role):
+    client, _, student, _ = demo_api
+    response = client.get("/students/me", headers=headers(role, f"{role}-test"))
+    assert response.status_code == 403
+
+
+@pytest.mark.parametrize("role", ["school", "taluka", "deo", "admin", "vendor"])
+def test_guardian_otp_route_rejects_officer_roles(demo_api, role):
+    client, _, _, _ = demo_api
+    response = client.post(
+        "/applications/guardian-otp/send", headers=headers(role, f"{role}-test")
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.parametrize("role", ["student", "school", "taluka", "vendor"])
+def test_dbt_sanction_rejects_roles_without_payment_authority(demo_api, role):
+    client, _, _, _ = demo_api
+    response = client.post(
+        "/dbt/sanction",
+        json={"application_ids": ["MISSING-APP"]},
+        headers=headers(role, f"{role}-test"),
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.parametrize("role", ["student", "taluka", "deo", "vendor"])
+def test_cycle_handover_start_rejects_non_school_roles(demo_api, role):
+    client, _, _, _ = demo_api
+    response = client.post(
+        "/handover/initiate",
+        json={"student_id": 1, "cycle_serial": "UNKNOWN"},
+        headers=headers(role, f"{role}-test"),
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.parametrize("role", ["student", "taluka", "deo", "vendor"])
+def test_cycle_handover_confirmation_rejects_non_school_roles(demo_api, role):
+    client, _, _, _ = demo_api
+    response = client.post(
+        "/handover/confirm",
+        json={"cycle_serial": "UNKNOWN", "otp": "123456"},
+        headers=headers(role, f"{role}-test"),
+    )
+    assert response.status_code == 403
+
+
+@pytest.mark.parametrize("role", ["student", "school", "taluka", "deo", "vendor"])
+def test_demo_promotion_rejects_non_admin_roles(demo_api, role):
+    client, _, student, _ = demo_api
+    response = client.post(
+        f"/demo/promote/{student.cts_id}", headers=headers(role, f"{role}-test")
+    )
+    assert response.status_code == 403

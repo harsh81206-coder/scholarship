@@ -222,6 +222,30 @@
         ]
       }
     },
+    "/applications/guardian-otp/send": {
+      "post": {
+        "tags": [
+          "applications"
+        ],
+        "summary": "Send Guardian Otp",
+        "operationId": "send_guardian_otp_applications_guardian_otp_send_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/applications/bulk": {
       "post": {
         "tags": [
@@ -3626,6 +3650,17 @@
             "type": "boolean",
             "title": "Consent",
             "default": false
+          },
+          "guardian_otp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guardian Otp"
           }
         },
         "type": "object",

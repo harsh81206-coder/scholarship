@@ -6,61 +6,156 @@ import { StudentShell } from "@/components/shell/StudentShell";
 import { T } from "@/components/T";
 import { Icon } from "@/components/Icon";
 import { Avatar } from "@/components/ui";
+import { Skeleton } from "@/components/states/Skeleton";
+import { ErrorState } from "@/components/states/ErrorState";
+import { EmptyState } from "@/components/states/EmptyState";
+import { ApiModeBadge } from "@/app/student/components/ApiModeBadge";
 import { useAppStore } from "@/lib/store";
+import {
+  useMe,
+  useMySchemes,
+  useApplications,
+  useNotifications,
+  useMyCycle,
+} from "@/lib/api/hooks";
 
 export default function StudentDashboardPage() {
-  const unreadCount = useAppStore((s) => s.unreadCount);
+  const lang = useAppStore((s) => s.lang);
+  const { data: profile, isLoading: loadingMe, error: errorMe, refetch: refetchMe } = useMe();
+  const { data: schemes, isLoading: loadingSchemes, error: errorSchemes, refetch: refetchSchemes } = useMySchemes();
+  const { data: appsData, isLoading: loadingApps, error: errorApps, refetch: refetchApps } = useApplications();
+  const { data: notifications, isLoading: loadingNotifications, error: errorNotifications, refetch: refetchNotifications } = useNotifications();
+  const { data: cycle, isLoading: loadingCycle, error: errorCycle, refetch: refetchCycle } = useMyCycle();
+
   const [copiedCts, setCopiedCts] = useState(false);
   const [copiedOtp, setCopiedOtp] = useState(false);
-  const [showWhyModal, setShowWhyModal] = useState(false);
+
+  if (loadingMe || loadingSchemes || loadingApps || loadingNotifications || loadingCycle) {
+    return (
+      <StudentShell>
+        <ApiModeBadge />
+        <div className="px-4 py-4 max-w-[430px] mx-auto pb-24">
+          <Skeleton rows={6} />
+        </div>
+      </StudentShell>
+    );
+  }
+
+  if (errorMe || errorSchemes || errorApps || errorNotifications || errorCycle) {
+    return (
+      <StudentShell>
+        <ApiModeBadge />
+        <div className="px-4 py-4 max-w-[430px] mx-auto pb-24">
+          <ErrorState
+            error={errorMe ?? errorSchemes ?? errorApps ?? errorNotifications ?? errorCycle}
+            onRetry={() => {
+              void refetchMe();
+              void refetchSchemes();
+              void refetchApps();
+              void refetchNotifications();
+              void refetchCycle();
+            }}
+          />
+        </div>
+      </StudentShell>
+    );
+  }
+
+  const ctsId = profile?.cts_id ?? "";
+  const studentName =
+    lang === "gu" ? profile?.name_gu || profile?.name_en || "Student" : profile?.name_en || "Student";
+  const schoolName = profile?.school_name ?? "";
+  const grade = profile?.grade;
+  const completionPct = profile?.completion_pct ?? 0;
+
+  const schemeList = schemes ?? [];
+  const eligibleSchemes = schemeList.filter((s) => s.status === "eligible" || s.status === "pending_docs");
+  const totalBenefit = eligibleSchemes.reduce((sum, s) => sum + Number(s.amount || 0), 0);
+  const hasFreeCycle = eligibleSchemes.some((s) => s.scheme_type === "material" || s.scheme_code === "saraswati-sadhna");
+
+  const appsList = appsData?.items ?? [];
+  const approvedApps = appsList.filter((a) =>
+    ["school_verified", "taluka_approved", "deo_approved", "sanctioned", "disbursed"].includes(a.status)
+  );
+  const latestApp = appsList[0];
+
+  const notifList = Array.isArray(notifications) ? notifications : [];
+  const unreadCount = notifList.filter((n) => !n.read).length;
+
+  const cycleAssigned = Boolean(cycle?.assigned);
+  const cycleOtp = cycle?.handover_otp ?? cycle?.otp
+    ? String(cycle.handover_otp ?? cycle.otp)
+    : notifList.find((notification) => String(notification.type) === "cycle")?.body
+      ? String(notifList.find((notification) => String(notification.type) === "cycle")?.body).match(/\b\d{6}\b/)?.[0] ?? null
+      : null;
 
   const handleCopyCts = () => {
-    navigator.clipboard?.writeText("GJ-AND-2026-004512");
+    navigator.clipboard?.writeText(ctsId);
     setCopiedCts(true);
     setTimeout(() => setCopiedCts(false), 2000);
   };
 
   const handleCopyOtp = () => {
-    navigator.clipboard?.writeText("482913");
+    if (!cycleOtp) return;
+    navigator.clipboard?.writeText(cycleOtp);
     setCopiedOtp(true);
     setTimeout(() => setCopiedOtp(false), 2000);
   };
 
+  const stageStep = (status?: string) => {
+    switch (status) {
+      case "applied":
+        return 1;
+      case "school_verified":
+        return 2;
+      case "taluka_approved":
+        return 3;
+      case "deo_approved":
+        return 4;
+      case "sanctioned":
+        return 5;
+      case "disbursed":
+        return 6;
+      default:
+        return 1;
+    }
+  };
+  const currentStep = stageStep(latestApp?.status);
+
   return (
     <StudentShell>
+      <ApiModeBadge />
       <div className="px-4 py-3 space-y-4 max-w-[430px] mx-auto pb-24 relative">
         {/* 1. Greeting & Profile Strip Card */}
         <section className="bg-surface-container-lowest rounded-2xl p-4 border border-outline-variant shadow-level-1 flex flex-col gap-3">
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <Avatar name="Riya Patel" size="md" className="ring-2 ring-primary/20 shadow-sm" />
+                <Avatar name={profile?.name_en ?? "Student"} size="md" className="ring-2 ring-primary/20 shadow-sm" />
                 <span className="absolute -bottom-0.5 -right-0.5 bg-emerald-600 text-white rounded-full p-0.5 border border-surface flex items-center justify-center">
                   <Icon name="check" size={10} className="font-bold text-white" />
                 </span>
               </div>
               <div className="min-w-0">
                 <h1 className="font-title-md text-title-md text-on-surface leading-tight">
-                  <T gu="નમસ્તે, રિયા પટેલ 👋" en="Namaste, Riya Patel 👋" hi="नमस्ते, रिया पटेल 👋" />
+                  <T gu={`નમસ્તે, ${studentName} 👋`} en={`Namaste, ${studentName} 👋`} hi={`नमस्ते, ${studentName} 👋`} />
                 </h1>
-                <p className="font-caption text-caption text-on-surface-variant truncate">
-                  <T gu="શ્રી સરદાર પટેલ હાઇસ્કૂલ, આણંદ" en="Shree Sardar Patel High School, Anand" hi="श्री सरदार पटेल हाई स्कूल, आणंद" />
-                </p>
+                <p className="font-caption text-caption text-on-surface-variant truncate">{schoolName}</p>
               </div>
             </div>
           </div>
 
           {/* Badges & CTS ID */}
           <div className="flex flex-wrap items-center gap-2 pt-1">
-            <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border border-emerald-200">
+            {profile?.verification_status === "verified" && <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border border-emerald-200">
               <Icon name="verified" size={13} fill className="text-emerald-700" />
               <T gu="GSRDA માન્ય ✓" en="GSRDA Verified ✓" hi="GSRDA सत्यापित ✓" />
-            </span>
+            </span>}
             <span className="text-[11px] font-medium text-on-surface-variant bg-surface-container-high px-2.5 py-0.5 rounded-full">
-              <T gu="ધોરણ ૯-બી" en="Class 9-B" hi="कक्षा 9-बी" />
+              {grade ? <T gu={`ધોરણ ${grade}`} en={`Class ${grade}`} hi={`कक्षा ${grade}`} /> : <T gu="ધોરણ ઉપલબ્ધ નથી" en="Grade unavailable" hi="कक्षा उपलब्ध नहीं" />}
             </span>
             <div className="inline-flex items-center gap-1 bg-surface-container-low px-2 py-0.5 rounded-full text-[11px] text-on-surface-variant font-mono">
-              <span>GJ-AND-2026-004512</span>
+              <span>{ctsId}</span>
               <button
                 type="button"
                 onClick={handleCopyCts}
@@ -82,16 +177,14 @@ export default function StudentDashboardPage() {
           <div className="pt-2 border-t border-outline-variant">
             <div className="flex items-center justify-between text-xs mb-1.5">
               <span className="font-medium text-on-surface">
-                <T gu="પ્રોફાઇલ પૂર્ણતા (Profile Status)" en="Profile Completion Status" hi="प्रोफ़ाइल पूर्णता स्थिति" />
+                <T gu="પ્રોફાઇલ પૂર્ણતા" en="Profile Completion Status" hi="प्रोफ़ाइल पूर्णता स्थिति" />
               </span>
-              <span className="font-semibold text-primary">
-                <T gu="૯૨% પૂર્ણ" en="92% Complete" hi="92% पूर्ण" />
-              </span>
+              <span className="font-semibold text-primary">{completionPct}%</span>
             </div>
             <div className="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
               <div
                 className="bg-gradient-to-r from-primary to-primary-container h-full rounded-full transition-all duration-500"
-                style={{ width: "92%" }}
+                style={{ width: `${Math.min(100, Math.max(0, completionPct))}%` }}
               />
             </div>
           </div>
@@ -100,25 +193,27 @@ export default function StudentDashboardPage() {
         {/* 2. KPI Summary Chips */}
         <section className="grid grid-cols-4 gap-2">
           <div className="bg-surface-container-lowest rounded-xl p-2.5 border border-outline-variant text-center shadow-xs">
-            <p className="font-headline-sm text-primary font-bold leading-tight">4</p>
+            <p className="font-headline-sm text-primary font-bold leading-tight">{eligibleSchemes.length}</p>
             <p className="text-[10px] text-on-surface-variant font-medium mt-0.5 leading-tight">
               <T gu="પાત્ર યોજના" en="Eligible" hi="पात्र" />
             </p>
           </div>
           <div className="bg-surface-container-lowest rounded-xl p-2.5 border border-outline-variant text-center shadow-xs">
-            <p className="font-headline-sm text-secondary font-bold leading-tight">1</p>
+            <p className="font-headline-sm text-secondary font-bold leading-tight">{appsList.length}</p>
             <p className="text-[10px] text-on-surface-variant font-medium mt-0.5 leading-tight">
               <T gu="અરજી કરેલ" en="Applied" hi="आवेदन" />
             </p>
           </div>
           <div className="bg-surface-container-lowest rounded-xl p-2.5 border border-outline-variant text-center shadow-xs">
-            <p className="font-headline-sm text-emerald-600 font-bold leading-tight">1</p>
+            <p className="font-headline-sm text-emerald-600 font-bold leading-tight">{approvedApps.length}</p>
             <p className="text-[10px] text-on-surface-variant font-medium mt-0.5 leading-tight">
               <T gu="મંજૂર થયેલ" en="Approved" hi="स्वीकृत" />
             </p>
           </div>
           <div className="bg-surface-container-lowest rounded-xl p-2.5 border border-outline-variant text-center shadow-xs">
-            <p className="font-headline-sm text-primary font-bold leading-tight">₹25k</p>
+            <p className="font-headline-sm text-primary font-bold leading-tight">
+              ₹{totalBenefit >= 1000 ? `${Math.round(totalBenefit / 1000)}k` : totalBenefit}
+            </p>
             <p className="text-[10px] text-on-surface-variant font-medium mt-0.5 leading-tight">
               <T gu="વાર્ષિક સહાય" en="DBT Aid" hi="वार्षिक सहायता" />
             </p>
@@ -137,18 +232,22 @@ export default function StudentDashboardPage() {
             <div>
               <h2 className="text-lg font-bold text-white leading-tight">
                 <T
-                  gu="તમે ૪ સરકારી યોજનાઓ માટે પાત્ર છો!"
-                  en="You are eligible for 4 government schemes!"
-                  hi="आप 4 सरकारी योजनाओं के लिए पात्र हैं!"
+                  gu={`તમે ${eligibleSchemes.length} સરકારી યોજનાઓ માટે પાત્ર છો!`}
+                  en={`You are eligible for ${eligibleSchemes.length} government schemes!`}
+                  hi={`आप ${eligibleSchemes.length} सरकारी योजनाओं के लिए पात्र हैं!`}
                 />
               </h2>
               <p className="text-xs text-on-primary-container mt-1 font-medium">
                 <T gu="અંદાજિત વાર્ષિક લાભ: " en="Estimated annual benefit: " hi="अनुमानित वार्षिक लाभ: " />
                 <span className="text-secondary-fixed font-bold text-sm">
-                  <T gu="₹ ૨૫,૦૦૦" en="₹ 25,000" hi="₹ 25,000" />
+                  ₹ {totalBenefit.toLocaleString("en-IN")}
                 </span>
-                {" + "}
-                <T gu="મફત સાયકલ" en="Free Cycle" hi="मुफ़्त साइकिल" />
+                {hasFreeCycle && (
+                  <>
+                    {" + "}
+                    <T gu="મફત સાયકલ" en="Free Cycle" hi="मुफ़्त साइकिल" />
+                  </>
+                )}
               </p>
             </div>
 
@@ -193,7 +292,7 @@ export default function StudentDashboardPage() {
               <T gu="દસ્તાવેજ વૉલ્ટ" en="Doc Vault" hi="दस्तावेज़ वॉल्ट" />
             </span>
             <span className="text-[10px] text-amber-700 font-medium mt-0.5">
-              <T gu="૧ બાકી" en="1 Pending" hi="1 बाकी" />
+              <T gu="દસ્તાવેજો" en="Documents" hi="दस्तावेज़" />
             </span>
           </Link>
 
@@ -208,7 +307,7 @@ export default function StudentDashboardPage() {
               <T gu="અરજી ટ્રેકર" en="Track Apps" hi="आवेदन ट्रैकर" />
             </span>
             <span className="text-[10px] text-emerald-700 font-medium mt-0.5">
-              <T gu="૧ સક્રિય" en="1 Active" hi="1 सक्रिय" />
+              {appsList.length} <T gu="સક્રિય" en="Active" hi="सक्रिय" />
             </span>
           </Link>
 
@@ -228,206 +327,113 @@ export default function StudentDashboardPage() {
           </Link>
         </section>
 
-        {/* 5. Action Needed Alert (Warm Amber Card) */}
-        <section className="bg-amber-50/90 border border-amber-300 rounded-2xl p-3.5 shadow-xs">
-          <div className="flex items-start gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-amber-500/20 text-amber-800 flex items-center justify-center shrink-0 mt-0.5">
-              <Icon name="warning" size={18} className="text-amber-800" />
+        {/* 5. Cycle Delivery Mini Card */}
+        {cycleAssigned && (
+          <section className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-3.5 shadow-xs">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center shrink-0 shadow-sm">
+                  <Icon name="pedal_bike" size={20} className="text-white" />
+                </div>
+                <div>
+                  <span className="inline-flex items-center text-[10px] uppercase font-bold text-primary tracking-wide">
+                    {String(cycle?.status ?? "READY FOR PICKUP")}
+                  </span>
+                  <h3 className="text-xs font-bold text-on-surface">
+                    <T gu="સાયકલ સ્થિતિ" en="Bicycle Delivery Status" hi="साइकिल वितरण स्थिति" />
+                  </h3>
+                </div>
+              </div>
+              <span className="text-[10px] bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full border border-emerald-300 font-mono">
+                {String(cycle?.serial_no ?? "")}
+              </span>
             </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="text-xs font-bold text-amber-950">
-                <T
-                  gu="તાત્કાલિક જરૂરી પગલાં: આવકનો દાખલો અપલોડ કરો"
-                  en="Action Needed: Upload Income Certificate"
-                  hi="आवश्यक कार्रवाई: आय प्रमाण पत्र अपलोड करें"
-                />
-              </h3>
-              <p className="text-[11px] text-amber-900 mt-1 leading-relaxed">
-                <T
-                  gu="તમારો નવો આવક દાખલો અપલોડ કરવાથી ઓબીસી કેટેગરી યોજના અનલોક થશે અને ₹ ૬,૦૦૦ સીધા બેંકમાં જમા થશે."
-                  en="Uploading your latest income certificate unlocks the OBC Category Pre-Matric Scholarship and transfers ₹ 6,000 directly to your bank account."
-                  hi="अपना नया आय प्रमाण पत्र अपलोड करने से ओबीसी श्रेणी छात्रवृत्ति अनलॉक होगी और ₹ 6,000 सीधे बैंक में जमा होंगे।"
-                />
-              </p>
-              <Link
-                href="/student/vault"
-                className="mt-2 text-xs font-semibold text-secondary hover:text-on-secondary-fixed inline-flex items-center gap-1 bg-amber-100 hover:bg-amber-200 px-3 py-1.5 rounded-lg transition-colors"
-              >
-                <span>
-                  <T gu="દસ્તાવેજ અપલોડ કરો" en="Upload Document" hi="दस्तावेज़ अपलोड करें" />
+
+            <div className="mt-2 flex items-center justify-between bg-white rounded-xl p-2.5 border border-blue-100">
+              <div>
+                <span className="text-[10px] text-on-surface-variant block">
+                  <T gu="ડિલિવરી OTP" en="Delivery OTP" hi="वितरण OTP" />
                 </span>
-                <Icon name="arrow_forward" size={14} />
+                <div className="flex items-center gap-1.5">
+                  {cycleOtp ? (
+                    <>
+                      <span className="text-base font-extrabold font-mono tracking-widest text-primary">{cycleOtp}</span>
+                      <button type="button" onClick={handleCopyOtp} className="text-on-surface-variant hover:text-primary transition-colors p-0.5" title="Copy OTP" aria-label="Copy OTP">
+                        <Icon name={copiedOtp ? "check" : "content_copy"} size={13} />
+                      </button>
+                      {copiedOtp && <span className="text-[9px] text-emerald-600 font-bold"><T gu="કોપી!" en="Copied!" hi="कॉपी!" /></span>}
+                    </>
+                  ) : <span className="text-xs text-on-surface-variant"><T gu="શાળામાં OTP મળશે" en="OTP provided at school handover" hi="स्कूल में हस्तांतरण पर OTP मिलेगा" /></span>}
+                </div>
+              </div>
+
+              <Link
+                href="/student/cycle"
+                className="px-2.5 py-1.5 bg-primary text-white text-[11px] font-semibold rounded-lg hover:bg-primary-container flex items-center gap-1 transition-colors shadow-xs"
+              >
+                <Icon name="qr_code_2" size={14} className="text-white" />
+                <span>
+                  <T gu="QR રસીદ" en="QR Receipt" hi="QR रसीद" />
+                </span>
               </Link>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* 6. Cycle Delivery Mini Card */}
-        <section className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-3.5 shadow-xs">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center shrink-0 shadow-sm">
-                <Icon name="pedal_bike" size={20} className="text-white" />
-              </div>
+        {/* 6. Live Application Tracker */}
+        {latestApp && (
+          <section className="bg-surface-container-lowest rounded-2xl p-3.5 border border-outline-variant shadow-level-1 space-y-3">
+            <div className="flex items-center justify-between">
               <div>
-                <span className="inline-flex items-center text-[10px] uppercase font-bold text-primary tracking-wide">
-                  <T gu="તૈયાર છે • READY FOR PICKUP" en="READY FOR PICKUP" hi="तैयार है • पिकअप के लिए तैयार" />
-                </span>
-                <h3 className="text-xs font-bold text-on-surface">
-                  <T gu="સાયકલ શાળામાં પહોંચી ગઈ છે!" en="Bicycle has arrived at school!" hi="साइकिल स्कूल पहुंच गई है!" />
+                <h3 className="text-xs font-bold text-on-surface uppercase tracking-wide">
+                  <T gu="લાઇવ અરજી ટ્રેકર" en="Live Application Tracker" hi="लाइव आवेदन ट्रैकर" />
                 </h3>
+                <p className="text-[11px] font-medium text-on-surface-variant">
+                  {String(latestApp.scheme_name_en ?? latestApp.scheme_code)} (#{latestApp.app_code})
+                </p>
               </div>
-            </div>
-            <span className="text-[10px] bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full border border-emerald-300">
-              <T gu="ઓન-સાઇટ" en="On-Site" hi="ऑन-साइट" />
-            </span>
-          </div>
-
-          <p className="text-[11px] text-on-surface-variant mt-2 leading-relaxed">
-            <T
-              gu="વર્ગ શિક્ષક પાસે ડિલિવરી સમયે નીચેનો વેરિફિકેશન OTP રજૂ કરો:"
-              en="Show the verification OTP below to your class teacher during bicycle handover:"
-              hi="साइकिल हस्तांतरण के समय अपने कक्षा शिक्षक को नीचे दिया गया सत्यापन OTP दिखाएं:"
-            />
-          </p>
-
-          <div className="mt-2 flex items-center justify-between bg-white rounded-xl p-2.5 border border-blue-100">
-            <div>
-              <span className="text-[10px] text-on-surface-variant block">
-                <T gu="ડિલિવરી OTP (માન્યતા ૧૦ મિનિટ)" en="Delivery OTP (Valid 10 mins)" hi="वितरण OTP (वैधता 10 मिनट)" />
-              </span>
-              <div className="flex items-center gap-1.5">
-                <span className="text-base font-extrabold font-mono tracking-widest text-primary">482913</span>
-                <button
-                  type="button"
-                  onClick={handleCopyOtp}
-                  className="text-on-surface-variant hover:text-primary transition-colors p-0.5"
-                  title="Copy OTP"
-                  aria-label="Copy OTP"
-                >
-                  <Icon name={copiedOtp ? "check" : "content_copy"} size={13} />
-                </button>
-                {copiedOtp && (
-                  <span className="text-[9px] text-emerald-600 font-bold">
-                    <T gu="કોપી!" en="Copied!" hi="कॉपी!" />
-                  </span>
-                )}
-              </div>
+              <Link href="/student/applications" className="text-xs text-primary font-semibold hover:underline">
+                <T gu="વિગત જુઓ" en="View Details" hi="विवरण देखें" />
+              </Link>
             </div>
 
-            <Link
-              href="/student/cycle"
-              className="px-2.5 py-1.5 bg-primary text-white text-[11px] font-semibold rounded-lg hover:bg-primary-container flex items-center gap-1 transition-colors shadow-xs"
-            >
-              <Icon name="qr_code_2" size={14} className="text-white" />
-              <span>
-                <T gu="QR રસીદ" en="QR Receipt" hi="QR रसीद" />
-              </span>
-            </Link>
-          </div>
-        </section>
-
-        {/* 7. Live Application Tracker */}
-        <section className="bg-surface-container-lowest rounded-2xl p-3.5 border border-outline-variant shadow-level-1 space-y-3">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-xs font-bold text-on-surface uppercase tracking-wide">
-                <T gu="લાઇવ અરજી ટ્રેકર" en="Live Application Tracker" hi="लाइव आवेदन ट्रैकर" />
-              </h3>
-              <p className="text-[11px] font-medium text-on-surface-variant">
-                <T
-                  gu="સરસ્વતી સાધના સાયકલ યોજના (#APP-2026-00871)"
-                  en="Saraswati Sadhna Cycle Scheme (#APP-2026-00871)"
-                  hi="सरस्वती साधना साइकिल योजना (#APP-2026-00871)"
-                />
-              </p>
+            <div className="grid grid-cols-6 gap-1 pt-1 pb-1">
+              {[
+                { step: 1, gu: "સબમિટ", en: "Submit", hi: "सबमिट" },
+                { step: 2, gu: "શાળા", en: "School", hi: "स्कूल" },
+                { step: 3, gu: "તાલુકા", en: "Taluka", hi: "तालुका" },
+                { step: 4, gu: "DEO", en: "DEO", hi: "DEO" },
+                { step: 5, gu: "મંજૂર", en: "Sanction", hi: "मंजूर" },
+                { step: 6, gu: "DBT", en: "Credited", hi: "क्रेडिट" },
+              ].map((item) => {
+                const done = currentStep >= item.step;
+                return (
+                  <div key={item.step} className="flex flex-col items-center text-center">
+                    <div
+                      className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold shadow-xs ${
+                        done
+                          ? "bg-emerald-600 text-white"
+                          : "bg-surface-container-high text-on-surface-variant"
+                      }`}
+                    >
+                      {done ? <Icon name="check" size={13} className="text-white" /> : item.step}
+                    </div>
+                    <span className="text-[9px] font-medium text-on-surface-variant mt-1 leading-tight">
+                      <T gu={item.gu} en={item.en} hi={item.hi} />
+                    </span>
+                  </div>
+                );
+              })}
             </div>
-            <Link href="/student/applications" className="text-xs text-primary font-semibold hover:underline">
-              <T gu="વિગત જુઓ" en="View Details" hi="विवरण देखें" />
-            </Link>
-          </div>
+          </section>
+        )}
 
-          {/* Compact 6-step progress stepper */}
-          <div className="grid grid-cols-6 gap-1 pt-1 pb-1">
-            {/* Step 1 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[11px] font-bold shadow-xs">
-                <Icon name="check" size={13} className="text-white" />
-              </div>
-              <span className="text-[9px] font-medium text-emerald-800 mt-1 leading-tight">
-                <T gu="સબમિટ" en="Submit" hi="सबमिट" />
-              </span>
-            </div>
-
-            {/* Step 2 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[11px] font-bold shadow-xs">
-                <Icon name="check" size={13} className="text-white" />
-              </div>
-              <span className="text-[9px] font-medium text-emerald-800 mt-1 leading-tight">
-                <T gu="શાળા ચકાસણી" en="School Verify" hi="स्कूल सत्यापन" />
-              </span>
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[11px] font-bold shadow-xs">
-                <Icon name="check" size={13} className="text-white" />
-              </div>
-              <span className="text-[9px] font-medium text-emerald-800 mt-1 leading-tight">
-                <T gu="DEO મંજૂર" en="DEO Approved" hi="DEO स्वीकृत" />
-              </span>
-            </div>
-
-            {/* Step 4 (Active) */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold ring-2 ring-primary/30 animate-pulse">
-                <Icon name="sync" size={13} className="text-white animate-spin" />
-              </div>
-              <span className="text-[9px] font-bold text-primary mt-1 leading-tight">
-                <T gu="ડિસ્પેચ (શાળા)" en="Dispatched" hi="डिस्पैच" />
-              </span>
-            </div>
-
-            {/* Step 5 */}
-            <div className="flex flex-col items-center text-center opacity-60">
-              <div className="w-6 h-6 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center text-[10px] font-semibold border border-outline-variant">
-                5
-              </div>
-              <span className="text-[9px] text-on-surface-variant mt-1 leading-tight">
-                <T gu="OTP વેરિફાઈ" en="OTP Verify" hi="OTP सत्यापन" />
-              </span>
-            </div>
-
-            {/* Step 6 */}
-            <div className="flex flex-col items-center text-center opacity-60">
-              <div className="w-6 h-6 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center text-[10px] font-semibold border border-outline-variant">
-                6
-              </div>
-              <span className="text-[9px] text-on-surface-variant mt-1 leading-tight">
-                <T gu="હસ્તાંતરણ" en="Handover" hi="हस्तांतरण" />
-              </span>
-            </div>
-          </div>
-
-          <div className="bg-surface-container-low rounded-xl px-2.5 py-1.5 flex items-center gap-2 text-[11px] text-on-surface-variant">
-            <span className="w-2 h-2 rounded-full bg-primary animate-ping shrink-0" />
-            <span className="truncate">
-              <T
-                gu="તાજેતરનું અપડેટ: સાયકલ સ્કૂલ ગોડાઉન પહોંચી છે. (આજે 11:30 AM)"
-                en="Latest update: Bicycle arrived at school warehouse. (Today 11:30 AM)"
-                hi="नवीनतम अपडेट: साइकिल स्कूल गोदाम पहुंच गई है। (आज 11:30 AM)"
-              />
-            </span>
-          </div>
-        </section>
-
-        {/* 8. Scheme Cards Stack */}
+        {/* 7. Scheme Cards Stack */}
         <section className="space-y-2.5">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-bold text-on-surface">
-                <T gu="તમારી યોજનાઓ (Your Schemes)" en="Your Schemes" hi="आपकी योजनाएं" />
+                <T gu="તમારી યોજનાઓ" en="Your Schemes" hi="आपकी योजनाएं" />
               </h3>
               <p className="text-[11px] text-on-surface-variant">
                 <T
@@ -437,223 +443,87 @@ export default function StudentDashboardPage() {
                 />
               </p>
             </div>
-            <Link href="/student/schemes/list" className="text-xs font-semibold text-primary hover:underline flex items-center gap-0.5">
+            <Link href="/student/apply" className="text-xs font-semibold text-primary hover:underline flex items-center gap-0.5">
               <span>
-                <T gu="બધી જુઓ" en="View All" hi="सभी देखें" />
+                <T gu="અરજી કરો" en="Apply All" hi="आवेदन करें" />
               </span>
               <Icon name="chevron_right" size={14} />
             </Link>
           </div>
 
-          <div className="space-y-2.5">
-            {/* Card 1: Namo Lakshmi */}
-            <div className="bg-surface-container-lowest rounded-2xl p-3.5 border border-outline-variant hover:border-primary/40 transition-all shadow-xs">
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
-                      <Icon name="check_circle" size={12} fill className="text-emerald-800" />
-                      <T gu="પાત્ર (Eligible) ✓" en="Eligible ✓" hi="पात्र ✓" />
-                    </span>
-                    <span className="text-[10px] text-on-surface-variant bg-surface-container-high px-1.5 py-0.5 rounded">
-                      <T gu="માસિક સહાય" en="Monthly Aid" hi="मासिक सहायता" />
-                    </span>
+          {schemeList.length === 0 ? (
+            <EmptyState title="No schemes available" description="Eligibility evaluation returned no schemes." />
+          ) : (
+            <div className="space-y-2.5">
+              {schemeList.map((scheme) => {
+                const isEligible = scheme.status === "eligible";
+                const isApplied = appsList.some((a) => a.scheme_code === scheme.scheme_code);
+                const title =
+                  lang === "gu"
+                    ? scheme.scheme_name_gu || scheme.scheme_name_en
+                    : scheme.scheme_name_en;
+                return (
+                  <div
+                    key={scheme.scheme_code}
+                    className="bg-surface-container-lowest rounded-2xl p-3.5 border border-outline-variant hover:border-primary/40 transition-all shadow-xs"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          {isApplied ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-primary">
+                              <Icon name="hourglass_top" size={12} className="text-primary" />
+                              <T gu="અરજી કરેલ" en="Applied" hi="आवेदन किया" />
+                            </span>
+                          ) : isEligible ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                              <Icon name="check_circle" size={12} fill className="text-emerald-800" />
+                              <T gu="પાત્ર ✓" en="Eligible ✓" hi="पात्र ✓" />
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-container-high text-on-surface-variant">
+                              <T gu="અપાત્ર" en={scheme.status} hi={scheme.status} />
+                            </span>
+                          )}
+                        </div>
+                        <h4 className="text-xs font-bold text-on-surface truncate">{title}</h4>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <span className="text-xs font-extrabold text-primary">
+                          {Number(scheme.amount) > 0 ? `₹ ${Number(scheme.amount).toLocaleString("en-IN")}` : "Cycle"}
+                        </span>
+                        <span className="text-[10px] text-on-surface-variant block">
+                          <T gu="વાર્ષિક" en="Annual" hi="वार्षिक" />
+                        </span>
+                      </div>
+                    </div>
+                    <div className="mt-2.5 pt-2 border-t border-surface-container-low flex items-center justify-between">
+                      <Link
+                        href={`/student/schemes/${encodeURIComponent(scheme.scheme_code)}`}
+                        className="text-xs font-semibold text-on-surface-variant hover:text-primary inline-flex items-center gap-0.5"
+                      >
+                        <T gu="પાત્રતા વિગત" en="Explain Eligibility" hi="पात्रता विवरण" />
+                      </Link>
+                      {!isApplied && isEligible && (
+                        <Link
+                          href="/student/apply"
+                          className="text-xs font-semibold text-primary hover:text-primary-container inline-flex items-center gap-0.5"
+                        >
+                          <span>
+                            <T gu="અરજી કરો" en="Apply Now" hi="आवेदन करें" />
+                          </span>
+                          <Icon name="arrow_forward" size={14} />
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                  <h4 className="text-xs font-bold text-on-surface truncate">
-                    <T
-                      gu="નમો લક્ષ્મી યોજના (Namo Lakshmi)"
-                      en="Namo Lakshmi Scheme"
-                      hi="नमो लक्ष्मी योजना"
-                    />
-                  </h4>
-                  <p className="text-[11px] text-on-surface-variant mt-0.5">
-                    <T
-                      gu="ધોરણ ૯ થી ૧૨ ની વિદ્યાર્થીનીઓ માટે શિષ્યવૃત્તિ"
-                      en="Scholarship for girl students of Classes 9 to 12"
-                      hi="कक्षा 9 से 12 की छात्राओं के लिए छात्रवृत्ति"
-                    />
-                  </p>
-                </div>
-                <div className="text-right shrink-0">
-                  <span className="text-xs font-extrabold text-primary">
-                    <T gu="₹ ૧૦,૦૦૦" en="₹ 10,000" hi="₹ 10,000" />
-                  </span>
-                  <span className="text-[10px] text-on-surface-variant block">
-                    <T gu="પ્રતિ વર્ષ" en="Per year" hi="प्रति वर्ष" />
-                  </span>
-                </div>
-              </div>
-              <div className="mt-2.5 pt-2 border-t border-surface-container-low flex items-center justify-between">
-                <span className="text-[10px] text-emerald-700 font-medium">
-                  <T gu="સંપૂર્ણ દસ્તાવેજો ઉપલબ્ધ છે" en="All documents available in vault" hi="सभी दस्तावेज़ उपलब्ध हैं" />
-                </span>
-                <Link
-                  href="/student/apply"
-                  className="text-xs font-semibold text-primary hover:text-primary-container inline-flex items-center gap-0.5"
-                >
-                  <span>
-                    <T gu="અરજી કરો" en="Apply Now" hi="आवेदन करें" />
-                  </span>
-                  <Icon name="arrow_forward" size={14} />
-                </Link>
-              </div>
+                );
+              })}
             </div>
-
-            {/* Card 2: Saraswati Sadhna Cycle */}
-            <div className="bg-surface-container-lowest rounded-2xl p-3.5 border border-outline-variant hover:border-primary/40 transition-all shadow-xs">
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-primary">
-                      <Icon name="hourglass_top" size={12} className="text-primary" />
-                      <T gu="અરજી કરેલ (Applied)" en="Applied" hi="आवेदन किया" />
-                    </span>
-                    <span className="text-[10px] text-on-surface-variant bg-surface-container-high px-1.5 py-0.5 rounded">
-                      <T gu="મફત સાયકલ" en="Free Cycle" hi="मुफ़्त साइकिल" />
-                    </span>
-                  </div>
-                  <h4 className="text-xs font-bold text-on-surface truncate">
-                    <T
-                      gu="સરસ્વતી સાધના સાયકલ યોજના"
-                      en="Saraswati Sadhna Cycle Scheme"
-                      hi="सरस्वती साधना साइकिल योजना"
-                    />
-                  </h4>
-                  <p className="text-[11px] text-on-surface-variant mt-0.5">
-                    <T
-                      gu="Atlas 22T ગર્લ્સ સાયકલ • શાળા પહોંચી ગઈ"
-                      en="Atlas 22T Girls Cycle • Arrived at school"
-                      hi="Atlas 22T गर्ल्स साइकिल • स्कूल पहुंच गई"
-                    />
-                  </p>
-                </div>
-                <div className="text-right shrink-0">
-                  <span className="text-xs font-extrabold text-emerald-700">
-                    <T gu="મંજૂર (Approved)" en="Approved" hi="स्वीकृत" />
-                  </span>
-                  <span className="text-[10px] text-on-surface-variant block">#APP-2026-00871</span>
-                </div>
-              </div>
-              <div className="mt-2.5 pt-2 border-t border-surface-container-low flex items-center justify-between">
-                <span className="text-[10px] text-primary font-medium">
-                  <T gu="ડિલિવરી પ્રક્રિયા ચાલુ" en="Delivery process in progress" hi="वितरण प्रक्रिया जारी" />
-                </span>
-                <Link
-                  href="/student/cycle"
-                  className="text-xs font-semibold text-primary hover:text-primary-container inline-flex items-center gap-0.5"
-                >
-                  <span>
-                    <T gu="ટ્રેકિંગ જુઓ" en="View Tracking" hi="ट्रैकिंग देखें" />
-                  </span>
-                  <Icon name="arrow_forward" size={14} />
-                </Link>
-              </div>
-            </div>
-
-            {/* Card 3: OBC Category Scholarship */}
-            <div className="bg-surface-container-lowest rounded-2xl p-3.5 border border-amber-200 hover:border-amber-400 transition-all shadow-xs">
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900">
-                      <Icon name="pending_actions" size={12} className="text-amber-900" />
-                      <T gu="દસ્તાવેજ જરૂરી (Needs Doc)" en="Needs Document" hi="दस्तावेज़ आवश्यक" />
-                    </span>
-                  </div>
-                  <h4 className="text-xs font-bold text-on-surface truncate">
-                    <T
-                      gu="ઓબીસી કેટેગરી પ્રિ-મેટ્રિક સ્કોલરશિપ"
-                      en="OBC Pre-Matric Scholarship"
-                      hi="ओबीसी प्री-मैट्रिक छात्रवृत्ति"
-                    />
-                  </h4>
-                  <p className="text-[11px] text-amber-800 mt-0.5">
-                    <T
-                      gu="આવક પ્રમાણપત્ર અપલોડ કરવું જરૂરી છે"
-                      en="Income certificate needs to be uploaded"
-                      hi="आय प्रमाण पत्र अपलोड करना आवश्यक है"
-                    />
-                  </p>
-                </div>
-                <div className="text-right shrink-0">
-                  <span className="text-xs font-extrabold text-primary">
-                    <T gu="₹ ૬,૦૦૦" en="₹ 6,000" hi="₹ 6,000" />
-                  </span>
-                  <span className="text-[10px] text-on-surface-variant block">
-                    <T gu="સંભવિત સહાય" en="Potential Aid" hi="संभावित सहायता" />
-                  </span>
-                </div>
-              </div>
-              <div className="mt-2.5 pt-2 border-t border-surface-container-low flex items-center justify-between">
-                <span className="text-[10px] text-amber-800 font-medium">
-                  <T gu="બાકી દસ્તાવેજ: ૧" en="Pending docs: 1" hi="बाकी दस्तावेज़: 1" />
-                </span>
-                <Link
-                  href="/student/vault"
-                  className="text-xs font-semibold text-secondary hover:text-on-secondary-fixed inline-flex items-center gap-0.5"
-                >
-                  <span>
-                    <T gu="અપલોડ કરો" en="Upload Now" hi="अपलोड करें" />
-                  </span>
-                  <Icon name="upload_file" size={14} />
-                </Link>
-              </div>
-            </div>
-
-            {/* Card 4: National Merit (NMMS) */}
-            <div className="bg-surface-container-lowest rounded-2xl p-3.5 border border-outline-variant opacity-85 hover:opacity-100 transition-all shadow-xs">
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-container-high text-on-surface-variant">
-                      <Icon name="block" size={12} className="text-on-surface-variant" />
-                      <T gu="હાલમાં અપાત્ર (Not Eligible)" en="Currently Not Eligible" hi="वर्तमान में अपात्र" />
-                    </span>
-                  </div>
-                  <h4 className="text-xs font-bold text-on-surface truncate">
-                    <T
-                      gu="નેશનલ મેરિટ સ્કોલરશિપ (NMMS)"
-                      en="National Means-cum-Merit Scholarship (NMMS)"
-                      hi="नेशनल मेरिट स्कॉलरशिप (NMMS)"
-                    />
-                  </h4>
-                  <p className="text-[11px] text-on-surface-variant mt-0.5">
-                    <T
-                      gu="પરીક્ષા પરિણામ વેરિફિકેશન બાકી છે"
-                      en="Class 8 exam score verification pending"
-                      hi="कक्षा 8 परीक्षा परिणाम सत्यापन लंबित है"
-                    />
-                  </p>
-                </div>
-                <div className="text-right shrink-0">
-                  <span className="text-xs font-bold text-on-surface-variant">
-                    <T gu="₹ ૧૨,૦૦૦" en="₹ 12,000" hi="₹ 12,000" />
-                  </span>
-                  <span className="text-[10px] text-on-surface-variant block">
-                    <T gu="વાર્ષિક" en="Annually" hi="वार्षिक" />
-                  </span>
-                </div>
-              </div>
-              <div className="mt-2.5 pt-2 border-t border-surface-container-low flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => setShowWhyModal(true)}
-                  className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-0.5"
-                >
-                  <span>
-                    <T gu="કારણ જુઓ (See why)" en="See Reason" hi="कारण देखें" />
-                  </span>
-                  <Icon name="help_outline" size={13} />
-                </button>
-                <span className="text-[10px] text-on-surface-variant">
-                  <T gu="ધોરણ ૮ મેરિટ કટ-ઓફ: ૭૦%" en="Class 8 Cut-off: 70%" hi="कक्षा 8 कट-ऑफ: 70%" />
-                </span>
-              </div>
-            </div>
-          </div>
+          )}
         </section>
 
-        {/* 9. Recent Activity & Notification Preview */}
+        {/* 8. Recent Activity & Notification Preview */}
         <section className="bg-surface-container-lowest rounded-2xl p-3.5 border border-outline-variant shadow-level-1 space-y-2.5">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-bold text-on-surface uppercase tracking-wide">
@@ -670,51 +540,30 @@ export default function StudentDashboardPage() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex items-start gap-2.5 p-2 rounded-xl bg-surface-container-low">
-              <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
-                <Icon name="pedal_bike" size={15} />
+            {notifList.slice(0, 3).map((n) => (
+              <div key={n.id} className="flex items-start gap-2.5 p-2 rounded-xl bg-surface-container-low">
+                <div className="w-7 h-7 rounded-full bg-blue-100 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                  <Icon name="notifications" size={15} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-on-surface leading-tight">
+                    {lang === "gu" ? String(n.title_gu ?? n.title_en) : lang === "hi" ? String(n.title_hi ?? n.title_en) : n.title_en}
+                  </p>
+                  <p className="text-[10px] text-on-surface-variant mt-0.5 truncate">
+                    {String(n.body ?? "")}
+                  </p>
+                </div>
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-on-surface leading-tight">
-                  <T gu="સાયકલ શાળામાં ડિલિવર થઈ" en="Bicycle delivered to school" hi="साइकिल स्कूल में डिलीवर हुई" />
-                </p>
-                <p className="text-[10px] text-on-surface-variant mt-0.5">
-                  <T
-                    gu="સરસ્વતી સાધના યોજના હેઠળ Atlas 22T સાયકલ તૈયાર છે."
-                    en="Atlas 22T cycle ready under Saraswati Sadhna Scheme."
-                    hi="सरस्वती साधना योजना के तहत साइकिल तैयार है।"
-                  />
-                </p>
-              </div>
-              <span className="text-[9px] text-on-surface-variant shrink-0">
-                <T gu="૨ કલાક પહેલાં" en="2h ago" hi="2 घंटे पहले" />
-              </span>
-            </div>
-
-            <div className="flex items-start gap-2.5 p-2 rounded-xl bg-surface-container-low">
-              <div className="w-7 h-7 rounded-full bg-blue-100 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                <Icon name="verified_user" size={15} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-on-surface leading-tight">
-                  <T gu="GSRDA આધાર ચકાસણી પૂર્ણ" en="GSRDA Aadhaar KYC Verified" hi="GSRDA आधार सत्यापन पूर्ण" />
-                </p>
-                <p className="text-[10px] text-on-surface-variant mt-0.5">
-                  <T
-                    gu="નમો લક્ષ્મી યોજના માટે ડેટા ઓટો-પ્રમાણિત થયો."
-                    en="Data auto-verified for Namo Lakshmi Scheme."
-                    hi="नमो लक्ष्मी योजना के लिए डेटा सत्यापित हुआ।"
-                  />
-                </p>
-              </div>
-              <span className="text-[9px] text-on-surface-variant shrink-0">
-                <T gu="ગઈકાલે" en="Yesterday" hi="कल" />
-              </span>
-            </div>
+            ))}
+            {notifList.length === 0 && (
+              <p className="text-xs text-on-surface-variant">
+                <T gu="કોઈ તાજેતરની સૂચના નથી" en="No recent notifications" hi="कोई हालिया सूचना नहीं" />
+              </p>
+            )}
           </div>
         </section>
 
-        {/* 10. Floating AI Help Button (Vidya Mitra AI) */}
+        {/* 9. Floating AI Help Button (Vidya Mitra AI) */}
         <div className="fixed bottom-20 right-4 z-40 md:right-[max(1rem,calc(50%-215px+1rem))]">
           <Link
             href="/student/assistant"
@@ -736,79 +585,6 @@ export default function StudentDashboardPage() {
             </div>
           </Link>
         </div>
-
-        {/* NMMS Eligibility Details Modal */}
-        {showWhyModal && (
-          <div
-            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-xs animate-fade-in"
-            onClick={() => setShowWhyModal(false)}
-          >
-            <div
-              className="bg-surface-container-lowest rounded-2xl max-w-sm w-full p-4 border border-outline-variant shadow-level-3 space-y-3"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center">
-                    <Icon name="info" size={18} />
-                  </div>
-                  <h4 className="font-title-md text-sm font-bold text-on-surface">
-                    <T gu="પાત્રતા વિગતો (NMMS)" en="Eligibility Details (NMMS)" hi="पात्रता विवरण (NMMS)" />
-                  </h4>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setShowWhyModal(false)}
-                  className="p-1 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors"
-                >
-                  <Icon name="close" size={18} />
-                </button>
-              </div>
-
-              <div className="space-y-2 text-xs text-on-surface-variant leading-relaxed">
-                <p>
-                  <strong className="text-on-surface">
-                    <T gu="યોજના:" en="Scheme:" hi="योजना:" />
-                  </strong>{" "}
-                  <T
-                    gu="નેશનલ મીન્સ-કમ-મેરિટ સ્કોલરશિપ (NMMS)"
-                    en="National Means-cum-Merit Scholarship (NMMS)"
-                    hi="नेशनल मीन्स-कम-मेरिट स्कॉलरशिप (NMMS)"
-                  />
-                </p>
-                <p>
-                  <strong className="text-on-surface">
-                    <T gu="શરત:" en="Requirement:" hi="शर्त:" />
-                  </strong>{" "}
-                  <T
-                    gu="ધોરણ ૮ NMMS રાજ્ય સ્તરની પરીક્ષામાં લઘુત્તમ ૭૦% ગુણ જરૂરી છે."
-                    en="Minimum 70% marks required in Class 8 NMMS state examination."
-                    hi="कक्षा 8 NMMS राज्य स्तरीय परीक्षा में न्यूनतम 70% अंक आवश्यक हैं।"
-                  />
-                </p>
-                <div className="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant">
-                  <p className="font-medium text-on-surface">
-                    <T
-                      gu="હાલની સ્થિતિ: SEB (રાજ્ય પરીક્ષા બોર્ડ) તરફથી ગુણ વેરિફિકેશન પ્રક્રિયામાં છે."
-                      en="Current Status: Marks verification in progress from SEB (State Examination Board)."
-                      hi="वर्तमान स्थिति: राज्य परीक्षा बोर्ड (SEB) से अंक सत्यापन प्रक्रिया में है।"
-                    />
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex justify-end pt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowWhyModal(false)}
-                  className="btn-primary px-4 py-1.5 h-9 rounded-lg text-xs"
-                >
-                  <T gu="સમજાયું" en="Got it" hi="समझ गया" />
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </StudentShell>
   );

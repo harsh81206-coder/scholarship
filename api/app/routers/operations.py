@@ -495,10 +495,13 @@ def put_consents(
     student = _student_for(user, session)
     key = f"consents:{student.cts_id}"
     row = session.get(Setting, key)
+    values = body.get("values", body)
+    if not isinstance(values, dict):
+        raise HTTPException(400, "Consent values must be an object")
     value = {
-        k: bool(body[k])
+        k: bool(values[k])
         for k in ("guardian_consent", "share_documents", "auto_apply", "alerts")
-        if k in body
+        if k in values
     }
     if row:
         row.value_json = json.dumps(value)

@@ -1,77 +1,90 @@
 # Final status — Vidya Pragati Setu
 
-Audit run: 2026-11-05. Statuses below reflect commands executed in this workspace; a route registration is not counted as a wired UI flow.
+Updated: 2026-11-26. This report separates API wiring, browser interaction coverage, route-only screenshots, and items that were not verified.
 
-## Milestones
+## Acceptance summary
 
-| Milestone | Status | Commit | Evidence / boundary |
-|---|---|---|---|
-| M0 Audit + hygiene | Done | N/A | `docs/STATUS.md` inventories all 33 screens; old `backend/` is archived at `_archive/backend/`; API README/contracts list current routes and describe actual ML fallbacks. |
-| M1 Frontend API layer | Partial | N/A | OpenAPI types, API client/resources/hooks, shared loading states, and mock API exist. Most screens still do not call the hooks; response schemas are not checked with Zod at runtime. |
-| M2 Login + guards | Partial | N/A | Real OTP send/verify, cooldown, role cookies/guards, and demo role login exist. Browser smoke passed for Student → School, `/students/me`, scoped `/applications`, and wrong-role redirect; all six demo roles were not individually exercised. |
-| M3 Wire 33 screens | Partial | N/A | P2/P3 use the API. The other 30 screen routes remain fixture/Zustand-driven; no screen-by-screen API browser flow was completed. |
-| M4 Backend verification | Partial | N/A | 46 backend tests pass, including a TestClient workflow through application approval, DBT, logistics, renewal consent, document upload, and audit-chain verification. Several requested edge cases are not covered yet. |
-| M5 Contract check v2 | Partial | N/A | `make check-contract` reports 33/33 route registrations. It does not log in as every role, invoke each endpoint, or validate OpenAPI/runtime/Zod response shapes. |
-| M6 E2E + visual QA | Partial | N/A | All 33 routes were captured at requested viewport sizes; login/role smoke passed. Full UI transaction journey and pixel-by-pixel comparison of all 33 references were not run. |
-| M7 Hardening + environment | Partial | N/A | Startup secret guard, mock-only `demo_otp`, OTP attempt lock, and local-font build are present. Docker and several requested upload/privacy/performance cases remain unverified. |
-| M8 Demo readiness | Partial | N/A | Root Makefile, seeded SQLite snapshot, trained artifacts, online startup script, offline build target, demo script, and this report exist. Root-level commits could not be made. |
+| Work area | Status | Evidence / boundary |
+|---|---|---|
+| Golden Path frontend | Done for the 17 listed Tier 1 routes, with X1 partial | Real API hooks are used for login, student application, school/DEO review, vendor dispatch, school handover, student cycle/payments/notifications, admin DBT, and promotion. X1 currently exposes promotion only. |
+| Cross-role database flow | Done for tested path | Playwright submits one student application and verifies the same row as school, DEO, vendor/school logistics, admin DBT, and student. |
+| Backend regression | Done for current test suite | 77 tests passed, exceeding the plan's 70+ target; `ruff check app tests` is clean. |
+| Contract check | Partial | `80` endpoint calls passed across six seeded roles. This is not a 33-page UI wiring check or full runtime Zod validation. |
+| Browser E2E | Done for stated path | `make e2e` passed three consecutive runs against fresh temporary databases. E2E uses the mock DBT simulator endpoint for deterministic credit after initiating DBT. |
+| Route and visual QA | Partial | 33/33 authenticated screenshots and browser health checks passed. Full Stitch pixel comparison and all-language layout review are still outstanding; focused manual review found fidelity gaps on dense officer screens. |
+| Tier 2/3 wiring | Partial | These routes render but remain fixtures/static. See [`STATUS.md`](STATUS.md). |
+| Production local demo | Done | `make demo` runs a production Next build and `next start` alongside FastAPI. Server URLs and current health are reported in the completion message. |
+| Offline demo | Done | `make demo-offline` builds and serves the mock-only frontend without requiring the API. |
+| Deployment / Docker | Partial | Deployment files are present. Docker is unavailable in this environment, so Compose validation and container startup are not verified. No hosted URL has been deployed or tested. |
 
-**Commit note:** `/Users/harshpatel/Desktop/hiii` has no root `.git` directory. `web/` has a separate nested Git repository. No milestone commit hashes can be truthfully reported, and I did not rewrite repository metadata or history.
+## Evidence
 
-## Done with evidence
+Commands run from the repository root unless noted:
 
-- Backend verification command, run from `api/`:
+```text
+make qa
+```
 
-  ```text
-  make openapi && make check-contract && ruff check app tests && pytest -q
-  Contract check: 33/33 screens have a frontend route and registered API path (P1 is static).
-  All checks passed!
-  46 passed, 3 warnings in 1.15s
-  ```
+Latest full output summary:
 
-  The three warnings were Python `crypt` deprecation and FastAPI `on_event` deprecation notices.
-- Frontend verification, run from `web/`:
+```text
+Endpoint contract check: 80 calls passed across 6 seeded roles.
+77 passed, 3 warnings in 1.48s
+All checks passed!
+openapi-typescript 7.13.0 generated lib/api/types.ts
+✔ No ESLint warnings or errors
+✓ Compiled successfully
+✓ Generating static pages (47/47)
+Playwright login: student OTP, /students/me, school role switch, scoped applications, and wrong-role redirect passed.
+Screenshots: 33/33
+HTTP/page errors: 0
+```
 
-  ```text
-  npm run api:types && npx tsc --noEmit && npm run lint && npm run build
-  openapi-typescript 7.13.0 generated lib/api/types.ts
-  ✔ No ESLint warnings or errors
-  ✓ Compiled successfully
-  ✓ Generating static pages (47/47)
-  ```
+This includes the OpenAPI contract calls, backend tests and Ruff, generated TypeScript, `tsc`, ESLint, optimized Next production build, OTP/role smoke, and all-route browser sweep. Screenshot QA starts a clean Next dev output against a temporary API port; it does not validate the production server session. The separate production build and the local `make demo` startup check cover the production bundle/server.
 
-  TypeScript emitted no errors. The production build completed without the prior SWC lockfile warning.
-- `make qa` completed end to end: 46 backend tests passed, ruff clean, API types regenerated, TypeScript/lint/build passed (47/47 pages), OTP/role smoke passed, and the browser sweep captured 33/33 routes with zero HTTP/page errors.
-- Offline build: `make demo-offline` completed; Next.js compiled and generated 47/47 static pages with `NEXT_PUBLIC_USE_MOCK=true`.
-- Route capture: `QA_BASE_URL=http://localhost:3100 npm run qa:screens` reported `Screenshots: 33/33`, `HTTP/page errors: 0`; all 33 rows had status 200, zero broken images, no page errors, Gujarati font availability true, and no document-level horizontal overflow. Result data: [`qa/results.json`](../qa/results.json); images: [`qa/screens/`](../qa/screens/).
-- Browser auth smoke: `QA_BASE_URL=http://localhost:3100 npm run qa:login` passed Student OTP login, `/students/me`, demo switch to School, `/applications`, and middleware redirect from `/admin` to `/school`.
-- Startup smoke: `VPS_API_PORT=8101 VPS_WEB_PORT=3101 make demo` printed demo URLs/identifiers; API `/health` returned HTTP 200 and web `/` returned HTTP 200.
-- Seeded assets present locally: `api/vps.demo.db` (656 KB), with 600 students from the seed run; trained dropout, fraud, and forecast joblib artifacts are in `api/artifacts/`.
+Production demo startup check:
+
+```text
+VPS_API_PORT=8000 VPS_WEB_PORT=3000 make demo
+✓ Generating static pages (47/47)
+✓ Ready in 123ms
+curl http://127.0.0.1:3000/ → HTTP 200
+curl http://127.0.0.1:8000/health → HTTP 200, {"status":"ok","version":"2.0.0","adapter_mode":"mock"}
+```
+
+Both servers are left running for the user at `http://localhost:3000` and `http://localhost:8000/api/docs`.
+
+```text
+make e2e
+```
+
+The command runs the browser Golden Path three times against a new disposable SQLite database each time. The tested path is login → S1 → S2 → S4 OCR upload → S5 guardian OTP/apply → S6 tracker → SC2/SC3 school approval → D2 DEO approval → V1 dispatch → SC5 receive/handover → S7 delivered → A3 DBT initiate → S8 credited → X1 promote → S10 notification.
+
+The contract check currently reports `Endpoint contract check: 80 calls passed across 6 seeded roles.` It validates declared OpenAPI response schemas where available and checks explicit response keys for other handlers. It does not parse every screen response with Zod in the browser.
 
 ## Not verified
 
-- Docker is not installed in this environment (`command -v docker` returned no path), so `docker compose config` and container startup were not run.
-- Full browser journey from upload/apply through school/taluka/DEO approval, vendor delivery, DBT credit, promote, and audit verification was not run. The API TestClient flow is not equivalent to UI E2E.
-- The 33 screenshots were checked for route load, JS errors, image failures, font availability, and page-level overflow. A full pixel/layout comparison against every Stitch PNG was not completed; focused manual inspection covered SC2, SC3, SC4, SC5, SC6, V1, and A3.
-- The contract checker does not invoke every API endpoint or validate each response against OpenAPI and Zod/TypeScript shapes. It checks route files and registered paths.
-- Dashboard latency under 300 ms, analytics cache behavior, all six role scopes, all requested authorization edge cases, ML artifact removal fallback, and every DBT/logistics/OCR/records/security requirement were not independently verified.
-- The Playwright route screenshots used fixture data and fake role cookies for route access; only the separate OTP/role smoke used real API-issued JWTs.
-- No Git commit hashes are available because the workspace root is not a Git repository.
+- Docker was not available (`command -v docker` returned no executable); `docker compose config` and container startup were not run.
+- No Render/Vercel deployment was created, and there is no verified public demo URL.
+- Full pixel-by-pixel comparison of all 33 Stitch references, every nested table/panel clipping check, and complete `gu`/`hi`/`en` switching on all Tier 1 and Tier 2 routes were not completed.
+- Tier 2/3 screens remain fixture-backed; route screenshots prove rendering, not real data behavior.
+- X1 has no UI controls for attendance simulation, forced DBT success/failure, or demo reset. These backend/demo endpoints are not part of the current click path.
+- E2E forces mock DBT completion through the simulator API after the UI starts payment. It does not prove the asynchronous mock worker always completes before the user navigates, nor any external PFMS transfer.
+- Full language, device, upload security, 300 ms dashboard latency, analytics cache expiry, all adapter failure cases, and VAPT were not exhaustively verified.
 
 ## Known limitations
 
-- Only login and OTP verification (P2/P3) call the backend from their screens. S1–X1 remain local fixture/Zustand screens despite the shared API client and hooks. `NEXT_PUBLIC_USE_MOCK=false` therefore does **not** make the whole UI a real-backend demo.
-- `make demo` runs the API in mock adapter mode and starts the Next development server. It is an online local startup command, not a fully API-wired workflow.
-- `make demo-offline` builds the mock-mode frontend; serve that build separately with `cd web && npm run start -- --hostname 127.0.0.1 --port 3000`.
-- SMS, PFMS, DigiLocker, Aadhaar/UIDAI, CTS, and external LLM integrations are local mock/template behavior. Do not present them as connected government services.
-- ML artifacts were trained from synthetic data; their metrics are not real-world accuracy claims.
-- OTP storage and resend cooldown are in-memory. Production OTP delivery is not configured.
-- Docker Compose currently builds the frontend with `NEXT_PUBLIC_USE_MOCK=true`; it does not demonstrate real API wiring from the pages.
+- PFMS, Aadhaar/UIDAI, CTS, DigiLocker, SMS, and LLM integrations remain local mock adapters. No government provider is connected.
+- Dropout, fraud, and forecast artifacts are trained on synthetic demo data; metrics are not real-world performance claims.
+- OTP state and resend cooldown are in memory and reset when the API process restarts. Demo OTP `123456` is available only in mock mode.
+- The 16 fixture/static routes listed in `docs/STATUS.md` do not become real-data screens just because their backend endpoints exist.
+- The checked-in SQLite seed is demo data. Reset it with `make demo-reset` before each clean presentation.
 
 ## Next steps for production
 
-1. Wire each screen to resource hooks and verify loading, empty, error, mutation, and language states against the running API.
-2. Expand contract validation to invoke all screen endpoints under all relevant roles and validate response schemas.
-3. Complete missing backend paths and tests listed in [`docs/STATUS.md`](STATUS.md) and `api/docs/api-contract.md`.
-4. Run the full Playwright workflow and compare all screenshots with Stitch references at the required viewports.
-5. Integrate approved PFMS, Aadhaar/UIDAI through AUA/KUA, CTS, DigiLocker, and SMS providers; complete VAPT and production secrets/CORS review.
+1. Wire Tier 2 dashboards and remaining Tier 3 screens, with per-screen interaction checks and a visible fixture fallback marker.
+2. Add browser-side runtime response validation for all screen payloads and complete full screen-by-screen contract coverage.
+3. Finish Stitch comparison and Gujarati/Hindi/English layout review, especially SC2, SC3, SC6, D2, A3, and V1.
+4. Persist OTP state, configure production secrets/CORS/rate limits, and complete a security review/VAPT.
+5. Integrate approved PFMS, Aadhaar/UIDAI through AUA/KUA, CTS, DigiLocker, and SMS providers before making production service claims.
+6. Deploy to a hosted environment, verify the cold-start/health path, then add the real URL and recorded demo link to the README.

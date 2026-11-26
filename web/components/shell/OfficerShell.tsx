@@ -6,6 +6,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { RoleSwitcher } from "@/components/RoleSwitcher";
 import { NAV_CONFIG, ROLE_LABELS } from "@/lib/nav.config";
 import { useAppStore, type Role } from "@/lib/store";
+import { ApiModeBadge } from "@/app/student/components/ApiModeBadge";
 
 interface OfficerShellProps {
   children: React.ReactNode;
@@ -108,7 +109,10 @@ export function OfficerShell({ children, role }: OfficerShellProps) {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-auto">{children}</main>
+        <main className="flex-1 overflow-auto">
+          <ApiModeBadge />
+          {children}
+        </main>
       </div>
       <RoleSwitcher />
     </div>

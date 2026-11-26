@@ -3,6 +3,7 @@ import { apiJson, apiRequest, type ApiEndpoint } from "./client";
 import { useAuthStore } from "./auth-store";
 import type { Lang, Role } from "@/lib/store";
 import { useAppStore } from "@/lib/store";
+import { create } from "zustand";
 
 export interface StudentProfile {
   cts_id: string;
@@ -42,7 +43,8 @@ export interface ResourceApi {
   documents(): Promise<DocumentSummary[]>;
   uploadDocument(docType: string, file: File): Promise<DocumentSummary & Record<string, unknown>>;
   fetchDigiLocker(): Promise<Record<string, unknown>>;
-  bulkApply(codes: string[], consent: boolean): Promise<Record<string, unknown>>;
+  sendGuardianOtp(): Promise<{ success: boolean; masked_mobile: string; resend_after_seconds: number; expires_in_seconds: number; demo_otp?: string }>;
+  bulkApply(codes: string[], consent: boolean, guardianOtp: string): Promise<Record<string, unknown>>;
   approve(code: string, remark?: string): Promise<Record<string, unknown>>;
   reject(code: string, reason: string): Promise<Record<string, unknown>>;
   requestCorrection(code: string, fields: string[], note: string): Promise<Record<string, unknown>>;
@@ -52,6 +54,7 @@ export interface ResourceApi {
   startHandover(input: Record<string, unknown>): Promise<Record<string, unknown>>;
   handover(input: Record<string, unknown>): Promise<Record<string, unknown>>;
   payments(): Promise<Record<string, unknown>>;
+  receipt(txnId: number): Promise<Record<string, unknown>>;
   dbtTransactions(): Promise<Paged<Record<string, unknown>>>;
   grievances(): Promise<Paged<GrievanceSummary>>;
   createGrievance(input: { category: string; description: string }): Promise<Record<string, unknown>>;
@@ -66,6 +69,8 @@ export interface ResourceApi {
   createDelegation(input: Record<string, unknown>): Promise<Record<string, unknown>>;
   fundsOverview(): Promise<Record<string, unknown>>;
   dbtReconciliation(): Promise<Record<string, unknown>>;
+  sanctionDbt(applicationIds: string[]): Promise<Record<string, unknown>>;
+  initiateDbt(applicationIds: string[], idempotencyKey?: string): Promise<Record<string, unknown>>;
   retryDbt(id: number): Promise<Record<string, unknown>>;
   reports(type?: string): Promise<Record<string, unknown>>;
   dropoutForecast(): Promise<Record<string, unknown>>;
@@ -109,7 +114,8 @@ const realApi: ResourceApi = {
     return apiRequest("/documents", { method: "POST", body });
   },
   fetchDigiLocker: () => apiRequest("/documents/fetch-digilocker", { method: "POST" }),
-  bulkApply: (schemeCodes, consent) => apiRequest("/applications/bulk", { ...apiJson("POST", { scheme_codes: schemeCodes, consent }) }),
+  sendGuardianOtp: () => apiRequest(route("/applications/guardian-otp/send"), { method: "POST" }),
+  bulkApply: (schemeCodes, consent, guardianOtp) => apiRequest("/applications/bulk", { ...apiJson("POST", { scheme_codes: schemeCodes, consent, guardian_otp: guardianOtp }) }),
   approve: (code, remark) => apiRequest(route(`/applications/${encodeURIComponent(code)}/approve`), { ...apiJson("POST", { remark }) }),
   reject: (code, reason) => apiRequest(route(`/applications/${encodeURIComponent(code)}/reject`), { ...apiJson("POST", { reason }) }),
   requestCorrection: (code, fields, note) => apiRequest(route(`/applications/${encodeURIComponent(code)}/request-correction`), { ...apiJson("POST", { fields, note }) }),
@@ -118,14 +124,30 @@ const realApi: ResourceApi = {
   cycleOverview: () => apiRequest("/cycles/overview"),
   startHandover: (input) => apiRequest("/handover/initiate", { ...apiJson("POST", input) }),
   handover: (input) => apiRequest("/handover/confirm", { ...apiJson("POST", input) }),
-  payments: () => apiRequest("/students/me/payments"),
+  payments: async () => {
+    const result = await apiRequest<Record<string, unknown>>("/students/me/payments");
+    const transactions = Array.isArray(result.transactions) ? result.transactions as Array<Record<string, unknown>> : [];
+    return {
+      ...result,
+      transactions: transactions.map((transaction) => ({
+        ...transaction,
+        id: transaction.id ?? transaction.txn_id,
+        scheme_name_en: transaction.scheme_name_en ?? transaction.scheme_name,
+        utr_no: transaction.utr_no ?? transaction.utr,
+      })),
+    };
+  },
+  receipt: (txnId) => apiRequest(route(`/dbt/receipt/${txnId}`)),
   dbtTransactions: () => apiRequest("/dbt/transactions?page=1&size=50"),
   grievances: async () => {
     const items = await apiRequest<GrievanceSummary[]>("/grievances/me");
     return { items, total: items.length, page: 1, size: items.length || 1 };
   },
   createGrievance: (input) => apiRequest("/grievances", { ...apiJson("POST", input) }),
-  notifications: () => apiRequest("/notifications"),
+  notifications: async () => {
+    const res = await apiRequest<{ items?: NotificationSummary[] } | NotificationSummary[]>("/notifications");
+    return Array.isArray(res) ? res : (res.items ?? []);
+  },
   readAllNotifications: () => apiRequest("/notifications/read-all", { method: "POST" }),
   readNotification: (id) => apiRequest(route(`/notifications/${id}/read`), { method: "PATCH" }),
   consents: () => apiRequest("/students/me/consents"),
@@ -136,6 +158,8 @@ const realApi: ResourceApi = {
   createDelegation: (input) => apiRequest("/delegations", { ...apiJson("POST", input) }),
   fundsOverview: () => apiRequest("/funds/overview"),
   dbtReconciliation: () => apiRequest("/dbt/reconciliation"),
+  sanctionDbt: (application_ids) => apiRequest("/dbt/sanction", { ...apiJson("POST", { application_ids }) }),
+  initiateDbt: (application_ids, idempotency_key) => apiRequest("/dbt/initiate", { ...apiJson("POST", { application_ids, idempotency_key }) }),
   retryDbt: (id) => apiRequest(route(`/dbt/${id}/retry`), { method: "POST" }),
   reports: (type = "summary") => apiRequest(`/analytics/school/reports?type=${encodeURIComponent(type)}`),
   dropoutForecast: () => apiRequest("/ml/forecast/cycles"),
@@ -167,6 +191,58 @@ const realApi: ResourceApi = {
   promote: (ctsId) => apiRequest(route(`/demo/promote/${encodeURIComponent(ctsId)}`), { method: "POST" }),
 };
 
+const schemeCodeByFixtureId: Record<string, string> = {
+  "namo-lakshmi": "namo-lakshmi",
+  "saraswati-cycle": "saraswati-sadhna",
+  "gyan-setu": "gyan-setu",
+  nmms: "nmms",
+  "obc-scholarship": "sebc-obc",
+};
+
+const mockSchemes: SchemeSummary[] = MOCK_SCHEMES.map((scheme) => {
+  const id = String(scheme.id);
+  return {
+    scheme_code: schemeCodeByFixtureId[id] ?? id,
+    scheme_name_en: scheme.name.en,
+    scheme_name_gu: scheme.name.gu,
+    amount: id === "namo-lakshmi" ? 10000 : id === "gyan-setu" || id === "nmms" ? 12000 : id === "obc-scholarship" ? 15000 : 0,
+    status: "eligible",
+    scheme_type: id === "saraswati-cycle" ? "material" : "cash",
+    reasons: [],
+  };
+});
+
+const mockApplications: ApplicationSummary[] = MOCK_APPLICATIONS.map((app) => {
+  const schemeCode = schemeCodeByFixtureId[String(app.schemeId)] ?? String(app.schemeId);
+  const statuses: Record<string, string> = {
+    "APP-2026-00871": "deo_approved",
+    "APP-2026-00872": "school_verified",
+    "APP-2025-004190": "disbursed",
+    "APP-2026-00875": "correction_requested",
+  };
+  return {
+    app_code: String(app.id),
+    scheme_code: schemeCode,
+    scheme_name_en: String(app.schemeName),
+    status: statuses[String(app.id)] ?? "submitted",
+    stage: statuses[String(app.id)] ?? "submitted",
+    amount: Number(app.amount ?? 0),
+    submitted_at: String(app.submittedDate ?? ""),
+  };
+});
+
+const mockUploadedDocuments: DocumentSummary[] = [];
+let mockGuardianOtp: { code: string; expiresAt: number } | null = null;
+const mockNotifications: NotificationSummary[] = MOCK_NOTIFICATIONS.map((notification, index) => ({
+  id: index + 1,
+  title_en: notification.title.en,
+  title_gu: notification.title.gu,
+  title_hi: notification.title.hi,
+  body: notification.body,
+  type: notification.type,
+  read: notification.read,
+}));
+
 const mockApi: ResourceApi = {
   sendOtp: async () => ({ success: true, resend_after_seconds: 30, demo_otp: "123456" }),
   verifyOtp: async (identifier, otp, role) => {
@@ -176,31 +252,108 @@ const mockApi: ResourceApi = {
       scope: { school_id: null, taluka_id: null, district_id: null },
     };
   },
-  me: async () => MOCK_STUDENT as unknown as StudentProfile,
-  mySchemes: async () => MOCK_SCHEMES as unknown as SchemeSummary[],
+  me: async () => ({
+    cts_id: MOCK_STUDENT.id,
+    name_en: MOCK_STUDENT.nameShort.en,
+    name_gu: MOCK_STUDENT.nameShort.gu,
+    grade: 9,
+    gender: "female",
+    school_name: MOCK_STUDENT.school.en,
+    completion_pct: MOCK_STUDENT.profileCompletion,
+    verification_status: "verified",
+    bank: {
+      bank_name: MOCK_STUDENT.bank.bank,
+      last4: MOCK_STUDENT.bank.last4,
+      aadhaar_seeded: MOCK_STUDENT.bank.aadhaarSeeded,
+    },
+  }),
+  mySchemes: async () => mockSchemes,
   explain: async (code, lang) => ({ scheme_code: code, lang, status: "eligible", text: "Eligible for this scheme.", steps: [] }),
-  applications: async () => ({ items: MOCK_APPLICATIONS as unknown as ApplicationSummary[], total: MOCK_APPLICATIONS.length, page: 1, size: 50 }),
+  applications: async () => ({ items: [...mockApplications], total: mockApplications.length, page: 1, size: 50 }),
+  sendGuardianOtp: async () => {
+    mockGuardianOtp = { code: "123456", expiresAt: Date.now() + 5 * 60 * 1000 };
+    return { success: true, masked_mobile: "••••••10", resend_after_seconds: 30, expires_in_seconds: 300, demo_otp: mockGuardianOtp.code };
+  },
   applicationTimeline: async (code) => [{ app_code: code, stage: "applied", actor: "Student" }],
   application: async (code) => ({ app_code: code, status: "applied", timeline: [{ app_code: code, stage: "applied" }] }),
-  documents: async () => [],
-  uploadDocument: async (docType) => ({ id: Date.now(), doc_type: docType, status: "pending", confidence: 0.92 }),
+  documents: async () => [...mockUploadedDocuments],
+  uploadDocument: async (docType) => {
+    const fields: Record<string, Record<string, unknown>> = {
+      income: { holder_name: "Hasmukh Patel", annual_income: 96000, cert_no: "REV/AND/2026/049182", issuing_authority: "Mamlatdar Anand" },
+      aadhaar: { name: MOCK_STUDENT.name.en, dob: MOCK_STUDENT.dob, gender: "F", uid_last4: "8912" },
+      caste: { category: "OBC", cert_no: "CST/GUJ/2024/99102", valid_upto: "2029-12-31" },
+      marksheet: { student_name: "Riya Patel", class: 8, marks_pct: 79, result: "PASS", board: "GSEB" },
+    };
+    const doc = { id: Date.now(), doc_type: docType, status: "pending", source: "upload" };
+    const previousIndex = mockUploadedDocuments.findIndex((item) => item.doc_type === docType);
+    if (previousIndex >= 0) mockUploadedDocuments[previousIndex] = doc;
+    else mockUploadedDocuments.push(doc);
+    return { ...doc, ocr_fields: fields[docType] ?? {}, confidence: 0.95, authenticity: { qr_valid: true, seal_detected: true, tamper_score: 0.04, name_match: true, expiry_ok: true } };
+  },
   fetchDigiLocker: async () => ({ fetched: ["aadhaar", "caste"], source: "digilocker" }),
-  bulkApply: async (codes) => ({ created: codes, skipped: [], count: codes.length }),
+  bulkApply: async (codes, _consent, guardianOtp) => {
+    if (!mockGuardianOtp || Date.now() > mockGuardianOtp.expiresAt || guardianOtp !== mockGuardianOtp.code) {
+      throw new Error("Invalid or expired guardian OTP");
+    }
+    mockGuardianOtp = null;
+    const created = codes.filter((code) => !mockApplications.some((app) => app.scheme_code === code));
+    created.forEach((code, index) => {
+      const scheme = mockSchemes.find((item) => item.scheme_code === code);
+      if (!scheme) return;
+      mockApplications.unshift({
+        app_code: `APP-DEMO-${Date.now()}-${index + 1}`,
+        scheme_code: code,
+        scheme_name_en: scheme.scheme_name_en,
+        status: "submitted",
+        stage: "submitted",
+        amount: scheme.amount,
+      });
+    });
+    return { created, skipped: [], count: created.length };
+  },
   approve: async (code) => ({ app_code: code, success: true, new_status: "school_verified" }),
   reject: async (code, reason) => ({ app_code: code, success: true, reason }),
   requestCorrection: async (code, fields) => ({ app_code: code, success: true, fields }),
   bulkApprove: async (codes) => ({ approved: codes, skipped: [], count: codes.length, total: codes.length, skipped_count: 0 }),
-  myCycle: async () => ({ assigned: true, serial_no: "SSB-2026-077432", status: "received" }),
+  myCycle: async () => ({ assigned: true, serial_no: "SSB-2026-077432", status: "received", handover_pending: true, handover_otp: "482913" }),
   cycleOverview: async () => ({ ordered: 120, dispatched: 120, received: 118, delivered: 84, batches: [] }),
-  startHandover: async (input) => ({ success: true, demo_otp: "123456", ...input }),
+  startHandover: async (input) => ({ success: true, demo_otp: "482913", ...input }),
   handover: async (input) => ({ success: true, status: "handed_over", ...input }),
-  payments: async () => ({ total_credited: 0, transactions: MOCK_PAYMENTS }),
-  dbtTransactions: async () => ({ items: MOCK_PAYMENTS as unknown as Record<string, unknown>[], total: MOCK_PAYMENTS.length, page: 1, size: 50 }),
+  payments: async () => ({
+    total_credited: MOCK_PAYMENTS.filter((payment) => payment.status === "credited").reduce((total, payment) => total + payment.amount, 0),
+    transactions: MOCK_PAYMENTS.map((payment, index) => ({
+      id: index + 1,
+      app_code: `APP-DEMO-PAY-${index + 1}`,
+      scheme_name_en: payment.scheme,
+      amount: payment.amount,
+      status: payment.status === "pending" ? "initiated" : payment.status,
+      utr_no: payment.utr,
+      credited_at: payment.status === "credited" ? payment.date : null,
+    })),
+  }),
+  receipt: async (txnId) => {
+    const payment = MOCK_PAYMENTS[txnId - 1];
+    return {
+      receipt_id: txnId,
+      status: payment?.status ?? "not_found",
+      amount: payment?.amount ?? 0,
+      scheme: payment?.scheme ?? "",
+      utr: payment?.utr ?? null,
+    };
+  },
+  dbtTransactions: async () => ({ items: [], total: 0, page: 1, size: 50 }),
   grievances: async () => ({ items: MOCK_GRIEVANCES as unknown as GrievanceSummary[], total: MOCK_GRIEVANCES.length, page: 1, size: 50 }),
   createGrievance: async () => ({ success: true, grv_code: "GRV-DEMO-001" }),
-  notifications: async () => MOCK_NOTIFICATIONS as unknown as NotificationSummary[],
-  readAllNotifications: async () => ({ success: true }),
-  readNotification: async (id) => ({ success: true, id, read: true }),
+  notifications: async () => mockNotifications.map((notification) => ({ ...notification })),
+  readAllNotifications: async () => {
+    mockNotifications.forEach((notification) => { notification.read = true; });
+    return { success: true };
+  },
+  readNotification: async (id) => {
+    const notification = mockNotifications.find((item) => item.id === id);
+    if (notification) notification.read = true;
+    return { success: true, id, read: true };
+  },
   consents: async () => ({ guardian_consent: true, data_sharing: true }),
   updateConsents: async (values) => ({ success: true, values }),
   exportData: async () => ({ success: true, download_url: "/demo/student-data.json" }),
@@ -209,6 +362,8 @@ const mockApi: ResourceApi = {
   createDelegation: async (input) => ({ success: true, ...input }),
   fundsOverview: async () => ({ allocated: 1000000, released: 720000, utilized: 510000 }),
   dbtReconciliation: async () => ({ matched: 0, mismatched: 0, pending: 0 }),
+  sanctionDbt: async (ids) => ({ sanctioned: ids, count: ids.length }),
+  initiateDbt: async (ids) => ({ initiated: ids, count: ids.length }),
   retryDbt: async (id) => ({ success: true, txn_id: id }),
   reports: async () => ({ total: 0, status_counts: {}, items: [] }),
   dropoutForecast: async () => ({ model: "mock", items: [], total_forecast: 0 }),
@@ -231,13 +386,49 @@ const mockApi: ResourceApi = {
   analytics: async () => ({ total_students: 600, pending: 12, approved: 420 }),
   dropout: async () => ({ items: [], total: 0, page: 1, size: 50 }),
   fraudFlags: async () => ({ items: [], total: 0, page: 1, size: 50 }),
-  adminSchemes: async () => MOCK_SCHEMES as unknown as Array<Record<string, unknown>>,
+  adminSchemes: async () => mockSchemes,
   auditLogs: async () => ({ items: [], total: 0, page: 1, size: 50 }),
   chat: async () => ({ reply_text: "I can help with schemes and applications. AI guidance; officers make the final decision.", cards: [], quick_replies: [] }),
   promote: async (ctsId) => ({ cts_id: ctsId, old_grade: 9, new_grade: 10, diff: { newly_eligible: [], renewed: [], no_longer_applicable: [] } }),
 };
 
-export const api: ResourceApi = process.env.NEXT_PUBLIC_USE_MOCK === "true" ? mockApi : realApi;
+const mockMode = process.env.NEXT_PUBLIC_USE_MOCK === "true";
+const useApiModeStore = create<{ demoData: boolean; setDemoData: (value: boolean) => void }>((set) => ({
+  demoData: mockMode,
+  setDemoData: (demoData) => set({ demoData }),
+}));
+
+/** True when this session is using fixtures, either by explicit mock mode or offline fallback. */
+export const useApiDemoData = () => useApiModeStore((state) => state.demoData);
+
+function canUseOfflineFallback(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const status = "status" in error ? Number(error.status) : 0;
+  if (status) return status >= 500;
+  const message = String(error);
+  return (error instanceof TypeError && /fetch|network|load failed/i.test(message)) || /network|fetch failed|load failed/i.test(message);
+}
+
+const realApiWithFallback: ResourceApi = new Proxy(realApi, {
+  get(target, property: keyof ResourceApi) {
+    const value = target[property];
+    if (typeof value !== "function") return value;
+    return async (...args: unknown[]) => {
+      try {
+        const result = await (value as (...params: unknown[]) => Promise<unknown>)(...args);
+        useApiModeStore.getState().setDemoData(false);
+        return result;
+      } catch (error) {
+        if (!canUseOfflineFallback(error)) throw error;
+        useApiModeStore.getState().setDemoData(true);
+        const fallback = mockApi[property] as (...params: unknown[]) => Promise<unknown>;
+        return fallback(...args);
+      }
+    };
+  },
+});
+
+export const api: ResourceApi = mockMode ? mockApi : realApiWithFallback;
 
 export function storeAuthSession(identifier: string, role: Role, response: Awaited<ReturnType<ResourceApi["verifyOtp"]>>) {
   useAuthStore.getState().setSession({ accessToken: response.access_token, role, identifier, scope: response.scope });

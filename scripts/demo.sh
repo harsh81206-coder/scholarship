@@ -44,7 +44,7 @@ for attempt in $(seq 1 30); do
   sleep 1
 done
 
-echo "Vidya Pragati Setu demo is starting."
+echo "Vidya Pragati Setu demo is starting (production Next.js build)."
 echo "Web: http://localhost:${WEB_PORT}"
 echo "API docs: http://localhost:${API_PORT}/api/docs"
 echo "Demo OTP: 123456 (mock adapters)"
@@ -53,6 +53,10 @@ echo "School: SCH-AND-001 | Taluka: TPEO-BOR-001 | DEO: DEO-AND-001"
 echo "Admin: ADMIN-STATE-001 | Vendor: VND-001"
 
 cd "${REPO_ROOT}/web"
+rm -rf .next
 NEXT_PUBLIC_USE_MOCK=false \
 NEXT_PUBLIC_API_URL="http://localhost:${API_PORT}" \
-  npm run dev -- --hostname 127.0.0.1 --port "${WEB_PORT}"
+  npm run build
+NEXT_PUBLIC_USE_MOCK=false \
+NEXT_PUBLIC_API_URL="http://localhost:${API_PORT}" \
+  npm run start -- --hostname 127.0.0.1 --port "${WEB_PORT}"

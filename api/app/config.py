@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 720
     adapter_mode: str = "mock"
     demo_otp: str = "123456"
+    pfms_mock_success_rate: float = 0.95
     cors_origins: str = "http://localhost:3000"
     data_dir: str = "./data"
     anthropic_api_key: str = ""

@@ -113,6 +113,15 @@ def test_vendor_to_student_handover(setup_client):
     )
     assert received.json()["status"] == "received"
 
+    roster = client.get("/cycles/overview", headers=school_headers).json()
+    assert roster["receivable_cycles"] == [
+        {"serial_no": serial, "batch_id": batch["id"], "status": "received"}
+    ]
+    assert any(
+        entry["id"] == student.id and entry["cts_id"] == student.cts_id
+        for entry in roster["handover_students"]
+    )
+
     started = client.post(
         "/handover/initiate",
         json={"student_id": student.id, "cycle_serial": serial},
@@ -127,9 +136,10 @@ def test_vendor_to_student_handover(setup_client):
     )
     assert done.status_code == 200, done.text
     assert done.json()["status"] == "handed_over"
-    assert (
-        client.get("/cycles/overview", headers=school_headers).json()["delivered"] == 1
-    )
+    delivered_roster = client.get("/cycles/overview", headers=school_headers).json()
+    assert delivered_roster["delivered"] == 1
+    assert delivered_roster["receivable_cycles"] == []
+    assert all(entry["id"] != student.id for entry in delivered_roster["handover_students"])
     vendor_notice = session.exec(
         select(Notification).where(Notification.recipient_id == "VND-001")
     ).first()
@@ -151,6 +161,53 @@ def test_school_cannot_receive_other_school_batch(setup_client):
         headers=outsider,
     )
     assert response.status_code == 403
+
+
+def test_cycles_overview_scopes_batch_and_handover_roster_to_school(setup_client):
+    client, student, school, session = setup_client
+    other_school = School(
+        udise_code="24150104503",
+        name_en="Other School",
+        taluka_id=school.taluka_id,
+    )
+    session.add(other_school)
+    session.flush()
+    outside_student = Student(
+        cts_id="GJ-AND-2026-999999",
+        mobile="9876500000",
+        name_en="Outside Student",
+        school_id=other_school.id,
+        grade=9,
+    )
+    session.add(outside_student)
+    session.commit()
+
+    vendor_headers = auth("vendor", "VND-001")
+    own_batch = client.post(
+        "/vendor/batches",
+        json={"school_id": school.id, "qty": 1},
+        headers=vendor_headers,
+    ).json()
+    other_batch = client.post(
+        "/vendor/batches",
+        json={"school_id": other_school.id, "qty": 1},
+        headers=vendor_headers,
+    ).json()
+    overview = client.get(
+        "/cycles/overview", headers=auth("school", "SCH-AND-001", school.id)
+    )
+    assert overview.status_code == 200
+    payload = overview.json()
+    assert [batch["id"] for batch in payload["batches"]] == [own_batch["id"]]
+    assert {cycle["serial_no"] for cycle in payload["receivable_cycles"]} == set(
+        own_batch["serials"]
+    )
+    roster_ids = {entry["id"] for entry in payload["handover_students"]}
+    assert student.id in roster_ids
+    assert outside_student.id not in roster_ids
+    assert other_batch["serials"][0] not in {
+        cycle["serial_no"] for cycle in payload["receivable_cycles"]
+    }
 
 
 def test_received_quantity_mismatch_alerts_deo(setup_client):

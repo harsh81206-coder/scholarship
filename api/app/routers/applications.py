@@ -23,17 +23,18 @@ from app.models.core import (
     Setting,
     Notification,
 )
-from app.security import sha256_chain
+from app.security import OTP_COOLDOWN, OTP_TTL, generate_otp, sha256_chain, verify_otp
+from app.config import get_settings
 from app.services.eligibility import evaluate, store_result
 
 router = APIRouter(tags=["applications"])
+settings = get_settings()
 
 VALID_TRANSITIONS: dict[str, dict[str, list[str]]] = {
     "school": {"applied": ["school_verified", "rejected", "correction_requested"]},
-    "taluka": {
-        "school_verified": ["taluka_approved", "rejected", "correction_requested"]
-    },
+    "taluka": {"applied": ["taluka_approved", "rejected", "correction_requested"]},
     "deo": {
+        "applied": ["deo_approved", "rejected"],
         "taluka_approved": ["deo_approved", "rejected"],
         "school_verified": ["deo_approved", "rejected"],
     },
@@ -169,6 +170,7 @@ def _gen_code() -> str:
 class BulkApplyRequest(BaseModel):
     scheme_codes: list[str]
     consent: bool = False
+    guardian_otp: str | None = None
 
 
 class ActionRequest(BaseModel):
@@ -191,6 +193,34 @@ class RenewalConsentRequest(BaseModel):
 
 
 # ── Endpoints ────────────────────────────────────────────────────────────────
+@router.post("/applications/guardian-otp/send")
+def send_guardian_otp(
+    user: CurrentUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    if user.role != "student":
+        raise HTTPException(403, "Only students can request guardian verification")
+    student = session.exec(select(Student).where(Student.cts_id == user.sub)).first()
+    if not student:
+        raise HTTPException(404, "Student not found")
+    if not student.guardian_mobile:
+        raise HTTPException(400, "No guardian mobile number is registered")
+    if settings.adapter_mode != "mock":
+        raise HTTPException(503, "Guardian SMS adapter is not configured")
+    otp_identifier = f"guardian:{student.cts_id}"
+    try:
+        otp = generate_otp(otp_identifier, "guardian")
+    except ValueError as exc:
+        raise HTTPException(429, str(exc)) from exc
+    return {
+        "success": True,
+        "masked_mobile": f"••••••{student.guardian_mobile[-2:]}",
+        "resend_after_seconds": OTP_COOLDOWN,
+        "expires_in_seconds": OTP_TTL,
+        "demo_otp": otp,
+    }
+
+
 @router.post("/applications/bulk")
 def bulk_apply(
     body: BulkApplyRequest,
@@ -205,6 +235,18 @@ def bulk_apply(
     student = session.exec(select(Student).where(Student.cts_id == user.sub)).first()
     if not student:
         raise HTTPException(404, "Student not found")
+    if not student.guardian_mobile:
+        raise HTTPException(400, "No guardian mobile number is registered")
+    if not body.guardian_otp:
+        raise HTTPException(400, "Guardian OTP verification is required")
+    try:
+        guardian_verified = verify_otp(
+            f"guardian:{student.cts_id}", "guardian", body.guardian_otp
+        )
+    except ValueError as exc:
+        raise HTTPException(429, str(exc)) from exc
+    if not guardian_verified:
+        raise HTTPException(400, "Invalid or expired guardian OTP")
 
     created, skipped = [], []
     for code in body.scheme_codes:
@@ -490,8 +532,25 @@ def _do_action(
         raise HTTPException(
             400, f"Cannot transition {app.status} -> {new_status} as {user.role}"
         )
+    # `route` is the actionable review level. A school audit sample is routed
+    # to school; medium risk goes to taluka; high risk goes to DEO. Once a
+    # school or taluka reviewer completes their stage, the application moves
+    # to the DEO queue for final approval.
+    expected_route = {
+        "school": "school",
+        "taluka": "taluka",
+        "deo": "deo",
+        "admin": "deo",
+    }.get(user.role)
+    if expected_route and app.route != expected_route:
+        raise HTTPException(
+            403,
+            f"Application route '{app.route}' cannot be approved by {user.role}",
+        )
     previous_status = app.status
     app.status = new_status
+    if new_status in ("school_verified", "taluka_approved"):
+        app.route = "deo"
     app.updated_at = datetime.now(timezone.utc)
     _write_event(
         session,
@@ -503,7 +562,12 @@ def _do_action(
         {"prev_status": previous_status},
     )
     session.commit()
-    return {"success": True, "app_code": app_code, "new_status": new_status}
+    return {
+        "success": True,
+        "app_code": app_code,
+        "new_status": new_status,
+        "route": app.route,
+    }
 
 
 @router.post("/applications/{app_code}/approve")
@@ -554,6 +618,14 @@ def request_correction(
     if "correction_requested" not in allowed:
         raise HTTPException(
             400, f"Cannot request a correction from {app.status} as {user.role}"
+        )
+    expected_route = {"school": "school", "taluka": "taluka", "deo": "deo"}.get(
+        user.role
+    )
+    if expected_route and app.route != expected_route:
+        raise HTTPException(
+            403,
+            f"Application route '{app.route}' cannot be corrected by {user.role}",
         )
     app.status = "correction_requested"
     app.updated_at = datetime.now(timezone.utc)

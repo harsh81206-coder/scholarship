@@ -140,6 +140,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/applications/guardian-otp/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send Guardian Otp */
+        post: operations["send_guardian_otp_applications_guardian_otp_send_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/applications/bulk": {
         parameters: {
             query?: never;
@@ -1342,6 +1359,8 @@ export interface components {
              * @default false
              */
             consent: boolean;
+            /** Guardian Otp */
+            guardian_otp?: string | null;
         };
         /** BulkApproveRequest */
         BulkApproveRequest: {
@@ -1731,6 +1750,26 @@ export interface operations {
         };
     };
     get_my_cycle_students_me_cycle_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    send_guardian_otp_applications_guardian_otp_send_post: {
         parameters: {
             query?: never;
             header?: never;

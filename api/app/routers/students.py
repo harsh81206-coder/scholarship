@@ -107,6 +107,9 @@ def get_my_payments(
             app = session.get(Application, txn.application_id)
             txns.append(
                 {
+                    "id": txn.id,
+                    "application_id": txn.application_id,
+                    "app_code": app.app_code if app else "",
                     "utr": txn.utr,
                     "amount": txn.amount,
                     "status": txn.status,

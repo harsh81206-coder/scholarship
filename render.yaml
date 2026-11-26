@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: vidya-pragati-setu-api
+    runtime: python
+    rootDir: api
+    buildCommand: pip install -r requirements.txt && python3 -m seed.seed --reset
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ADAPTER_MODE
+        value: mock
+      - key: DEMO_OTP
+        value: "123456"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///./vps.demo.db
+      - key: CORS_ORIGINS
+        value: https://vidya-pragati-setu.vercel.app
+# Note: Free-tier Render instances sleep after 15m inactivity; hit /health before live demos.

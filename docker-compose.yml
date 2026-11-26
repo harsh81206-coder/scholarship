@@ -22,13 +22,13 @@ services:
     build:
       context: ./web
       args:
-        NEXT_PUBLIC_USE_MOCK: "true"
+        NEXT_PUBLIC_USE_MOCK: "false"
         NEXT_PUBLIC_API_URL: http://localhost:8000
     container_name: vps-frontend
     ports:
       - "3000:3000"
     environment:
-      NEXT_PUBLIC_USE_MOCK: "true"
+      NEXT_PUBLIC_USE_MOCK: "false"
       NEXT_PUBLIC_API_URL: http://localhost:8000
     depends_on:
       api:

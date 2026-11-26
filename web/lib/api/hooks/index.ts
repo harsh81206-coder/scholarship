@@ -36,6 +36,7 @@ export const useApplicationTimeline = (code: string) => useQuery({
 export const useApplication = (code: string) => useQuery({
   queryKey: ["applications", code] as const, queryFn: () => api.application(code), enabled: Boolean(code),
 });
+export const useSendGuardianOtp = () => useMutation({ mutationFn: api.sendGuardianOtp });
 export const useDocuments = () => useQuery({ queryKey: keys.docs, queryFn: api.documents });
 export const useUploadDocument = () => {
   const client = useQueryClient();
@@ -48,7 +49,7 @@ export const useFetchDigiLocker = () => {
 };
 export const useBulkApply = () => {
   const client = useQueryClient();
-  return useMutation({ mutationFn: ({ codes, consent }: { codes: string[]; consent: boolean }) => api.bulkApply(codes, consent),
+  return useMutation({ mutationFn: ({ codes, consent, guardianOtp }: { codes: string[]; consent: boolean; guardianOtp: string }) => api.bulkApply(codes, consent, guardianOtp),
     onSuccess: () => client.invalidateQueries({ queryKey: keys.apps }) });
 };
 export const useApprove = () => {
@@ -80,6 +81,7 @@ export const useHandover = () => {
     onSuccess: () => client.invalidateQueries({ queryKey: keys.cycle }) });
 };
 export const usePayments = () => useQuery({ queryKey: keys.payments, queryFn: api.payments });
+export const useReceipt = () => useMutation({ mutationFn: api.receipt });
 export const useDbt = () => useQuery({ queryKey: keys.dbt, queryFn: api.dbtTransactions });
 export const useGrievances = () => useQuery({ queryKey: keys.grievances, queryFn: api.grievances });
 export const useCreateGrievance = () => {
@@ -117,6 +119,29 @@ export const useCreateDelegation = () => {
 };
 export const useFundsOverview = () => useQuery({ queryKey: ["funds", "overview"], queryFn: api.fundsOverview });
 export const useDbtReconciliation = () => useQuery({ queryKey: ["dbt", "reconciliation"], queryFn: api.dbtReconciliation });
+export const useSanctionDbt = () => {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: (applicationIds: string[]) => api.sanctionDbt(applicationIds),
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: keys.apps });
+      client.invalidateQueries({ queryKey: keys.dbt });
+      client.invalidateQueries({ queryKey: ["funds", "overview"] });
+    },
+  });
+};
+export const useInitiateDbt = () => {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({ applicationIds, idempotencyKey }: { applicationIds: string[]; idempotencyKey?: string }) =>
+      api.initiateDbt(applicationIds, idempotencyKey),
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: keys.apps });
+      client.invalidateQueries({ queryKey: keys.dbt });
+      client.invalidateQueries({ queryKey: ["funds", "overview"] });
+    },
+  });
+};
 export const useRetryDbt = () => {
   const client = useQueryClient();
   return useMutation({ mutationFn: api.retryDbt,
