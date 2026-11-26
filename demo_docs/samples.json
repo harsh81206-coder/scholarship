@@ -1,0 +1,49 @@
+{
+  "income_riya": [
+    "INCOME CERTIFICATE",
+    "Name: Riya Hasmukhbhai Patel",
+    "Annual family income: INR 96,000",
+    "Certificate number: REV/AND/2026/049182",
+    "Issue date: 2026-04-10",
+    "Authority: Anand Mamlatdar Office"
+  ],
+  "income_meera": [
+    "INCOME CERTIFICATE",
+    "Name: Meera Ramesh Parmar",
+    "Annual family income: INR 132,500",
+    "Certificate number: REV/BOR/2026/067314",
+    "Issue date: 2026-03-22",
+    "Authority: Borsad Mamlatdar Office"
+  ],
+  "caste_obc": [
+    "CASTE CERTIFICATE",
+    "Name: Riya Hasmukhbhai Patel",
+    "Caste category: OBC / SEBC",
+    "Certificate number: CST/GUJ/2024/99102",
+    "Issue date: 2024-08-12",
+    "Authority: District Collector, Anand"
+  ],
+  "marksheet_class8": [
+    "GSEB CLASS 8 MARKSHEET",
+    "Name: Riya Hasmukhbhai Patel",
+    "School: Shree Sardar Patel High School",
+    "Academic year: 2025-26",
+    "Marks: 79 percent",
+    "Attendance: 88 percent",
+    "Certificate number: GSEB/2026/MS-88124"
+  ],
+  "bank_mother": [
+    "BANK ACCOUNT PASSBOOK",
+    "Account holder: Hetalben Patel",
+    "Relationship: Mother / Guardian",
+    "Bank: State Bank of India",
+    "Account number: XXXX XXXX 4521",
+    "IFSC: SBIN0001234"
+  ],
+  "aadhaar_masked": [
+    "MASKED IDENTITY DOCUMENT",
+    "Name: Riya Hasmukhbhai Patel",
+    "Aadhaar: XXXX-XXXX-8912",
+    "This is fabricated demo data. Not a real identity document."
+  ]
+}

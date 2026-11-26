@@ -29,7 +29,7 @@ def _build_context(student: Student, session: Session) -> dict:
     records = session.exec(
         select(AcademicRecord)
         .where(AcademicRecord.student_id == student.id)
-        .order_by(AcademicRecord.year.desc())  # type: ignore[arg-type]
+        .order_by(AcademicRecord.record_month.desc(), AcademicRecord.year.desc())  # type: ignore[arg-type]
     ).all()
     if records:
         ctx["attendance_pct"] = records[0].attendance_pct

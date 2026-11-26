@@ -20,7 +20,7 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-(cd "${repo_root}/api" && DATABASE_URL="${database_url}" python3 -m seed.seed --reset >/dev/null)
+(cd "${repo_root}/api" && DATABASE_URL="${database_url}" JWT_SECRET="vps-qa-local-secret-32-characters" python3 -m seed.seed --reset >/dev/null)
 # make qa has just produced a production build. Give the browser smoke its own
 # clean dev output so Next does not mix production traces with dev chunks.
 rm -rf "${repo_root}/web/.next"

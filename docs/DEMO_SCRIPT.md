@@ -35,13 +35,13 @@ Open `/student/apply`, select an eligible scheme, check guardian consent, reques
 
 ### 4. School and DEO review — SC2/SC3 → D2 (60 seconds)
 
-If the application route is `school`, switch to **School**, open `/school/queue`, open the application, and use **Approve & Forward**. Switch to **DEO**, open `/deo/approvals`, select the application in the DEO route tab, and approve it.
+For the seeded review path, switch to **School**, open `/school/queue`, and open Riya's flagged application `APP-2026-RIYA-NL` (it is at the top of the first queue page). Use **Approve & Forward**, then switch to **DEO**, open `/deo/approvals`, select the same application in the DEO route tab, and approve it.
 
 **Expected:** The same application advances from school verification to DEO approval and remains visible in Riya's tracker. If the application was auto-routed by the seeded 5% sampling rules, continue with the seeded data or run `make e2e` for the deterministic review walkthrough.
 
 ### 5. Bicycle logistics — V1 → SC5 → S7 (60 seconds)
 
-Switch to **Vendor**, create a one-cycle batch for the seeded school, and dispatch it. Switch to **School**, open `/school/cycles`, receive the batch using the serial returned by V1, then initiate handover for Riya. Confirm using the mock OTP displayed by SC5. Open Riya's `/student/cycle` page.
+Switch to **Vendor** and show the seeded VND-001 batches: one ready to dispatch, one in transit, and one received. Riya already has a received cycle (`SSB-2026-700121`) with a pending handover, so do not assign her another cycle. Switch to **School**, open `/school/cycles`, choose handover, keep Riya's student ID `1` and the seeded serial, request a fresh mock OTP, and confirm it. Open Riya's `/student/cycle` page.
 
 **Expected:** The batch changes to received, the handover is confirmed, and S7 displays a delivered cycle. Handover OTP is generated for the session; it is not necessarily `123456`.
 

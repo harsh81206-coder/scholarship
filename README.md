@@ -15,7 +15,7 @@ flowchart LR
 
 ### 1. Full Stack (Production Next.js Build + FastAPI + Seeded SQLite)
 ```bash
-make demo-reset   # Reset seeded SQLite snapshot (600 students)
+make demo-reset   # Reset seeded SQLite snapshot (1,500 students, 40 schools)
 make demo         # Starts FastAPI (:8000) + Next.js production build (:3000)
 ```
 

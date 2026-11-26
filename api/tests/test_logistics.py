@@ -10,7 +10,8 @@ from datetime import datetime, timedelta
 
 from app.db import get_session
 from app.main import app
-from app.models.core import Cycle, District, Handover, Notification, School, Student, Taluka, User
+from app.models.core import Cycle, CycleBatch, District, Handover, Notification, School, Student, Taluka, User
+from app.routers.logistics import _signed_payload
 from app.security import create_access_token
 
 
@@ -261,6 +262,55 @@ def test_student_cannot_receive_a_second_cycle(setup_client):
         headers=school_headers,
     )
     assert second.status_code == 409
+
+
+def test_pending_handover_can_resume_for_students_seeded_cycle(setup_client):
+    client, student, school, session = setup_client
+    vendor = session.exec(select(User).where(User.role == "vendor")).one()
+    batch = CycleBatch(
+        batch_code="BATCH-SEEDED-PENDING",
+        vendor_id=vendor.id,
+        school_id=school.id,
+        qty=1,
+        received_qty=1,
+        status="received",
+    )
+    session.add(batch)
+    session.flush()
+    serial = "SSB-SEEDED-PENDING-0001"
+    cycle = Cycle(
+        serial_no=serial,
+        qr_payload=_signed_payload(serial, batch.id),
+        batch_id=batch.id,
+        status="received",
+        student_id=student.id,
+    )
+    session.add(cycle)
+    session.flush()
+    session.add(
+        Handover(
+            cycle_id=cycle.id,
+            student_id=student.id,
+            otp_hash="expired-demo-hash",
+            otp_expires=datetime.utcnow() + timedelta(minutes=5),
+        )
+    )
+    session.commit()
+
+    school_headers = auth("school", "SCH-AND-001", school.id)
+    started = client.post(
+        "/handover/initiate",
+        json={"student_id": student.id, "cycle_serial": serial},
+        headers=school_headers,
+    )
+    assert started.status_code == 200, started.text
+    confirmed = client.post(
+        "/handover/confirm",
+        json={"cycle_serial": serial, "otp": started.json()["demo_otp"]},
+        headers=school_headers,
+    )
+    assert confirmed.status_code == 200, confirmed.text
+    assert confirmed.json()["status"] == "handed_over"
 
 
 def test_handover_otp_expires_and_locks_after_five_attempts(setup_client):

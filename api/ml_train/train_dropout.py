@@ -11,12 +11,15 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 from ml_train.gen_synthetic import gen_dropout
+from ml_train.seeded_data import dropout_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def train() -> dict:
-    x, y = gen_dropout()
+    dataset = dropout_rows()
+    source = "seeded_demo_proxy_labels" if dataset is not None else "synthetic_fallback"
+    x, y = dataset if dataset is not None else gen_dropout()
     x_train, x_test, y_train, y_test = train_test_split(
         x, y, test_size=0.2, random_state=42, stratify=y
     )
@@ -29,6 +32,8 @@ def train() -> dict:
     predictions = (probabilities >= 0.5).astype(int)
     metrics = {
         "samples": int(len(y)),
+        "source": source,
+        "proxy_positive_labels": int(y.sum()) if dataset is not None else None,
         "auc": round(float(roc_auc_score(y_test, probabilities)), 4),
         "accuracy": round(float(accuracy_score(y_test, predictions)), 4),
         "precision": round(

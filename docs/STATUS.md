@@ -40,6 +40,8 @@ Updated: 2026-11-26. **API-wired** means that the route uses the API hooks when 
 
 ## Coverage summary
 
+- The current deterministic seed has 1 Anand district, 8 talukas, 40 schools, 1,500 students, 9,000 academic records, 2,200 applications, 900 DBT transactions, and 400 cycles. Exact counts, stage split, cast identities, and verification commands are in [`SEED_DATA.md`](SEED_DATA.md).
+
 - 33/33 routes were captured by the route screenshot sweep; this verifies rendering and basic browser health, not that every screen's controls work.
 - 17 Tier 1 routes are API-wired (P2, P3, S1, S2, S4, S5, S6, S7, S8, S10, SC2, SC3, SC5, D2, A3, V1, X1). X1 is partial as described above.
 - 16 additional routes remain fixture-backed or static (P1, S3, S9, S11, S12, SC1, SC4, SC6, D1, D3, D4, D5, A1, A2, A4, A5).

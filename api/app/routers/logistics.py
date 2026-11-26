@@ -255,7 +255,9 @@ def initiate_handover(
     ).first()
     if assigned_cycle and assigned_cycle.id != cycle.id:
         raise HTTPException(409, "Student already has a cycle assigned")
-    if cycle.status not in ("received", "in_stock") or cycle.student_id:
+    if cycle.status not in ("received", "in_stock") or (
+        cycle.student_id is not None and cycle.student_id != student.id
+    ):
         raise HTTPException(409, "Cycle is not available")
     existing = session.exec(
         select(Handover).where(Handover.cycle_id == cycle.id)

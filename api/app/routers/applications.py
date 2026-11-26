@@ -409,6 +409,10 @@ def list_applications(
         ).first()
         if student:
             q = q.where(Application.student_id == student.id)
+    elif user.role == "admin":
+        # Keep recent workflow changes visible to the bounded admin UI query
+        # when the seeded demo contains thousands of older applications.
+        q = q.order_by(Application.id.desc())
     # Filters
     if scheme:
         s = session.exec(select(Scheme).where(Scheme.code == scheme)).first()

@@ -27,7 +27,7 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 echo "Resetting demo database..."
-(cd "${repo_root}/api" && DATABASE_URL="${database_url}" python3 -m seed.seed --reset >/dev/null)
+(cd "${repo_root}/api" && DATABASE_URL="${database_url}" JWT_SECRET="vps-e2e-local-secret-32-characters" python3 -m seed.seed --reset >/dev/null)
 # Make the UI path deterministic: treat auto-verified applications as audit samples
 # in this throwaway E2E database so school and DEO actions are exercised every run.
 (

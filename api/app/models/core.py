@@ -18,6 +18,8 @@ class Taluka(SQLModel, table=True):
     __tablename__ = "taluka"
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(index=True)
+    name_gu: str = ""
+    name_en: str = ""
     district_id: int = Field(foreign_key="district.id", index=True)
     district: Optional["District"] = Relationship(back_populates="talukas")
     schools: List["School"] = Relationship(back_populates="taluka")
@@ -32,6 +34,8 @@ class School(SQLModel, table=True):
     school_type: str = "Govt"
     principal_name: str = ""
     taluka_id: int = Field(foreign_key="taluka.id", index=True)
+    latitude: float = 22.55
+    longitude: float = 72.95
     taluka: Optional["Taluka"] = Relationship(back_populates="schools")
     students: List["Student"] = Relationship(back_populates="school")
 
@@ -92,6 +96,7 @@ class AcademicRecord(SQLModel, table=True):
     grade: int
     attendance_pct: float = 0.0
     marks_pct: float = 0.0
+    record_month: str = ""
     result_json: Optional[str] = Field(default=None)
     student: Optional["Student"] = Relationship(back_populates="academic_records")
 
@@ -368,3 +373,15 @@ class Setting(SQLModel, table=True):
     value_json: str = "{}"
     description: str = ""
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class TimeSeriesPoint(SQLModel, table=True):
+    __tablename__ = "time_series_point"
+    id: Optional[int] = Field(default=None, primary_key=True)
+    metric: str = Field(index=True)
+    period: str = Field(index=True)
+    district_id: int = Field(foreign_key="district.id", index=True)
+    taluka_id: int = Field(foreign_key="taluka.id", index=True)
+    scheme_code: str = Field(index=True)
+    count: int = 0
+    amount: int = 0

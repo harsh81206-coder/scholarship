@@ -625,7 +625,7 @@ def confirm_records(
         record = session.exec(
             select(AcademicRecord)
             .where(AcademicRecord.student_id == student.id)
-            .order_by(AcademicRecord.year.desc())
+            .order_by(AcademicRecord.record_month.desc(), AcademicRecord.year.desc())
         ).first()
         if record:
             setattr(

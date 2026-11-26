@@ -57,6 +57,13 @@ def _mock_authenticity(doc_type: str) -> dict:
     }
 
 
+def _document_file_path(stored_path: str) -> Path:
+    path = Path(stored_path)
+    if not path.is_absolute():
+        path = Path(settings.data_dir) / path
+    return path.resolve()
+
+
 @router.post("")
 async def upload_document(
     doc_type: str = Form(...),
@@ -216,7 +223,7 @@ def delete_document(
     if not student or not doc or doc.student_id != student.id:
         raise HTTPException(404, "Document not found")
     if doc.file_path:
-        Path(doc.file_path).unlink(missing_ok=True)
+        _document_file_path(doc.file_path).unlink(missing_ok=True)
     session.delete(doc)
     session.commit()
     return {"success": True, "deleted_id": doc_id}

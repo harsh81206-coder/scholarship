@@ -5,14 +5,14 @@ install:
 	@if [ ! -x web/node_modules/.bin/next ]; then cd web && npm ci; fi
 
 seed:
-	cd api && DATABASE_URL="sqlite:///$(CURDIR)/api/vps.demo.db" python3 -m seed.seed --reset
+	cd api && DATABASE_URL="sqlite:///$(CURDIR)/api/vps.demo.db" JWT_SECRET="$(if $(VPS_JWT_SECRET),$(VPS_JWT_SECRET),local-demo-secret-change-before-deployment)" python3 -m seed.seed --reset
 
-seed-reset: seed
+seed-reset: seed train
 
 demo-reset: seed-reset
 
 train:
-	cd api && python3 -m ml_train.train_all
+	cd api && DATABASE_URL="sqlite:///$(CURDIR)/api/vps.demo.db" python3 -m ml_train.train_all
 
 demo: install
 	bash scripts/demo.sh
@@ -25,7 +25,7 @@ test:
 	cd web && npx tsc --noEmit && npm run lint
 
 check-contract:
-	cd api && DATABASE_URL="sqlite:///$(CURDIR)/api/vps.demo.db" ADAPTER_MODE=mock DEMO_OTP=123456 python3 -m scripts.check_contract
+	cd api && DATABASE_URL="sqlite:///$(CURDIR)/api/vps.demo.db" JWT_SECRET="$(if $(VPS_JWT_SECRET),$(VPS_JWT_SECRET),local-demo-secret-change-before-deployment)" ADAPTER_MODE=mock DEMO_OTP=123456 python3 -m scripts.check_contract
 
 e2e:
 	@set -e; for run in 1 2 3; do echo "Golden Path run $$run/3"; bash scripts/e2e.sh; done

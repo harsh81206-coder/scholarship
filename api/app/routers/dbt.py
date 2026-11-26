@@ -169,6 +169,10 @@ def list_transactions(
     q = select(DbtTxn)
     if status:
         q = q.where(DbtTxn.status == status)
+    if user.role == "admin":
+        # The demo admin screen only requests a bounded first page; show recent
+        # workflow transactions there when the seeded fund ledger is large.
+        q = q.order_by(DbtTxn.id.desc())
     total = len(session.exec(q).all())
     items = session.exec(q.offset((page - 1) * size).limit(size)).all()
     return {

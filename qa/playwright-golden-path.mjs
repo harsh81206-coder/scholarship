@@ -251,9 +251,12 @@ try {
   const cycleOverview = await apiRequest(schoolAuth, "/cycles/overview");
   const handoverStudent = cycleOverview.handover_students.find((student) => student.cts_id === studentAuth.identifier);
   assert.ok(handoverStudent, "School cycle roster should include Riya with a record ID");
+  const assignedStudentCycle = await apiRequest(studentAuth, "/students/me/cycle");
+  assert.ok(assignedStudentCycle.assigned && assignedStudentCycle.handover_pending,
+    "Riya should use her seeded cycle that is already assigned and waiting for OTP");
   await page.getByRole("button", { name: /Student Handover/ }).click();
   await page.locator('input[type="number"]').fill(String(handoverStudent.id));
-  await page.locator('input[type="text"]').nth(1).fill(createdBatch.serials[0]);
+  await page.locator('input[type="text"]').nth(1).fill(assignedStudentCycle.serial_no);
   const initiateHandover = page.waitForResponse((response) => response.url().endsWith("/handover/initiate") && response.request().method() === "POST", { timeout: 10000 });
   await page.getByRole("button", { name: /Send Handover OTP to Student/ }).click();
   const initiateResponse = await initiateHandover;

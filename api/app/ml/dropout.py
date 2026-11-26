@@ -26,7 +26,7 @@ def _extract_features(student: Student, session: Session) -> dict[str, Any]:
     recs = session.exec(
         select(AcademicRecord)
         .where(AcademicRecord.student_id == student.id)
-        .order_by(AcademicRecord.year.desc())  # type: ignore[arg-type]
+        .order_by(AcademicRecord.record_month.desc(), AcademicRecord.year.desc())  # type: ignore[arg-type]
     ).all()
 
     att = recs[0].attendance_pct if recs else 70.0

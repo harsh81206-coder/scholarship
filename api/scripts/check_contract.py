@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 import json
+import os
 import sqlite3
 import tempfile
 
@@ -139,6 +140,7 @@ def main() -> int:
     from app.models.core import (
         Application,
         BankAccount,
+        Cycle,
         DbtTxn,
         FraudFlag,
         Notification,
@@ -167,7 +169,9 @@ def main() -> int:
     # creates synthetic rows in this temporary database so mutations never touch
     # api/vps.demo.db. Background workers that use imported engine globals are
     # disabled for the duration of this contract pass.
-    source_db = ROOT / "api" / "vps.demo.db"
+    source_db = Path(
+        os.environ.get("VPS_CONTRACT_DB", str(ROOT / "api" / "vps.demo.db"))
+    )
     if not source_db.is_file():
         print(f"FAIL API: seeded snapshot not found: {source_db}")
         return 1
@@ -358,6 +362,23 @@ def main() -> int:
                         student = session.exec(select(Student).where(Student.cts_id == role_users["student"][0])).first()
                         scheme = session.exec(select(Scheme).where(Scheme.active.is_(True)).order_by(Scheme.id)).first()
                         school_id = student.school_id if student else None
+                        assigned_student_ids = {
+                            student_id
+                            for student_id in session.exec(select(Cycle.student_id)).all()
+                            if student_id is not None
+                        }
+                        handover_student = next(
+                            (
+                                candidate
+                                for candidate in session.exec(
+                                    select(Student).where(Student.school_id == school_id).order_by(Student.id)
+                                ).all()
+                                if candidate.id not in assigned_student_ids
+                            ),
+                            None,
+                        )
+                        if not handover_student:
+                            missing.append(("seed", "no unassigned student found for the contract handover"))
                         school_user = session.exec(select(User).where(User.role == "school")).first()
                         taluka_user = session.exec(select(User).where(User.role == "taluka")).first()
                         vendor = session.exec(select(User).where(User.role == "vendor")).first()
@@ -455,6 +476,7 @@ def main() -> int:
                             contract_school_id = school_id
                             contract_school_user_id = school_user.id
                             contract_student_id = student_id
+                            contract_handover_student_id = handover_student.id if handover_student else student_id
                             first_flag = session.exec(select(FraudFlag).order_by(FraudFlag.id)).first()
                             flag_id = first_flag.id
                             failed_txn_id = failed_txn.id
@@ -555,7 +577,7 @@ def main() -> int:
                         check_call(client, tokens, "V1", "vendor", "POST", f"/batches/{batch_id}/dispatch", ("id", "status", "dispatched_at"), data={"lat": 22.56, "lng": 72.95})
                         check_call(client, tokens, "V1", "vendor", "POST", f"/batches/{batch_id}/gps", ("success", "points"), data={"lat": 22.57, "lng": 72.96})
                         check_call(client, tokens, "SC5", "school", "POST", f"/batches/{batch_id}/receive", ("batch_id", "status", "received_qty", "expected_qty", "mismatch"), data={"received_qty": 1, "scanned_serials": serials})
-                        started = check_call(client, tokens, "SC5", "school", "POST", "/handover/initiate", ("success", "cycle_serial", "expires_in_seconds", "demo_otp"), data={"student_id": contract_student_id, "cycle_serial": serials[0]})
+                        started = check_call(client, tokens, "SC5", "school", "POST", "/handover/initiate", ("success", "cycle_serial", "expires_in_seconds", "demo_otp"), data={"student_id": contract_handover_student_id, "cycle_serial": serials[0]})
                         otp = started.json().get("demo_otp", "123456") if started.status_code == 200 else "123456"
                         check_call(client, tokens, "SC5", "school", "POST", "/handover/confirm", ("success", "serial_no", "status", "handed_at"), data={"cycle_serial": serials[0], "otp": otp, "photo_path": "", "lat": 22.56, "lng": 72.95})
                     check_call(client, tokens, "X1", "admin", "POST", f"/demo/promote/{role_users['student'][0]}", ("cts_id", "diff"))

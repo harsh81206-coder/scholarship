@@ -1,6 +1,8 @@
 # Visual and route QA report
 
-Run: 2026-11-26 via `make qa`. The API and browser sweep used a fresh temporary SQLite database. The browser sweep used the Next development server with a clean `.next` directory; the separate optimized production build completed before it.
+Baseline run: 2026-11-26 via `make qa`, using a fresh temporary SQLite database and the Next development server. The separate optimized production build completed before that sweep.
+
+Latest demo run: after `make seed-reset` regenerated the checked-in snapshot and ML artifacts, `make demo` built and started the production server; `qa:login` and `qa:screens` then ran against `http://localhost:3000` and `http://localhost:8000`. All 33 routes returned HTTP 200, with zero page/API errors, broken images, or document-level overflow. The login smoke passed. This route sweep checks rendering and data loading, not every control or pixel similarity.
 
 ## Automated checks
 

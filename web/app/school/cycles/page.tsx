@@ -27,7 +27,7 @@ export default function SchoolCycleReceiveHandoverPage() {
 
   const [studentCts, setStudentCts] = useState("GJ-AND-2026-004512");
   const [studentId, setStudentId] = useState("1");
-  const [serialNo, setSerialNo] = useState("SSB-2026-700000");
+  const [serialNo, setSerialNo] = useState("SSB-2026-700121");
   const [otpInput, setOtpInput] = useState("");
   const [handoverStarted, setHandoverStarted] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);

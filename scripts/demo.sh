@@ -7,12 +7,12 @@ WEB_PORT="${VPS_WEB_PORT:-3000}"
 DATABASE_URL="sqlite:///${REPO_ROOT}/api/vps.demo.db"
 
 if [ ! -f "${REPO_ROOT}/api/vps.demo.db" ]; then
-  (cd "${REPO_ROOT}/api" && DATABASE_URL="${DATABASE_URL}" python3 -m seed.seed --reset)
+  (cd "${REPO_ROOT}/api" && DATABASE_URL="${DATABASE_URL}" JWT_SECRET="${VPS_JWT_SECRET:-local-demo-secret-change-before-deployment}" python3 -m seed.seed --reset)
 fi
 
 for artifact in dropout_model.joblib fraud_model.joblib forecast_model.joblib; do
   if [ ! -f "${REPO_ROOT}/api/artifacts/${artifact}" ]; then
-    (cd "${REPO_ROOT}/api" && python3 -m ml_train.train_all)
+    (cd "${REPO_ROOT}/api" && DATABASE_URL="${DATABASE_URL}" python3 -m ml_train.train_all)
     break
   fi
 done
